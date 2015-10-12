@@ -3,7 +3,7 @@
 
 /****************************************************
 Funcction: algorithm1
-Purpose: Linear subarray algorithm
+Purpose: Enumeration
 Time Complexity: O(n^3)
 Input: vector of integers, representing one problem set
 from the file input in main
@@ -27,4 +27,7 @@ int algorithm1(std::vector<int> inputArray){
 }
 
 
-	
+/****************************************************
+Funcction: algorithm2
+Purpose: Better Enumeration
+****************************************************/
