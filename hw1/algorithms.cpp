@@ -142,11 +142,11 @@ int algorithm4(std::vector<int>&input)
 	//non-recursive, linear
 	for(index=0; index < input.size(); index++){
 		sum += input[index];
-		//if we just added neg, disreguard
+		//if we just added neg, disregard
 		if(sum > max){
 			max = sum;
 		}
-		//if we just went neg, disreguard
+		//if we just went neg, disregard
 		else if(sum < 0){
 			sum = 0;
 		}
