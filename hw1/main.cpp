@@ -8,66 +8,45 @@
 
 int main(){
 
-	std::ifstream fp;					// file pointer
-	std::vector<string> intialRead;		// read into this vector
-	std::vector<int> converted;			// read vector convereted to integers
-	std::vector<int> resultsInt;			// pass empty vector, return full of results
-	std::vector<string> finalResult;		// info about algo and ints as strings for final read
+	std::ifstream input;									// file pointer
+	std::ostream output;									// file pointer
+	std::vector<std::string> intialRead;		// read into this vector, vector of vectors
+	std::vector<std::vector<int>> converted;				// read vector convereted to integers
+	std::vector<std::string> line;
+	int result;
 
-	// Step One: Open and read the file
-		// remember error catch if problem opening
-
-		// read into vector
-
-		// remember to close when done
+	// read the file
+	input.open(filenamehere);
+		// make sure we test for errors
 
 
-	// Step Two: Convert vector of strings to ints
-		// while the vectore isn't empty
-			// use ataoi on the present element
-			// push present element into the vector
+	// store file contents in a vector
+	while(!input.eof()){
+		input >> line;
+		initialRead.push_back(line);
+	}
 
-	// Step Three: Send converted vector to Function One
-
-		// Open the results file for writing!
-
-		// send to function with int vector and empty vector
-		// empty vector returns full
-		// open result file
-			// write into it the algo we're on
-			// write into it the resultInt vector, converted to c.string
-			// close
-		// empty resultInt vector
-
-		// Step Four: Send converted vector to Function Two
-		// send to function with int vector and empty vector
-		// empty vector returns full
-		// open result file
-			// write into it the algo we're on
-			// write into it the resultInt vector, converted to c.string
-			// close
-		// empty resultInt vector
-
-		// Step Five: Send converted vector to Function Three
-		// send to function with int vector and empty vector
-		// empty vector returns full
-		// open result file
-			// write into it the algo we're on
-			// write into it the resultInt vector, converted to c.string
-			// close
-		// empty resultInt vector
-
-		// Step Six: Send converted vector to Function Four
-		// send to function with int vector and empty vector
-		// empty vector returns full
-		// open result file
-			// write into it the algo we're on
-			// write into it the resultInt vector, converted to c.string
-			// close
-		// empty resultInt vector
-
-		// Close the results file!
+	// close
+	input.close();
 
 
+	// open the file for writing
+	output.open(filenamehere);
+		// test for errros
+
+
+	// write each line and the result from the algo
+	for(int i=0; i < initialRead.size; i++){
+		output << intialRead[i];								// write the line
+		output << "\n";											// spacing
+		converted = intialRead[i] converted into ints. Maybe another function?
+		result = algorithm1(converted);							// call the function
+		output << result;										// write the answer
+		output << "\n\n";										// spacing
+	}
+
+	// repeat for other three functions
+
+close writing
 	return 0;
 }
