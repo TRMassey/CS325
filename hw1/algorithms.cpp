@@ -1,5 +1,6 @@
 #include <algorithm.h>
 #include <vector>
+#include <iostream>
 #include <limits.h>	 //for relative -infinity (INT_MIN) 
 
 /****************************************************
@@ -10,10 +11,10 @@ Input: vector of integers, representing one problem set
 from the file input in main
 Output: Returns the maximum sum
 ****************************************************/
-int algorithm1(std::vector<int> inputArray){
+int algorithm1(std::vector<int> &inputArray){
 	int maxSum = 0;
 
-	for(int i=0 i < inputArray.size(); i++){
+	for(int i=0; i < inputArray.size(); i++){
 		for(int j=i; j < inputArray.size(); j++){
 			int sum = 0;
 			for(int k = i; k <= j; k++){			// O(j-1)
@@ -36,12 +37,12 @@ Input: vector of integers, representing one problem set
 from the file input in main
 Output: Returns the maximum sum
 ****************************************************/
-int algorithm2(std::vector<int> inputArray){
+int algorithm2(std::vector<int> &inputArray){
 	int maxSum = 0;
 
 	for(int i = 0; i < inputArray.size(); i++){
 		int sum = 0;
-		for(int j = 0; j < inputArray.size(); j++){		// O(n^2)
+		for(int j = i; j < inputArray.size(); j++){		// O(n^2)
 			sum = sum + inputArray[j];
 			if(sum > maxSum)
 				maxSum = sum;
