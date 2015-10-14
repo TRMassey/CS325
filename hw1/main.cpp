@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <cstring>
+#include <time.h>
 
 int main(int argc, char* argv[]){
 
@@ -17,6 +18,8 @@ int main(int argc, char* argv[]){
 	int result;												// algorithm's answer
 
 
+	srand(time(NULL));										// set for random generation
+	
 // Step One: Address possible conditions for selecting proper user input
 
 	// if a filename is provided
