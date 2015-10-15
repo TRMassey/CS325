@@ -8,31 +8,22 @@
 #include <cstring>
 #include <time.h>
 
-int main(int argc, char* argv[]){
+int main(){
 
 	std::ifstream input;									// Input Stream
-	std::ostream output;									// Output Stream
-	std::vector<std::string> intialRead;					// read into this vector, vector of vectors
-	std::vector<std::vector<int>> converted;				// read vector convereted to integers
-	std::vector<std::string> line;							// string for easier iteration through vector of strings
+	std::ofstream output;									// Output Stream
+	std::vector<std::string> initialRead;					// read into this vector, vector of vectors
+	std::vector<std::vector<int> > converted;				// read vector convereted to integers
+	std::string line;										// string for easier iteration through vector of strings
 	std::string fileName;									// name of file to be read or written to
 	int result;												// algorithm's answer
 
 
 	srand(time(NULL));										// set for random generation
 	
-// Step One: Address possible conditions for selecting proper user input
-
-	// if a filename is provided
-	if(argc == 2){
-		fileName = argv[1];;
-	}
-	else{
-		fileName = "MSS_Problems.txt";
-	}
 
 // Step Two: Open the file and address errors conccerning bad user input
-	input.open(fileName);
+	input.open("MSS_Problems.txt");
 	if(!input.is_open()){
 		std::cout << "ERROR: file unable to be opened\n";
 		return 0;
@@ -41,7 +32,6 @@ int main(int argc, char* argv[]){
 
 // Step Three: Store the file contents in a vector for use
 	while(std::getline(input, line)){
-		input >> line;
 		initialRead.push_back(line);		// each line of input stores to one element in the vector
 	}
 
@@ -54,8 +44,7 @@ int main(int argc, char* argv[]){
 
 
 // Step Five: Open the file for writing and deal with opening errors
-	fileName = "MSS_Results.txt";			// changed for output file
-	output.open(fileName);
+	output.open("MSS_Results.txt");
 	if(!output.is_open()){
 		std::cout << "ERROR: file unable to be opened for writing";
 	}
