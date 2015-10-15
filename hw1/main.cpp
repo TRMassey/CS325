@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <string.h>
 #include <cstdio>
 #include <cstdlib>
 #include <vector>
@@ -13,21 +14,22 @@ int main(){
 	std::ifstream input;									// Input Stream
 	std::ofstream output;									// Output Stream
 	std::vector<std::string> initialRead;					// read into this vector, vector of vectors
-	std::vector<int> converted;				// read vector convereted to integers
+	std::vector<int> converted;								// read vector convereted to integers
 	std::string line;										// string for easier iteration through vector of strings
 	std::string fileName;									// name of file to be read or written to
 	int result;												// algorithm's answer
 
 
 	srand(time(NULL));										// set for random generation
-	
 
+	
 // Step Two: Open the file and address errors conccerning bad user input
 	input.open("MSS_Problems.txt");
 	if(!input.is_open()){
 		std::cout << "ERROR: file unable to be opened\n";
 		return 0;
 	}
+
 
 
 // Step Three: Store the file contents in a vector for use
@@ -42,13 +44,11 @@ int main(){
 		std::cout << "ERROR: file unable to be properly closed\n";
 	}
 
-
 // Step Five: Open the file for writing and deal with opening errors
 	output.open("MSS_Results.txt");
 	if(!output.is_open()){
 		std::cout << "ERROR: file unable to be opened for writing";
 	}
-
 
 // Step Six: The file contents stored in a vector will be otuput to the
 // result file, then the line will be converted to only integers, the
@@ -92,8 +92,11 @@ int main(){
 	}
 	std::cout << "\nFile contents written.\n";
 
+	// clear vector
+	for(int j = 0; j < converted.size(); j++){
+		converted[j] = 0;
+	}
 
-	
 	// Algorithm two
 	std::cout << "\nRunning analysis of file on Algorithm Two";
 	for(int i=0; i < initialRead.size(); i++){
@@ -131,9 +134,15 @@ int main(){
 	}
 	std::cout << "\nFile contents written.\n";
 
+	// clear vector
+	for(int j = 0; j < converted.size(); j++){
+		converted[j] = 0;
+	}
+
+
 	// algorithm Three
 	std::cout << "\nRunning Analysis on file for Algorithm Three";
-	for(i=0; i < initialRead.size(); i++){
+	for(int i=0; i < initialRead.size(); i++){
 		output << initialRead[i];								// write the line
 		output << "\n";											// spacing
 
@@ -167,7 +176,11 @@ int main(){
 		output << "\n\n";										// spacing
 	}
 	std::cout << "\nFile contents written\n";
-
+	
+	// clear vector
+	for(int j = 0; j < converted.size(); j++){
+		converted[j] = 0;
+	}
 
 	// algorithm Four
 	std::cout << "\nRunning Analysis on File for Algorithm Four";
@@ -205,6 +218,11 @@ int main(){
 		output << "\n\n";										// spacing
 	}
 	std::cout << "\nFile contents written\n";
+
+	// clear vector
+	for(int j = 0; j < converted.size(); j++){
+		converted[j] = 0;
+	}
 
 // Step Seven: Close and deal with closing errors
 	output.close();

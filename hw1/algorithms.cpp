@@ -1,4 +1,4 @@
-#include <algorithms.hpp>
+#include "algorithms.hpp"
 #include <vector>
 #include <iostream>
 #include <limits.h>	 //for relative -infinity (INT_MIN) 
@@ -11,7 +11,7 @@ Input: vector of integers, representing one problem set
 from the file input in main
 Output: Returns the maximum sum
 ****************************************************/
-int algorithm1(std::vector<int> &inputArray){
+int algorithm1(std::vector<int> inputArray){
 	int maxSum = 0;
 
 	for(int i=0; i < inputArray.size(); i++){
