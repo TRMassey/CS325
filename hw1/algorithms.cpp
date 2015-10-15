@@ -1,4 +1,4 @@
-#include <algorithm.h>
+#include <algorithms.hpp>
 #include <vector>
 #include <iostream>
 #include <limits.h>	 //for relative -infinity (INT_MIN) 

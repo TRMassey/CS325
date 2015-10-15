@@ -1,16 +1,17 @@
-#include "algorithms.h"
-#include <fstream>
+#include "algorithms.hpp"
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <cstdio>
-#include <stdlib.h>
+#include <cstdlib>
 #include <vector>
 #include <cstring>
 #include <time.h>
 
 int main(int argc, char* argv[]){
 
-	std::ifstream input;									// file pointer
-	std::ostream output;									// file pointer
+	std::ifstream input;									// Input Stream
+	std::ostream output;									// Output Stream
 	std::vector<std::string> intialRead;					// read into this vector, vector of vectors
 	std::vector<std::vector<int>> converted;				// read vector convereted to integers
 	std::vector<std::string> line;							// string for easier iteration through vector of strings
@@ -56,7 +57,7 @@ int main(int argc, char* argv[]){
 	fileName = "MSS_Results.txt";			// changed for output file
 	output.open(fileName);
 	if(!output.is_open()){
-		std::cout << "ERROR: file unable to be opened for writing"
+		std::cout << "ERROR: file unable to be opened for writing";
 	}
 
 
@@ -76,7 +77,7 @@ int main(int argc, char* argv[]){
 		std::string newLine;		// string without brackets
 
 		// strip brackets. New array made without brackets in newLine.
-		int k  0;
+		int k = 0;
 		for(int j=0; j < line.length(); j++){
 			if(line[j] == '[' || line[j] == ']'){
 				continue;
@@ -100,7 +101,7 @@ int main(int argc, char* argv[]){
 		output << result;										// write the answer
 		output << "\n\n";										// spacing
 	}
-	std::cout << "\nFile contents written.\n"
+	std::cout << "\nFile contents written.\n";
 
 
 	
@@ -115,8 +116,8 @@ int main(int argc, char* argv[]){
 		std::string newLine;		// string without brackets
 
 		// strip brackets. New array made without brackets in newLine.
-		int k  0;
-		for(int j=0; j < line.length(); j++){
+		int k = 0;
+		for(int j =0; j < line.size(); j++){
 			if(line[j] == '[' || line[j] == ']'){
 				continue;
 			}
@@ -143,7 +144,7 @@ int main(int argc, char* argv[]){
 
 	// algorithm Three
 	std::cout << "\nRunning Analysis on file for Algorithm Three";
-	for(int i=0; i < initialRead.size; i++){
+	for(i=0; i < initialRead.size; i++){
 		output << intialRead[i];								// write the line
 		output << "\n";											// spacing
 
@@ -152,8 +153,8 @@ int main(int argc, char* argv[]){
 		std::string newLine;		// string without brackets
 
 		// strip brackets. New array made without brackets in newLine.
-		int k  0;
-		for(int j=0; j < line.length(); j++){
+		int k = 0;
+		for(int j=0; j < line.size(); j++){
 			if(line[j] == '[' || line[j] == ']'){
 				continue;
 			}
@@ -180,7 +181,7 @@ int main(int argc, char* argv[]){
 
 
 	// algorithm Four
-	std::cout << "\nRunning Analysis on File for Algorithm Four"
+	std::cout << "\nRunning Analysis on File for Algorithm Four";
 	for(int i=0; i < initialRead.size; i++){
 		output << intialRead[i];								// write the line
 		output << "\n";											// spacing
@@ -190,8 +191,8 @@ int main(int argc, char* argv[]){
 		std::string newLine;		// string without brackets
 
 		// strip brackets. New array made without brackets in newLine.
-		int k  0;
-		for(int j=0; j < line.length(); j++){
+		int k = 0;
+		for(int j=0; j < line.size(); j++){
 			if(line[j] == '[' || line[j] == ']'){
 				continue;
 			}
@@ -233,10 +234,10 @@ int main(int argc, char* argv[]){
 	for(i=0; i < nArray.size(); i++){
 
 		// we will run each n input size 10 times
-		for(k=0; k < 10; k++){
+		for(int k=0; k < 10; k++){
 
 			// make the array of n inputs, all random numbers
-			for(j=0; j < nArray[i]; j++){
+			for(int j=0; j < nArray[i]; j++){
 				random[j] = rand() % nArray.size() + 1;
 			}
 
@@ -245,43 +246,43 @@ int main(int argc, char* argv[]){
 			t1 = 1000 * clock() / CLOCKS_PER_SEC;
 			result = algorithm1(random);
 			t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
-			cout << "\nRUNTIME FOR SIZE ";
-			cout << nArray[i];
-        	cout << " - Running time for Algorithm1 is: ";
-        	cout << result;
-        	cout << "\n";
+			std::cout << "\nRUNTIME FOR SIZE ";
+			std::cout << nArray[i];
+        	std::cout << " - Running time for Algorithm1 is: ";
+        	std::cout << result;
+        	std::cout << "\n";
 
         			
 			std::cout << "Algorithm2:\n";
 			t1 = 1000 * clock() / CLOCKS_PER_SEC;
 			result = algorithm2(random);
 			t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
-			cout << "\nRUNTIME FOR SIZE ";
-			cout << nArray[i];
-        	cout << " - Running time for Algorithm1 is: ";
-        	cout << result;
-        	cout << "\n";
+			std::cout << "\nRUNTIME FOR SIZE ";
+			std::cout << nArray[i];
+        	std::cout << " - Running time for Algorithm1 is: ";
+        	std::cout << result;
+        	std::cout << "\n";
 
         		
 			std::cout << "Algorithm3:\n";
 			t1 = 1000 * clock() / CLOCKS_PER_SEC;
 			result = algorithm3(random, 0, random.size()-1);
 			t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
-			cout << "\nRUNTIME FOR SIZE ";
-			cout << nArray[i];
-        	cout << " - Running time for Algorithm1 is: ";
-        	cout << result;
-        	cout << "\n";
+			std::cout << "\nRUNTIME FOR SIZE ";
+			std::cout << nArray[i];
+        	std::cout << " - Running time for Algorithm1 is: ";
+        	std::cout << result;
+        	std::cout << "\n";
 
 			std::cout << "Algorithm4:\n";
 			t1 = 1000 * clock() / CLOCKS_PER_SEC;
 			result = algorithm4(random);
 			t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
-			cout << "\nRUNTIME FOR SIZE ";
-			cout << nArray[i];
-        	cout << " - Running time for Algorithm1 is: ";
-        	cout << result;
-        	cout << "\n";
+			std::cout << "\nRUNTIME FOR SIZE ";
+			std::cout << nArray[i];
+        	std::cout << " - Running time for Algorithm1 is: ";
+        	std::cout << result;
+        	std::cout << "\n";
         }
 	}
 	return 0;
