@@ -13,7 +13,7 @@ int main(){
 	std::ifstream input;									// Input Stream
 	std::ofstream output;									// Output Stream
 	std::vector<std::string> initialRead;					// read into this vector, vector of vectors
-	std::vector<std::vector<int> > converted;				// read vector convereted to integers
+	std::vector<int> converted;				// read vector convereted to integers
 	std::string line;										// string for easier iteration through vector of strings
 	std::string fileName;									// name of file to be read or written to
 	int result;												// algorithm's answer
@@ -57,8 +57,8 @@ int main(){
 
 	// algorithm One
 	std::cout << "\nRunning Analysis from file on Algorithm One";
-	for(int i=0; i < initialRead.size; i++){
-		output << intialRead[i];								// write the line
+	for(int i=0; i < initialRead.size(); i++){
+		output << initialRead[i];								// write the line
 		output << "\n";											// spacing
 
 		// Begin tokenization
@@ -96,8 +96,8 @@ int main(){
 	
 	// Algorithm two
 	std::cout << "\nRunning analysis of file on Algorithm Two";
-	for(int i=0; i < initialRead.size; i++){
-		output << intialRead[i];								// write the line
+	for(int i=0; i < initialRead.size(); i++){
+		output << initialRead[i];								// write the line
 		output << "\n";											// spacing
 
 		// Begin tokenization
@@ -133,8 +133,8 @@ int main(){
 
 	// algorithm Three
 	std::cout << "\nRunning Analysis on file for Algorithm Three";
-	for(i=0; i < initialRead.size; i++){
-		output << intialRead[i];								// write the line
+	for(i=0; i < initialRead.size(); i++){
+		output << initialRead[i];								// write the line
 		output << "\n";											// spacing
 
 		// Begin tokenization
@@ -171,8 +171,8 @@ int main(){
 
 	// algorithm Four
 	std::cout << "\nRunning Analysis on File for Algorithm Four";
-	for(int i=0; i < initialRead.size; i++){
-		output << intialRead[i];								// write the line
+	for(int i=0; i < initialRead.size(); i++){
+		output << initialRead[i];								// write the line
 		output << "\n";											// spacing
 
 		// Begin tokenization
