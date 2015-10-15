@@ -224,31 +224,42 @@ int main(){
 		converted[j] = 0;
 	}
 
+
 // Step Seven: Close and deal with closing errors
 	output.close();
 	if(output.is_open()){
 		std::cout << "ERROR: file unable to be properly closed\n";
 	}
 
-
 // PART TWO : Timing with random number generator
 	std::cout << "\n TIMING ANALYSIS BEGINNING FOR n AMOUNT OF RANDOM VALUES:";
-	std::vector<int> nArray = {100, 200, 400, 600, 900, 1000, 2000};	// sizes of array
+	std::vector<int> nArray;			// vector for storage and functions
 	std::vector<int> random;
 	double t1, t2;
 
+	for(int i=100; i < 900; i++){
+		nArray.push_back(i);
+		i = i + 99;
+	}
+
+	for(int i=1000; i < 3000; i++){
+		nArray.push_back(i);
+		i = i + 999;
+	}
+
+
 	// will run for as long as we have numbers of n input
-	for(i=0; i < nArray.size(); i++){
+	for(int i=0; i < nArray.size(); i++){
+		int curSize = nArray[i];
 
 		// we will run each n input size 10 times
 		for(int k=0; k < 10; k++){
 
 			// make the array of n inputs, all random numbers
-			for(int j=0; j < nArray[i]; j++){
-				random[j] = rand() % nArray.size() + 1;
+			for(int j=0; j < curSize; j++){
+				 random.push_back(rand() % curSize + 1);
 			}
-
-			// run each of the algorithms
+						// run each of the algorithms
 			std::cout << "Algorithm1:\n";
 			t1 = 1000 * clock() / CLOCKS_PER_SEC;
 			result = algorithm1(random);
@@ -259,14 +270,13 @@ int main(){
         	std::cout << result;
         	std::cout << "\n";
 
-        			
-			std::cout << "Algorithm2:\n";
+        	std::cout << "Algorithm2:\n";
 			t1 = 1000 * clock() / CLOCKS_PER_SEC;
 			result = algorithm2(random);
 			t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
 			std::cout << "\nRUNTIME FOR SIZE ";
 			std::cout << nArray[i];
-        	std::cout << " - Running time for Algorithm1 is: ";
+        	std::cout << " - Running time for Algorithm2 is: ";
         	std::cout << result;
         	std::cout << "\n";
 
@@ -277,7 +287,7 @@ int main(){
 			t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
 			std::cout << "\nRUNTIME FOR SIZE ";
 			std::cout << nArray[i];
-        	std::cout << " - Running time for Algorithm1 is: ";
+        	std::cout << " - Running time for Algorithm3 is: ";
         	std::cout << result;
         	std::cout << "\n";
 
@@ -287,11 +297,12 @@ int main(){
 			t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
 			std::cout << "\nRUNTIME FOR SIZE ";
 			std::cout << nArray[i];
-        	std::cout << " - Running time for Algorithm1 is: ";
+        	std::cout << " - Running time for Algorithm4 is: ";
         	std::cout << result;
         	std::cout << "\n";
+
         }
-	}
-	return 0;
+    }
+return 0;
 }
 
