@@ -78,7 +78,7 @@ int main(){
 		}
 
 		// tokenize based off commas
-		char* toTokenize = line.c_str();
+		const char* toTokenize = line.c_str();
 		char* token = strtok((char*) toTokenize, ",");
 		while(token != NULL){
 			int temp = atoi(token);
@@ -117,7 +117,7 @@ int main(){
 		}
 
 		// tokenize based off commas
-		char* toTokenize = line.c_str();
+		const char* toTokenize = line.c_str();
 		char* token = strtok((char*) toTokenize, ",");
 		while(token != NULL){
 			int temp = atoi(token);
@@ -154,7 +154,7 @@ int main(){
 		}
 
 		// tokenize based off commas
-		char* toTokenize = line.c_str();
+		const char* toTokenize = line.c_str();
 		char* token = strtok((char*) toTokenize, ",");
 		while(token != NULL){
 			int temp = atoi(token);
@@ -192,7 +192,7 @@ int main(){
 		}
 
 		// tokenize based off commas
-		char* toTokenize = line.c_str();
+		const char* toTokenize = line.c_str();
 		char* token = strtok((char*) toTokenize, ",");
 		while(token != NULL){
 			int temp = atoi(token);
