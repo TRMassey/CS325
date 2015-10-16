@@ -19,6 +19,7 @@ int main(){
 	std::string fileName;									// name of file to be read or written to
 	int result;												// algorithm's answer
 	int total;												// total runtime
+	std::string choice;
 
 
 	srand(time(NULL));										// set for random generation
@@ -230,6 +231,14 @@ int main(){
 	output.close();
 	if(output.is_open()){
 		std::cout << "ERROR: file unable to be properly closed\n";
+	} 
+
+
+// Ask the poor TA if they want to the run time analysis to go, or if they'd like to stop
+	std::cout << "\n\nHave program run timing analysis for n inputs of each algorithm? (y or Y to continue): ";
+	std::cin >> choice;
+	if(choice != "y" && choice != "Y"){
+		return 0;
 	}
 
 // PART TWO : Timing with random number generator
@@ -306,6 +315,10 @@ int main(){
         	std::cout << total;
         	std::cout << "\n";
 
+        	// clear vector
+			for(int j=0; j < curSize; j++){
+				 random.pop_back();
+			}
         }
     }
 return 0;
