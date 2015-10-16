@@ -60,8 +60,9 @@ int main(){
 	// algorithm One
 	std::cout << "\nRunning Analysis from file on Algorithm One";
 	for(int i=0; i < initialRead.size(); i++){
+		output << "\nArray Processed :  ";
 		output << initialRead[i];								// write the line
-		output << "\n";											// spacing
+		output << "\n\n";										// spacing
 
 		// Begin tokenization
 		line = initialRead[i];		// for easier iteration
@@ -80,28 +81,38 @@ int main(){
 		}
 
 		// tokenize based off commas
-		const char* toTokenize = line.c_str();
+		const char* toTokenize = newLine.c_str();
 		char* token = strtok((char*) toTokenize, ",");
+		converted.empty();
 		while(token != NULL){
 			int temp = atoi(token);
 			converted.push_back(temp);
 			token = strtok(NULL, ",");
 		}
 		
+		std::cout << "\nThis is inthe array : ";
+		for(int j = 0; j < converted.size(); j++){
+			std::cout << converted[j];
+			std::cout << ", ";
+		}
 		result = algorithm1(converted);							// call the function
+		output << "Algoirthm One Result : ";
 		output << result;										// write the answer
 		output << "\n\n";										// spacing
+
+			// clear vector
+		for(int j = 0; j < converted.size(); j++){
+			converted[j] = 0;
+		}
+		converted.empty();
+
 	}
 	std::cout << "\nFile contents written.\n";
 
-	// clear vector
-	for(int j = 0; j < converted.size(); j++){
-		converted[j] = 0;
-	}
-
-	// Algorithm two
+		// Algorithm two
 	std::cout << "\nRunning analysis of file on Algorithm Two";
 	for(int i=0; i < initialRead.size(); i++){
+		output << "Array Processed :  ";
 		output << initialRead[i];								// write the line
 		output << "\n";											// spacing
 
@@ -131,20 +142,25 @@ int main(){
 		}
 		
 		result = algorithm2(converted);							// call the function
+		output << "Algorithm Two Result : ";
 		output << result;										// write the answer
 		output << "\n\n";										// spacing
+
+					// clear vector
+		for(int j = 0; j < converted.size(); j++){
+			converted[j] = 0;
+		}
+		converted.empty();
 	}
+
 	std::cout << "\nFile contents written.\n";
 
-	// clear vector
-	for(int j = 0; j < converted.size(); j++){
-		converted[j] = 0;
-	}
 
 
 	// algorithm Three
 	std::cout << "\nRunning Analysis on file for Algorithm Three";
 	for(int i=0; i < initialRead.size(); i++){
+		output << "Array Processed :  ";
 		output << initialRead[i];								// write the line
 		output << "\n";											// spacing
 
@@ -174,19 +190,24 @@ int main(){
 		}
 		
 		result = algorithm3(converted, 0, converted.size()-1);	// call the function
+		output << "Algorithm Three Result : ";
 		output << result;										// write the answer
 		output << "\n\n";										// spacing
+
+					// clear vector
+		for(int j = 0; j < converted.size(); j++){
+			converted[j] = 0;
+		}
+		converted.empty();
+
 	}
 	std::cout << "\nFile contents written\n";
 	
-	// clear vector
-	for(int j = 0; j < converted.size(); j++){
-		converted[j] = 0;
-	}
 
 	// algorithm Four
 	std::cout << "\nRunning Analysis on File for Algorithm Four";
 	for(int i=0; i < initialRead.size(); i++){
+		output << "Array Processed :  ";
 		output << initialRead[i];								// write the line
 		output << "\n";											// spacing
 
@@ -216,15 +237,18 @@ int main(){
 		}
 		
 		result = algorithm4(converted);							// call the function
+		output << "Algorithm Four Result : ";
 		output << result;										// write the answer
 		output << "\n\n";										// spacing
+
+					// clear vector
+		for(int j = 0; j < converted.size(); j++){
+			converted[j] = 0;
+		}
+		converted.empty();
 	}
 	std::cout << "\nFile contents written\n";
 
-	// clear vector
-	for(int j = 0; j < converted.size(); j++){
-		converted[j] = 0;
-	}
 
 
 // Step Seven: Close and deal with closing errors
@@ -321,6 +345,8 @@ int main(){
 			}
         }
     }
+
+
 return 0;
 }
 
