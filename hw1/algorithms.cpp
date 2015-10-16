@@ -1,7 +1,7 @@
 #include "algorithms.hpp"
 #include <vector>
 #include <iostream>
-#include <limits.h>	 //for relative -infinity (INT_MIN) 
+//#include <limits.h>	 //for relative -infinity (INT_MIN) 
 
 /****************************************************
 Funcction: algorithm1
@@ -64,8 +64,7 @@ ending point
 Output: Returns the maximum sum of mid
 ****************************************************/
 int algo3_Midpoint(std::vector<int>&input, int start, int mid, int end){
-	int leftSum = INT_MIN, rightSum = INT_MIN;	//rep neg infinity
-	int sum = 0;
+	int leftSum = 0, rightSum = 0, sum = 0;	
 	int index, maxR, maxL;
 
 	//iterate from mid to low
@@ -73,7 +72,6 @@ int algo3_Midpoint(std::vector<int>&input, int start, int mid, int end){
 		sum += input[index];
 		if (sum > leftSum){
 			leftSum = sum;
-			//maxL = index;	don't use if not doing tuple solution
 		}
 	}
 	//reset sum and iterate from mid to high
@@ -82,7 +80,6 @@ int algo3_Midpoint(std::vector<int>&input, int start, int mid, int end){
 		sum += input[index];
 		if(sum > rightSum){
 			rightSum = sum;
-			//maxR = index; don't use if not doing tuple solution
 		}
 	}
 	return leftSum + rightSum;
