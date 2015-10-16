@@ -80,7 +80,7 @@ int main(){
 		}
 
 		// tokenize based off commas
-		const char* toTokenize = line.c_str();
+		const char* toTokenize = newLine.c_str();
 		char* token = strtok((char*) toTokenize, ",");
 		while(token != NULL){
 			int temp = atoi(token);
