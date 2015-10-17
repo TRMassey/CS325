@@ -2,12 +2,14 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <string.h>
 #include <cstdio>
 #include <cstdlib>
 #include <vector>
 #include <cstring>
 #include <time.h>
+#include <cstddef>
 
 int main(){
 
@@ -24,9 +26,9 @@ int main(){
 
 	srand(time(NULL));										// set for random generation
 
-	
+
 // Step Two: Open the file and address errors conccerning bad user input
-	input.open("MSS_Problems.txt");
+	input.open("Test_Problems.txt");
 	if(!input.is_open()){
 		std::cout << "ERROR: file unable to be opened\n";
 		return 0;
@@ -59,6 +61,7 @@ int main(){
 
 	// algorithm One
 	std::cout << "\nRunning Analysis from file on Algorithm One";
+
 	for(int i=0; i < initialRead.size(); i++){
 		output << "\nArray Processed :  ";
 		output << initialRead[i];								// write the line
@@ -66,45 +69,40 @@ int main(){
 
 		// Begin tokenization
 		line = initialRead[i];		// for easier iteration
-		std::string newLine;		// string without brackets
+		//std::cout << "\nline is " << line;
+		//std::string newLine;		// string without brackets
 
-		// strip brackets. New array made without brackets in newLine.
-		int k = 0;
-		for(int j=0; j < line.length(); j++){
-			if(line[j] == '[' || line[j] == ']'){
-				continue;
-			}
-			else{
-				newLine[k] = line[j];
-				k++;
-			}
-		}
+        // replace all non-spaces with spaces
+        std::size_t found = line.find_first_of("[,]");
 
-		// tokenize based off commas
-		const char* toTokenize = newLine.c_str();
-		char* token = strtok((char*) toTokenize, ",");
-		converted.empty();
+        while (found!=std::string::npos) {
+            line[found]=' ';
+            found=line.find_first_of("[,]",found+1);
+        }
+
+        // tokenize based off spaces
+		const char* toTokenize = line.c_str();
+		char* token = strtok((char*) toTokenize, " ");
+		converted.clear();
 		while(token != NULL){
 			int temp = atoi(token);
 			converted.push_back(temp);
-			token = strtok(NULL, ",");
+			token = strtok(NULL, " ");
 		}
-		
-		std::cout << "\nThis is inthe array : ";
+
+
+
+		/*std::cout << "\nThis is in the array : ";
 		for(int j = 0; j < converted.size(); j++){
 			std::cout << converted[j];
 			std::cout << ", ";
-		}
-		result = algorithm1(converted);							// call the function
-		output << "Algoirthm One Result : ";
+		}*/
+		result = algorithm1(converted);
+		// call the function
+		std::cout << "\nResult is " << result;
+		output << "Algorithm One Result : ";
 		output << result;										// write the answer
-		output << "\n\n";										// spacing
-
-			// clear vector
-		for(int j = 0; j < converted.size(); j++){
-			converted[j] = 0;
-		}
-		converted.empty();
+		output << "\n";										// spacing
 
 	}
 	std::cout << "\nFile contents written.\n";
@@ -118,30 +116,31 @@ int main(){
 
 		// Begin tokenization
 		line = initialRead[i];		// for easier iteration
-		std::string newLine;		// string without brackets
+		//std::cout << "\nline is " << line;
+		//std::string newLine;		// string without brackets
 
-		// strip brackets. New array made without brackets in newLine.
-		int k = 0;
-		for(int j =0; j < line.size(); j++){
-			if(line[j] == '[' || line[j] == ']'){
-				continue;
-			}
-			else{
-				newLine[k] = line[j];
-				k++;
-			}
-		}
+        // replace all non-spaces with spaces
+        std::size_t found = line.find_first_of("[,]");
 
-		// tokenize based off commas
+        while (found!=std::string::npos) {
+            line[found]=' ';
+            found=line.find_first_of("[,]",found+1);
+        }
+
+        // tokenize based off spaces
 		const char* toTokenize = line.c_str();
-		char* token = strtok((char*) toTokenize, ",");
+		char* token = strtok((char*) toTokenize, " ");
+		converted.clear();
 		while(token != NULL){
 			int temp = atoi(token);
 			converted.push_back(temp);
-			token = strtok(NULL, ",");
+			token = strtok(NULL, " ");
 		}
-		
+
+
+
 		result = algorithm2(converted);							// call the function
+        std::cout << "\nResult is " << result;
 		output << "Algorithm Two Result : ";
 		output << result;										// write the answer
 		output << "\n\n";										// spacing
@@ -166,30 +165,31 @@ int main(){
 
 		// Begin tokenization
 		line = initialRead[i];		// for easier iteration
-		std::string newLine;		// string without brackets
+		//std::cout << "\nline is " << line;
+		//std::string newLine;		// string without brackets
 
-		// strip brackets. New array made without brackets in newLine.
-		int k = 0;
-		for(int j=0; j < line.size(); j++){
-			if(line[j] == '[' || line[j] == ']'){
-				continue;
-			}
-			else{
-				newLine[k] = line[j];
-				k++;
-			}
-		}
+        // replace all non-spaces with spaces
+        std::size_t found = line.find_first_of("[,]");
 
-		// tokenize based off commas
+        while (found!=std::string::npos) {
+            line[found]=' ';
+            found=line.find_first_of("[,]",found+1);
+        }
+
+        // tokenize based off spaces
 		const char* toTokenize = line.c_str();
-		char* token = strtok((char*) toTokenize, ",");
+		char* token = strtok((char*) toTokenize, " ");
+		converted.clear();
 		while(token != NULL){
 			int temp = atoi(token);
 			converted.push_back(temp);
-			token = strtok(NULL, ",");
+			token = strtok(NULL, " ");
 		}
-		
+
+
+
 		result = algorithm3(converted, 0, converted.size()-1);	// call the function
+        std::cout << "\nResult is " << result;
 		output << "Algorithm Three Result : ";
 		output << result;										// write the answer
 		output << "\n\n";										// spacing
@@ -202,7 +202,7 @@ int main(){
 
 	}
 	std::cout << "\nFile contents written\n";
-	
+
 
 	// algorithm Four
 	std::cout << "\nRunning Analysis on File for Algorithm Four";
@@ -213,30 +213,31 @@ int main(){
 
 		// Begin tokenization
 		line = initialRead[i];		// for easier iteration
-		std::string newLine;		// string without brackets
+		//std::cout << "\nline is " << line;
+		//std::string newLine;		// string without brackets
 
-		// strip brackets. New array made without brackets in newLine.
-		int k = 0;
-		for(int j=0; j < line.size(); j++){
-			if(line[j] == '[' || line[j] == ']'){
-				continue;
-			}
-			else{
-				newLine[k] = line[j];
-				k++;
-			}
-		}
+        // replace all non-spaces with spaces
+        std::size_t found = line.find_first_of("[,]");
 
-		// tokenize based off commas
+        while (found!=std::string::npos) {
+            line[found]=' ';
+            found=line.find_first_of("[,]",found+1);
+        }
+
+        // tokenize based off spaces
 		const char* toTokenize = line.c_str();
-		char* token = strtok((char*) toTokenize, ",");
+		char* token = strtok((char*) toTokenize, " ");
+		converted.clear();
 		while(token != NULL){
 			int temp = atoi(token);
 			converted.push_back(temp);
-			token = strtok(NULL, ",");
+			token = strtok(NULL, " ");
 		}
-		
-		result = algorithm4(converted);							// call the function
+
+
+		result = algorithm4(converted);
+		std::cout << "\nResult is " << result;
+		// call the function
 		output << "Algorithm Four Result : ";
 		output << result;										// write the answer
 		output << "\n\n";										// spacing
@@ -255,7 +256,7 @@ int main(){
 	output.close();
 	if(output.is_open()){
 		std::cout << "ERROR: file unable to be properly closed\n";
-	} 
+	}
 
 
 // Ask the poor TA if they want to the run time analysis to go, or if they'd like to stop
@@ -316,7 +317,7 @@ int main(){
         	std::cout << total;
         	std::cout << "\n";
 
-        		
+
 			std::cout << "\nAlgorithm3:\n";
 			t1 = 1000 * clock() / CLOCKS_PER_SEC;
 			result = algorithm3(random, 0, random.size()-1);
@@ -349,4 +350,3 @@ int main(){
 
 return 0;
 }
-
