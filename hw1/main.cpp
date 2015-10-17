@@ -23,6 +23,7 @@ int main(){
 	int result;												// algorithm's answer
 	float total;												// total runtime
 	std::string choice;
+	std::ofstream anaout;			                        // analysis output stream
 
 
 	srand(time(NULL));										// set for random generation
@@ -259,6 +260,12 @@ int main(){
 		i = i + 999;
 	}
 
+    // Create output file to store data from testing
+    anaout.open("Analysis Output.txt");
+
+    if(!anaout.is_open()) {
+        std::cout << "ERROR: analysis output file unable to be opened for writing.";
+    }
 
 	// will run for as long as we have numbers of n input
 	for(int i=0; i < nArray.size(); i++){
@@ -271,7 +278,7 @@ int main(){
 			for(int j=0; j < curSize; j++){
 				 random.push_back(rand() % 1000 + 1);
 			}
-			
+
 			// run each of the algorithms
 
 			// handle small numbers, then bigger ones in the else
@@ -287,9 +294,11 @@ int main(){
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm1 is: ";
         		total = (t2-t1) / 100;	// divide answer by loops
-        		std::cout << total;	
+        		std::cout << total;
         		std::cout << "\n";
 
+        		// write to output file
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm1 is: " << total << "\n";
 
         		std::cout << "\nAlgorithm2:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -302,9 +311,11 @@ int main(){
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm2 is: ";
         		total = (t2-t1) / 1000;	// divide answer by loops
-        		std::cout << total;	
+        		std::cout << total;
         		std::cout << "\n";
 
+                // write to output file
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm2 is: " << total << "\n";
 
         		std::cout << "\nAlgorithm3:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -317,9 +328,11 @@ int main(){
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm3 is: ";
         		total = (t2-t1) / 1000;	// divide answer by loops
-        		std::cout << total;	
+        		std::cout << total;
         		std::cout << "\n";
 
+        		// write to output file
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm3 is: " << total << "\n";
 
         		std::cout << "\nAlgorithm4:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -332,8 +345,11 @@ int main(){
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm4 is: ";
         		total = (t2-t1) / 10000;	// divide answer by loops
-        		std::cout << total;	
+        		std::cout << total;
         		std::cout << "\n";
+
+        		// write to output file
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm4 is: " << total << "\n\n";
         	}
 
         	// larger numbers, no loops to increase decimal placement
@@ -346,8 +362,11 @@ int main(){
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm1 is: ";
         		total = (t2-t1); // divide answer by loops
-        		std::cout << total;	
+        		std::cout << total;
         		std::cout << "\n";
+
+                // write to output file
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm1 is: " << total << "\n";
 
 
         		std::cout << "\nAlgorithm2:\n";
@@ -361,8 +380,11 @@ int main(){
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm2 is: ";
         		total = (t2-t1) / 100;	// divide answer by loops
-        		std::cout << total;	
+        		std::cout << total;
         		std::cout << "\n";
+
+        		// write to output file
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm2 is: " << total << "\n";
 
 
 
@@ -377,9 +399,11 @@ int main(){
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm3 is: ";
         		total = (t2-t1) / 1000;	// divide answer by loops
-        		std::cout << total;	
+        		std::cout << total;
         		std::cout << "\n";
 
+        		// write to output file
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm3 is: " << total << "\n";
 
         		std::cout << "\nAlgorithm4:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -392,8 +416,11 @@ int main(){
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm4 is: ";
         		total = (t2-t1) / 10000;	// divide answer by loops
-        		std::cout << total;	
+        		std::cout << total;
         		std::cout << "\n";
+
+                // write to output file
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm4 is: " << total << "\n\n";
         	}
 
         	// really big numbers, algo1 was stuck
@@ -410,10 +437,11 @@ int main(){
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm2 is: ";
         		total = (t2-t1) / 100;	// divide answer by loops
-        		std::cout << total;	
+        		std::cout << total;
         		std::cout << "\n";
 
-
+        		// write to output file
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm2 is: " << total << "\n";
 
         		std::cout << "\nAlgorithm3:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -426,9 +454,11 @@ int main(){
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm3 is: ";
         		total = (t2-t1) / 1000;	// divide answer by loops
-        		std::cout << total;	
+        		std::cout << total;
         		std::cout << "\n";
 
+        		// write to output file
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm3 is: " << total << "\n";
 
         		std::cout << "\nAlgorithm4:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -441,15 +471,22 @@ int main(){
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm4 is: ";
         		total = (t2-t1) / 10000;	// divide answer by loops
-        		std::cout << total;	
+        		std::cout << total;
         		std::cout << "\n";
+
+                // write to output file
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm4 is: " << total << "\n\n";
         	}
-   
+
         	// clear vector
 			random.clear();
         }
     }
 
+    anaout.close();
+    if(anaout.is_open()){
+		std::cout << "ERROR: analysis output file unable to be properly closed\n";
+	}
 
 return 0;
 }
