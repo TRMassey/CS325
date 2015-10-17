@@ -269,7 +269,7 @@ int main(){
 
 			// make the array of n inputs, all random numbers
 			for(int j=0; j < curSize; j++){
-				 random.push_back(rand() % curSize + 1);
+				 random.push_back(rand() % 1000 + 1);
 			}
 			
 			// run each of the algorithms
@@ -337,7 +337,7 @@ int main(){
         	}
 
         	// larger numbers, no loops to increase decimal placement
-        	else{
+        	else if( i < 10 ){
         		std::cout << "\nAlgorithm1:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
 				result = algorithm1(random);
@@ -345,48 +345,108 @@ int main(){
 				std::cout << "RUNTIME FOR SIZE ";
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm1 is: ";
-        		total = (t2-t1) / 10000;	// divide answer by loops
+        		total = (t2-t1); // divide answer by loops
         		std::cout << total;	
         		std::cout << "\n";
 
-     		   	std::cout << "\nAlgorithm2:\n";
+
+        		std::cout << "\nAlgorithm2:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
-				result = algorithm2(random);
+				// loop numerous times to be able to get it up from 0
+				for(int n = 0; n < 100; n++){
+					result = algorithm2(random);
+				}
 				t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
 				std::cout << "RUNTIME FOR SIZE ";
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm2 is: ";
-        		total = (t2-t1);
-        		std::cout << total;
+        		total = (t2-t1) / 100;	// divide answer by loops
+        		std::cout << total;	
         		std::cout << "\n";
 
 
-				std::cout << "\nAlgorithm3:\n";
+
+        		std::cout << "\nAlgorithm3:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
-				result = algorithm3(random, 0, random.size()-1);
+				// loop numerous times to be able to get it up from 0
+				for(int n = 0; n < 1000; n++){
+					result = algorithm3(random, 0, random.size()-1);
+				}
 				t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
 				std::cout << "RUNTIME FOR SIZE ";
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm3 is: ";
-        		total = (t2-t1);
-        		std::cout << total;
+        		total = (t2-t1) / 1000;	// divide answer by loops
+        		std::cout << total;	
         		std::cout << "\n";
 
-				std::cout << "\nAlgorithm4:\n";
+
+        		std::cout << "\nAlgorithm4:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
-				result = algorithm4(random);
+				// loop numerous times to be able to get it up from 0
+				for(int n = 0; n < 10000; n++){
+					result = algorithm4(random);
+				}
 				t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
 				std::cout << "RUNTIME FOR SIZE ";
 				std::cout << nArray[i];
         		std::cout << " - Running time for Algorithm4 is: ";
-        		total = (t2-t1);
-        		std::cout << total;
+        		total = (t2-t1) / 10000;	// divide answer by loops
+        		std::cout << total;	
         		std::cout << "\n";
         	}
+
+        	// really big numbers, algo1 was stuck
+        	else {
+
+        		std::cout << "\nAlgorithm2:\n";
+				t1 = 1000 * clock() / CLOCKS_PER_SEC;
+				// loop numerous times to be able to get it up from 0
+				for(int n = 0; n < 100; n++){
+					result = algorithm2(random);
+				}
+				t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
+				std::cout << "RUNTIME FOR SIZE ";
+				std::cout << nArray[i];
+        		std::cout << " - Running time for Algorithm2 is: ";
+        		total = (t2-t1) / 100;	// divide answer by loops
+        		std::cout << total;	
+        		std::cout << "\n";
+
+
+
+        		std::cout << "\nAlgorithm3:\n";
+				t1 = 1000 * clock() / CLOCKS_PER_SEC;
+				// loop numerous times to be able to get it up from 0
+				for(int n = 0; n < 1000; n++){
+					result = algorithm3(random, 0, random.size()-1);
+				}
+				t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
+				std::cout << "RUNTIME FOR SIZE ";
+				std::cout << nArray[i];
+        		std::cout << " - Running time for Algorithm3 is: ";
+        		total = (t2-t1) / 1000;	// divide answer by loops
+        		std::cout << total;	
+        		std::cout << "\n";
+
+
+        		std::cout << "\nAlgorithm4:\n";
+				t1 = 1000 * clock() / CLOCKS_PER_SEC;
+				// loop numerous times to be able to get it up from 0
+				for(int n = 0; n < 10000; n++){
+					result = algorithm4(random);
+				}
+				t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
+				std::cout << "RUNTIME FOR SIZE ";
+				std::cout << nArray[i];
+        		std::cout << " - Running time for Algorithm4 is: ";
+        		total = (t2-t1) / 10000;	// divide answer by loops
+        		std::cout << total;	
+        		std::cout << "\n";
+        	}
+   
         	// clear vector
-			for(int j=0; j < curSize; j++){
-				 random.pop_back();
-			}
+			random.clear();
         }
     }
 
