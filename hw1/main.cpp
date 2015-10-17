@@ -28,7 +28,7 @@ int main(){
 
 
 // Step Two: Open the file and address errors conccerning bad user input
-	input.open("Test_Problems.txt");
+	input.open("MSS_Problems.txt");
 	if(!input.is_open()){
 		std::cout << "ERROR: file unable to be opened\n";
 		return 0;
