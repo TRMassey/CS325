@@ -28,7 +28,7 @@ int main(){
 
 
 // Step Two: Open the file and address errors conccerning bad user input
-	input.open("Test_Problems.txt");
+	input.open("MSS_Problems.txt");
 	if(!input.is_open()){
 		std::cout << "ERROR: file unable to be opened\n";
 		return 0;
@@ -69,8 +69,6 @@ int main(){
 
 		// Begin tokenization
 		line = initialRead[i];		// for easier iteration
-		//std::cout << "\nline is " << line;
-		//std::string newLine;		// string without brackets
 
         // replace all non-spaces with spaces
         std::size_t found = line.find_first_of("[,]");
@@ -90,13 +88,6 @@ int main(){
 			token = strtok(NULL, " ");
 		}
 
-
-
-		/*std::cout << "\nThis is in the array : ";
-		for(int j = 0; j < converted.size(); j++){
-			std::cout << converted[j];
-			std::cout << ", ";
-		}*/
 		result = algorithm1(converted);
 		// call the function
 		std::cout << "\nResult is " << result;
@@ -116,8 +107,6 @@ int main(){
 
 		// Begin tokenization
 		line = initialRead[i];		// for easier iteration
-		//std::cout << "\nline is " << line;
-		//std::string newLine;		// string without brackets
 
         // replace all non-spaces with spaces
         std::size_t found = line.find_first_of("[,]");
@@ -145,11 +134,7 @@ int main(){
 		output << result;										// write the answer
 		output << "\n\n";										// spacing
 
-					// clear vector
-		for(int j = 0; j < converted.size(); j++){
-			converted[j] = 0;
-		}
-		converted.empty();
+
 	}
 
 	std::cout << "\nFile contents written.\n";
@@ -194,12 +179,6 @@ int main(){
 		output << result;										// write the answer
 		output << "\n\n";										// spacing
 
-					// clear vector
-		for(int j = 0; j < converted.size(); j++){
-			converted[j] = 0;
-		}
-		converted.empty();
-
 	}
 	std::cout << "\nFile contents written\n";
 
@@ -242,11 +221,6 @@ int main(){
 		output << result;										// write the answer
 		output << "\n\n";										// spacing
 
-					// clear vector
-		for(int j = 0; j < converted.size(); j++){
-			converted[j] = 0;
-		}
-		converted.empty();
 	}
 	std::cout << "\nFile contents written\n";
 
