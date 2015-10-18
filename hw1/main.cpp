@@ -261,7 +261,7 @@ int main(){
 	}
 
     // Create output file to store data from testing
-    anaout.open("Analysis Output.txt");
+    anaout.open("Analysis_Output.txt");
 
     if(!anaout.is_open()) {
         std::cout << "ERROR: analysis output file unable to be opened for writing.";
@@ -298,7 +298,7 @@ int main(){
         		std::cout << "\n";
 
         		// write to output file
-                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm1 is: " << total << "\n";
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm1 is: " << total << "\r\n";
 
         		std::cout << "\nAlgorithm2:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -315,7 +315,7 @@ int main(){
         		std::cout << "\n";
 
                 // write to output file
-                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm2 is: " << total << "\n";
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm2 is: " << total << "\r\n";
 
         		std::cout << "\nAlgorithm3:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -332,7 +332,7 @@ int main(){
         		std::cout << "\n";
 
         		// write to output file
-                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm3 is: " << total << "\n";
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm3 is: " << total << "\r\n";
 
         		std::cout << "\nAlgorithm4:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -349,7 +349,7 @@ int main(){
         		std::cout << "\n";
 
         		// write to output file
-                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm4 is: " << total << "\n\n";
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm4 is: " << total << "\r\n\n";
         	}
 
         	// larger numbers, no loops to increase decimal placement
@@ -366,7 +366,7 @@ int main(){
         		std::cout << "\n";
 
                 // write to output file
-                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm1 is: " << total << "\n";
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm1 is: " << total << "\r\n";
 
 
         		std::cout << "\nAlgorithm2:\n";
@@ -384,7 +384,7 @@ int main(){
         		std::cout << "\n";
 
         		// write to output file
-                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm2 is: " << total << "\n";
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm2 is: " << total << "\r\n";
 
 
 
@@ -403,7 +403,7 @@ int main(){
         		std::cout << "\n";
 
         		// write to output file
-                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm3 is: " << total << "\n";
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm3 is: " << total << "\r\n";
 
         		std::cout << "\nAlgorithm4:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -420,7 +420,7 @@ int main(){
         		std::cout << "\n";
 
                 // write to output file
-                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm4 is: " << total << "\n\n";
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm4 is: " << total << "\r\n\n";
         	}
 
         	// really big numbers, algo1 was stuck
@@ -441,7 +441,7 @@ int main(){
         		std::cout << "\n";
 
         		// write to output file
-                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm2 is: " << total << "\n";
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm2 is: " << total << "\r\n";
 
         		std::cout << "\nAlgorithm3:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -458,7 +458,7 @@ int main(){
         		std::cout << "\n";
 
         		// write to output file
-                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm3 is: " << total << "\n";
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm3 is: " << total << "\r\n";
 
         		std::cout << "\nAlgorithm4:\n";
 				t1 = 1000 * clock() / CLOCKS_PER_SEC;
@@ -475,7 +475,7 @@ int main(){
         		std::cout << "\n";
 
                 // write to output file
-                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm4 is: " << total << "\n\n";
+                anaout << "Runtime for size " << nArray[i] << " - Running time for Algorithm4 is: " << total << "\r\n\n";
         	}
 
         	// clear vector
