@@ -1,0 +1,5 @@
+To Compile: Compile using included makefile
+
+To Run: ./prog
+
+Using Program:  The first half of the program runs the data from "MSS_Problems.txt" into each algorithm and outputs results into "MSS_Results.txt".  When this is completed the program will ask the user if they would like to continue.  If the user enters a "y" or "Y", the program will continue to show timing analysis.  If the user enters anything other than "y" or "Y" the program will exit. 
