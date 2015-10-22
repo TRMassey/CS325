@@ -1,0 +1,91 @@
+
+Array Processed :  [1, 4, -9, 8, 1, 3, 3, 1, -1, -4, -6, 2, 8, 19, -10, -11] 
+
+Algorithm One Result : 34
+
+Array Processed :  [2, 9, 8, 6, 5, -11, 9, -11, 7, 5, -1, -8, -3, 7, -2]
+
+Algorithm One Result : 30
+
+Array Processed :  [10, -11, -1, -9, 33, -45, 23, 24, -1, -7, -8, 19] 
+
+Algorithm One Result : 50
+
+Array Processed :  [31,-41, 59, 26, -53, 58, 97, -93, -23, 84] 
+
+Algorithm One Result : 187
+
+Array Processed :  [3, 2, 1, 1, -8, 1, 1, 2, 3]
+
+Algorithm One Result : 7
+
+Array Processed :  [12, 99, 99, -99, -27, 0, 0, 0, -3, 10] 
+
+Algorithm One Result : 210
+
+Array Processed :  [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+
+Algorithm One Result : 6
+Array Processed :  [1, 4, -9, 8, 1, 3, 3, 1, -1, -4, -6, 2, 8, 19, -10, -11] 
+Algorithm Two Result : 34
+
+Array Processed :  [2, 9, 8, 6, 5, -11, 9, -11, 7, 5, -1, -8, -3, 7, -2]
+Algorithm Two Result : 30
+
+Array Processed :  [10, -11, -1, -9, 33, -45, 23, 24, -1, -7, -8, 19] 
+Algorithm Two Result : 50
+
+Array Processed :  [31,-41, 59, 26, -53, 58, 97, -93, -23, 84] 
+Algorithm Two Result : 187
+
+Array Processed :  [3, 2, 1, 1, -8, 1, 1, 2, 3]
+Algorithm Two Result : 7
+
+Array Processed :  [12, 99, 99, -99, -27, 0, 0, 0, -3, 10] 
+Algorithm Two Result : 210
+
+Array Processed :  [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+Algorithm Two Result : 6
+
+Array Processed :  [1, 4, -9, 8, 1, 3, 3, 1, -1, -4, -6, 2, 8, 19, -10, -11] 
+Algorithm Three Result : 34
+
+Array Processed :  [2, 9, 8, 6, 5, -11, 9, -11, 7, 5, -1, -8, -3, 7, -2]
+Algorithm Three Result : 30
+
+Array Processed :  [10, -11, -1, -9, 33, -45, 23, 24, -1, -7, -8, 19] 
+Algorithm Three Result : 50
+
+Array Processed :  [31,-41, 59, 26, -53, 58, 97, -93, -23, 84] 
+Algorithm Three Result : 187
+
+Array Processed :  [3, 2, 1, 1, -8, 1, 1, 2, 3]
+Algorithm Three Result : 7
+
+Array Processed :  [12, 99, 99, -99, -27, 0, 0, 0, -3, 10] 
+Algorithm Three Result : 210
+
+Array Processed :  [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+Algorithm Three Result : 6
+
+Array Processed :  [1, 4, -9, 8, 1, 3, 3, 1, -1, -4, -6, 2, 8, 19, -10, -11] 
+Algorithm Four Result : 34
+
+Array Processed :  [2, 9, 8, 6, 5, -11, 9, -11, 7, 5, -1, -8, -3, 7, -2]
+Algorithm Four Result : 30
+
+Array Processed :  [10, -11, -1, -9, 33, -45, 23, 24, -1, -7, -8, 19] 
+Algorithm Four Result : 50
+
+Array Processed :  [31,-41, 59, 26, -53, 58, 97, -93, -23, 84] 
+Algorithm Four Result : 187
+
+Array Processed :  [3, 2, 1, 1, -8, 1, 1, 2, 3]
+Algorithm Four Result : 7
+
+Array Processed :  [12, 99, 99, -99, -27, 0, 0, 0, -3, 10] 
+Algorithm Four Result : 210
+
+Array Processed :  [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+Algorithm Four Result : 6
+
