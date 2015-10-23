@@ -19,14 +19,14 @@ int main(){
 
 	  /* algo testing - comment out or delete section when running assignment */
 	  int count;
-	  int value = 10;
-	  static const int temp[] = {1,2,5};
+	  int value = 22;
+	  static const int temp[] = {1,3,7, 26};
 	  std::vector<int> coins (temp, temp+sizeof(temp)/sizeof(temp[0]));
 	  std::cout << "Size of vector: " << coins.size() << std::endl;
 	  std::vector<int> used (coins.size(), 0);
 
 	  std::cout << "- Brute Force -" << std::endl;
-	  count = changeslow(coins, coins.size()-1, value, used);
+	  count = changeslow(coins, coins.size(), value, used);
 	  std::cout << "Count is: " << count << std::endl;
 	  std::cout << "Coins used: [";
 	  for(int i =0; i < used.size(); i++){
@@ -40,7 +40,7 @@ int main(){
 	  std::cout << "]" << std::endl;
 	  std::cout << "\n";
 
-	  value = 10;
+	  value = 22;
 	  std::cout << "- Greedy -" << std::endl;
 	  std::fill(used.begin(), used.end(), 0);
 	  count = changegreedy(coins, value, used);
@@ -57,7 +57,7 @@ int main(){
 	  std::cout << "]" << std::endl;
 	  std::cout << "\n";
 
-	  value = 10;
+	  value = 22;
 	  std::cout << "- Dynamic Programming -" << std::endl;
 	  std::fill(used.begin(), used.end(), 0);
 	  count = changedp(coins, value, used);

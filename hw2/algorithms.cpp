@@ -8,7 +8,7 @@
 /**********************************************************
 Funcction: changeslow
 Purpose: Brute Force/ Divide and Conquer
-Time Complexity: exponential O(2^n)
+Time Complexity: exponential 
 Input: sorted array/vector of coins in register, int end of
 array, value of change that needs to be made, array/vector of
 used coins.
@@ -19,6 +19,10 @@ http://www.geeksforgeeks.org/find-minimum-number-of-coins-that-make-a-change/
 int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &used){
 	int count = INT_MAX;			//to compare total result to sub result
 	int subCount = 0;				//holds sub-results from recursion
+	int finalCount = INT_MAX;		//following variables for used vector result
+	int vSub = 0;					
+	int vCount = INT_MAX;
+	int vVal;
 
 	//error if no coins
 	assert(coins.size() != 0); 
@@ -29,20 +33,41 @@ int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &u
 	}
 
 	//else divide into subproblems- for each i<k
-	for(int index = 0; index < coins.size(); index++){
-			//find the min number of coins needed to make i cents
-			if(coins[index] <= value){
-				//find the min number of coins needed to make K-i cents
-				subCount = changeslow(coins, coins.size(), value - coins[index], used);
-			}
+	for(int i = 0; i < index; i++){
+		//find the min number of coins needed to make i cents
+		if(coins[i] <= value){
+			//find the min number of coins needed to make K-i cents
+			subCount = changeslow(coins, index, value - coins[i], used);
 			//chose the i that minimizes this sum
-			if(subCount != INT_MAX && subCount + 1 < count){
-				count = subCount + 1;
-				used[index] = count;
+			if(subCount != INT_MAX && subCount+1 < count){
+				count = subCount + 1;					
 			}
-			else{
-				used[index] = 0;
+		}
+		//THIS IS THE CURRENT MIN SET, make used vector
+		if(finalCount > count && i == index-1){
+			finalCount = count;
+			std::fill(used.begin(), used.end(), 0);
+			vVal = value;
+			int x = index-1;
+			//use the final count to locate what the current min is
+			while(vCount != finalCount && x >= 0){
+				if(coins[x] <= value){
+					vSub = (value/coins[x]);	//simplify work done above
+					value -= vSub * coins[x];	
+					vCount += subCount;
+					//this is wrong, clear anything written to vector
+					if(vCount > finalCount){
+						vVal = value;
+						std::fill(used.begin(), used.end(), 0);
+					}
+					//this is potentially right, write it and keep checking
+					else{
+						used[x] = vSub;
+					}
+				}
+				x--;	//decrement through the coins
 			}
+		}
 	}
 	return count;
 }
@@ -52,7 +77,7 @@ int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &u
 /**********************************************************
 Funcction: changegreedy
 Purpose: Greedy
-Time Complexity: O(n^2)
+Time Complexity:
 Input: sorted array/vector of coins in register, value
 of change that needs to be made, array/vector of used coins.
 Notes: Algorithm adapted from discusion and code found at 
@@ -61,7 +86,6 @@ titled, "Greedy Algorithm to find Minimum number of Coins".
 **********************************************************/
 int changegreedy(std::vector<int> coins, int value, std::vector<int> &used){
 	int count = 0;						// coins used
-	int curMax = 0;						//cur coin closest to val
 
 	//error if no coins
 	assert(coins.size() != 0); 
@@ -87,7 +111,7 @@ int changegreedy(std::vector<int> coins, int value, std::vector<int> &used){
 /**********************************************************
 Funcction: changedp
 Purpose: Dynamic Programming
-Time Complexity: O(nk)
+Time Complexity: 
 Input: Sorted array/vector of coins in register, value of
 change that needs to be made, array/vector of used coins.
 Notes: Algorithm adapted from discusion and code found at 
@@ -107,15 +131,20 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 
 	//iterate through positive, non-zero value optons
 	for(int sum = 1; sum <= value; sum++){
+		int subVal = value;
 		//iterate through all possible coin options
-		for(int coin = 0; coin <= coins.size(); coin++){
+		for(int coin = coins.size()-1; coin >= 0; coin--){
 			//is the coin an option?
 			if(coins[coin] <= sum){
 				subCount = table[sum-coins[coin]];
 				//find min
 				if(subCount != INT_MAX && subCount+1 < table[sum]){
 					table[sum] = subCount+1;
-					used[coin] = subCount+1;
+
+					if(subVal > coins[coin]){
+						subVal -= (subVal/coins[coin])*coins[coin];
+						used[coin] = subVal/coins[coin];
+					}
 				}
 			}
 		}
