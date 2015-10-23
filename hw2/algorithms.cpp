@@ -27,11 +27,11 @@ int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &u
 	//error if no coins
 	assert(coins.size() != 0); 
 
+	//recursive work to locate min result
 	//base case - finished making change
 	if(value == 0){
 		return 0;		// don't increment count
 	}
-
 	//else divide into subproblems- for each i<k
 	for(int i = 0; i < index; i++){
 		//find the min number of coins needed to make i cents
@@ -44,15 +44,15 @@ int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &u
 			}
 		}
 	}
-	//Prep for writing results to used coins vector
+	//Prep for writing results to used coins vector, preserve needed values
 	finalCount = count;
 	vVal = value;
 	int x = index-1;
 	//use the final count to locate what the current min coin amount is
 	while(vCount != finalCount && x >= 0){
 		if(coins[x] <= value){
-			vSub = (value/coins[x]);	//simplify recursive work done above since we have the answer to compare
-			value -= vSub * coins[x];	
+			vSub = (vVal/coins[x]);	//simplify recursive work done above since we can compare results
+			vVal -= vSub * coins[x];	
 			vCount += subCount;
 			//compare with results from recursive work
 			if(vCount > finalCount){  //this is wrong, clear anything written to vector
@@ -65,8 +65,6 @@ int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &u
 		}
 		x--;	//decrement through the coins
 	}
-	
-	
 	return count;
 }
 
@@ -119,6 +117,9 @@ titled, "Find minimum number of coins that make a given value".
 int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	int count = 0;						// coins used
 	int subCount;
+	int vSub = 0;					//following variables for used vector result
+	int vCount = INT_MAX;
+	int vVal;
 	std::vector<int> table (value+1, INT_MAX);//table of sub-values
 
 	//if value == 0
@@ -127,6 +128,7 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	//error if no coins
 	assert(coins.size() != 0); 
 
+	//make table of all results
 	//iterate through positive, non-zero value optons
 	for(int sum = 1; sum <= value; sum++){
 		int subVal = value;
@@ -146,9 +148,26 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 			}
 		}
 	}
-
-	
-
+	//Prep for writing results to used coins vector, preserve needed values
+	vVal = value;
+	int x = coins.size()-1;
+	//use the table[value] to locate what the current min coin amount is
+	while(vCount != table[value] && x >= 0){
+		if(coins[x] <= value){
+			vSub = (vVal/coins[x]);	//simplify table work done above since we can compare results
+			vVal -= vSub * coins[x];	
+			vCount += subCount;
+			//compare with results from recursive work
+			if(vCount > table[value]){  //this is wrong, clear anything written to vector
+				vVal = value;
+				std::fill(used.begin(), used.end(), 0);
+			}
+			else{  //this is potentially right, write it and keep checking
+				used[x] = vSub;
+			}
+		}
+		x--;	//decrement through the coins
+	}
 	//return array of coins used
 	return table[value];
 }
