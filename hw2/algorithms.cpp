@@ -43,32 +43,30 @@ int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &u
 				count = subCount + 1;					
 			}
 		}
-		//THIS IS THE CURRENT MIN SET, make used vector
-		if(finalCount > count && i == index-1){
-			finalCount = count;
-			std::fill(used.begin(), used.end(), 0);
-			vVal = value;
-			int x = index-1;
-			//use the final count to locate what the current min is
-			while(vCount != finalCount && x >= 0){
-				if(coins[x] <= value){
-					vSub = (value/coins[x]);	//simplify work done above
-					value -= vSub * coins[x];	
-					vCount += subCount;
-					//this is wrong, clear anything written to vector
-					if(vCount > finalCount){
-						vVal = value;
-						std::fill(used.begin(), used.end(), 0);
-					}
-					//this is potentially right, write it and keep checking
-					else{
-						used[x] = vSub;
-					}
-				}
-				x--;	//decrement through the coins
+	}
+	//Prep for writing results to used coins vector
+	finalCount = count;
+	vVal = value;
+	int x = index-1;
+	//use the final count to locate what the current min coin amount is
+	while(vCount != finalCount && x >= 0){
+		if(coins[x] <= value){
+			vSub = (value/coins[x]);	//simplify recursive work done above since we have the answer to compare
+			value -= vSub * coins[x];	
+			vCount += subCount;
+			//compare with results from recursive work
+			if(vCount > finalCount){  //this is wrong, clear anything written to vector
+				vVal = value;
+				std::fill(used.begin(), used.end(), 0);
+			}
+			else{  //this is potentially right, write it and keep checking
+				used[x] = vSub;
 			}
 		}
+		x--;	//decrement through the coins
 	}
+	
+	
 	return count;
 }
 
@@ -143,12 +141,14 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 
 					if(subVal > coins[coin]){
 						subVal -= (subVal/coins[coin])*coins[coin];
-						used[coin] = subVal/coins[coin];
 					}
 				}
 			}
 		}
 	}
+
+	
+
 	//return array of coins used
 	return table[value];
 }
