@@ -121,6 +121,11 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	std::vector<int> table (value+1, INT_MAX);//table of sub-values
 	std::vector<int> tempUsed (coins.size(), 0);	//vectors inside vTable
 	std::vector< std::vector<int> > vTable (value+1, tempUsed); //table of vector coins used solutions
+	std::vector<int> temp2;
+	int tempValue = value;
+	int temp = 0;
+
+	int length = coins.size();
 
 	//if value == 0
 	table[0] = 0;
@@ -130,18 +135,19 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 
 	//make table of all results
 	//iterate through positive, non-zero value optons
+	temp2.push_back(0); 		// without this, weird values were happening..
 	for(int sum = 1; sum <= value; sum++){
 		int subVal = value;
+		temp2.push_back(0);	// making room to reference like a normal array for each # of sum
 		//iterate through all possible coin options
-		for(int coin = coins.size()-1; coin >= 0; coin--){
+		for(int coin = coins.size(); coin >= 0; coin--){
 			//is the coin an option?
 			if(coins[coin] <= sum){
 				subCount = table[sum-coins[coin]];
 				//find min
 				if(subCount != INT_MAX && subCount+1 < table[sum]){
 					table[sum] = subCount+1;
-					vTable[sum][coin] = sum/coins[coin];
-					std::cout << vTable[sum][coin] << std::endl;
+					temp2[sum-1] = coin;			// store coin options here for backtracking
 					if(subVal > coins[coin]){
 						subVal -= (subVal/coins[coin])*coins[coin];
 					}
@@ -149,9 +155,19 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 			}		
 		}
 	}
-	for(int x = 0; x < used.size(); x++){
-		used[x] = vTable[value][x];
+
+// go back through the stored coin, match with original array, and increase count
+// based off of: Dynamic Programming vs. Greedy Algorithms
+// https://alaning.me/index.php/Dynamic_Programming_vs_Greedy_Algorithms
+while(tempValue > 0){					//while value is greater than 0
+	temp = coins[temp2[tempValue]];		// store coin value at the previous coin stored
+	for(int i = 1; i <= coins.size(); i++){
+		if(temp == coins[i]){			// if that value == coins value
+			used[i]+=1;					// increase count
+		}
 	}
+	tempValue = tempValue - coins[temp2[tempValue]];
+}
 
 	//return array of coins used
 	return table[value];
