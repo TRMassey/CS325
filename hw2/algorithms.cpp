@@ -38,6 +38,10 @@ int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &u
 			//chose the i that minimizes this sum
 			if(subCount != INT_MAX && subCount + 1 < count){
 				count = subCount + 1;
+				used[index] = count;
+			}
+			else{
+				used[index] = 0;
 			}
 	}
 	return count;
@@ -83,28 +87,37 @@ int changegreedy(std::vector<int> coins, int value, std::vector<int> &used){
 /**********************************************************
 Funcction: changedp
 Purpose: Dynamic Programming
-Time Complexity:
+Time Complexity: O(nk)
 Input: Sorted array/vector of coins in register, value of
 change that needs to be made, array/vector of used coins.
 Notes: Algorithm adapted from discusion and code found at 
-http://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/
-titled, "Dynamic Programming | Set 7 (Coin Change)".
+http://www.geeksforgeeks.org/find-minimum-number-of-coins-that-make-a-change/
+titled, "Find minimum number of coins that make a given value".
 **********************************************************/
 int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	int count = 0;						// coins used
-	//std::map<int, int> table (1, value);//table of sub-values
-	std::vector<int> table (value+1, 0);//table of sub-values
-	table[0] = 1;
+	int subCount;
+	std::vector<int> table (value+1, INT_MAX);//table of sub-values
+
+	//if value == 0
+	table[0] = 0;
 
 	//error if no coins
 	assert(coins.size() != 0); 
 
-	//update table with 
-	for(int index = 0; index < coins.size(); index++){
-		for(int coin = coins[index]; coin <= value; coin++){
-			table[coin] += table[coin-coins[index]];
-			std:: cout << coin << std::endl;
-			used[index] += 1;
+	//iterate through positive, non-zero value optons
+	for(int sum = 1; sum <= value; sum++){
+		//iterate through all possible coin options
+		for(int coin = 0; coin <= coins.size(); coin++){
+			//is the coin an option?
+			if(coins[coin] <= sum){
+				subCount = table[sum-coins[coin]];
+				//find min
+				if(subCount != INT_MAX && subCount+1 < table[sum]){
+					table[sum] = subCount+1;
+					used[coin] = subCount+1;
+				}
+			}
 		}
 	}
 	//return array of coins used
