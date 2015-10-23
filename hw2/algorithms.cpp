@@ -47,21 +47,22 @@ int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &u
 	//Prep for writing results to used coins vector, preserve needed values
 	finalCount = count;
 	vVal = value;
+	vCount = 0;
 	int x = index-1;
 	//use the final count to locate what the current min coin amount is
 	while(vCount != finalCount && x >= 0){
-		if(coins[x] <= value){
-			vSub = (vVal/coins[x]);	//simplify recursive work done above since we can compare results
-			vVal -= vSub * coins[x];	
-			vCount += subCount;
-			//compare with results from recursive work
-			if(vCount > finalCount){  //this is wrong, clear anything written to vector
-				vVal = value;
-				std::fill(used.begin(), used.end(), 0);
-			}
-			else{  //this is potentially right, write it and keep checking
-				used[x] = vSub;
-			}
+		vSub = (vVal/coins[x]);	//simplify recursive work done above since we can compare results
+		vVal -= vSub * coins[x];	
+		vCount += vSub;
+		//std::cout << vCount << " vs. " << finalCount << std::endl;
+		//compare with results from recursive work
+		if(vCount > finalCount){  //this is wrong, clear anything written to vector
+			vVal = value;
+			vCount = 0;
+			std::fill(used.begin(), used.end(), 0);
+		}
+		else{  //this is potentially right, write it and keep checking
+			used[x] = vSub;
 		}
 		x--;	//decrement through the coins
 	}
@@ -117,10 +118,9 @@ titled, "Find minimum number of coins that make a given value".
 int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	int count = 0;						// coins used
 	int subCount;
-	int vSub = 0;					//following variables for used vector result
-	int vCount = INT_MAX;
-	int vVal;
 	std::vector<int> table (value+1, INT_MAX);//table of sub-values
+	std::vector<int> tempUsed (coins.size(), 0);	//vectors inside vTable
+	std::vector< std::vector<int> > vTable (value+1, tempUsed); //table of vector coins used solutions
 
 	//if value == 0
 	table[0] = 0;
@@ -140,34 +140,39 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 				//find min
 				if(subCount != INT_MAX && subCount+1 < table[sum]){
 					table[sum] = subCount+1;
-
+					vTable[sum][coin] = sum/coins[coin];
+					std::cout << vTable[sum][coin] << std::endl;
 					if(subVal > coins[coin]){
 						subVal -= (subVal/coins[coin])*coins[coin];
 					}
 				}
-			}
+			}		
 		}
 	}
-	//Prep for writing results to used coins vector, preserve needed values
-	vVal = value;
-	int x = coins.size()-1;
-	//use the table[value] to locate what the current min coin amount is
-	while(vCount != table[value] && x >= 0){
-		if(coins[x] <= value){
-			vSub = (vVal/coins[x]);	//simplify table work done above since we can compare results
-			vVal -= vSub * coins[x];	
-			vCount += subCount;
-			//compare with results from recursive work
-			if(vCount > table[value]){  //this is wrong, clear anything written to vector
-				vVal = value;
-				std::fill(used.begin(), used.end(), 0);
-			}
-			else{  //this is potentially right, write it and keep checking
-				used[x] = vSub;
-			}
-		}
-		x--;	//decrement through the coins
+	for(int x = 0; x < used.size(); x++){
+		used[x] = vTable[value][x];
 	}
+
 	//return array of coins used
 	return table[value];
 }
+
+
+
+/*currently have only been working on dp.  My original version found the correct count
+based off of dp and then used a version of greedy to find the vector results.  Then I saw
+that there is a situation where greedy is supposed to return an incorrect answer while the
+other two are not:
+
+Suppose V = [1, 3, 7, 12] and A = 29. The changegreedy should return C = [2, 1, 0, 2] with m = 5
+and changedp and slowchange should return C = [0, 1, 2, 1] with m = 4. The minimum number of coins m
+= 4. 
+
+So... I tried a bunch of ideas and have been spending the most time trying to figure out
+how to do the same idea from dp for arrays.  So we would need to make a vector of vectors.
+vector[x][y]  where x is the value (similar to what we have for finding the count) and y
+is the coins.  So at vector[value] holds [0, 1, 2, 1] where the count is 4.
+
+Totally open to other ideas!
+
+*/
