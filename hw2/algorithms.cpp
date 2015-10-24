@@ -18,22 +18,36 @@ http://www.algorithmist.com/index.php/Min-Coin_Change
 http://www.geeksforgeeks.org/find-minimum-number-of-coins-that-make-a-change/
 **********************************************************/
 int changeslow (std::vector<int> coins, int amount, std::vector<int> &used) {
-	// base case, if there is a K-cent coin
-    int index = coins.size();
-    if (coins[index-1] == amount) {
+	int count = INT_MAX;			//to compare total result to sub result
+	int subCount = 0;				//holds sub-results from recursion
+	int index = coins.size();
+	int finalCount = 0;
+
+	//error if no coins
+	assert(coins.size() != 0); 
+
+	// base case, if there is a K-cent coin or value is 0
+    if(amount == 0){
+    	return 0;
+    }
+    else if (coins[index-1] == amount) {
         used[index-1] = 1;
         return 1;
     }
 
-    int count = 0;
     // moves from right to left in sorted array
     // finding the difference between the amount available and given value of i
-    for(int i = (coins.size() - 1); i >= 0; i--) {
+    for(int i = 0; i < index; i++) {
+        //find the min number of coins needed to make i cents
         if (amount >= coins[i]){
+            //find the min number of coins needed to make K-i cents
             amount = amount - coins[i];
             used[i] += (coins[i]/coins[i]);
-            count = changeslow(coins, amount, used);
-            return ++count;
+            subCount = changeslow(coins, amount, used);
+            if(subCount != INT_MAX && subCount+1 < count){
+            	count = subCount + 1;
+            	//return count;
+            }      
         }
     }
     return count;
