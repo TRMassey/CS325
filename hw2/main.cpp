@@ -11,7 +11,7 @@
 
 
 int main(){
-	
+
 	/* All functions require a vector for register coins AND a zeroed out
 	  vector for marking coins used.  Must clear used after each function
 	  call or create new used */
@@ -26,7 +26,7 @@ int main(){
 	  std::vector<int> used (coins.size(), 0);
 
 	  std::cout << "- Brute Force -" << std::endl;
-	  count = changeslow(coins, coins.size(), value, used);
+	  count = changeslow(coins, value, used);
 	  std::cout << "Count is: " << count << std::endl;
 	  std::cout << "Coins used: [";
 	  for(int i =0; i < used.size(); i++){

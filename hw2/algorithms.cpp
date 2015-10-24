@@ -4,11 +4,12 @@
 #include <assert.h>
 #include <algorithm>
 #include <limits.h>
+#include <numeric>
 
 /**********************************************************
 Funcction: changeslow
 Purpose: Brute Force/ Divide and Conquer
-Time Complexity: exponential 
+Time Complexity: exponential
 Input: sorted array/vector of coins in register, int end of
 array, value of change that needs to be made, array/vector of
 used coins.
@@ -16,76 +17,26 @@ Notes: Adapted from pseudocode, code, and discussion found at
 http://www.algorithmist.com/index.php/Min-Coin_Change
 http://www.geeksforgeeks.org/find-minimum-number-of-coins-that-make-a-change/
 **********************************************************/
-int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &used){
-	int count = INT_MAX;			//to compare total result to sub result
-	int subCount = 0;				//holds sub-results from recursion
-	int finalCount = INT_MAX;		//following variables for used vector result
-	std::vector<int> temp2;
-	std::vector< std::vector<int> > temp;
-	int tempValue = value;
-	int tracker = 0;
-	bool found = false;
+int changeslow (std::vector<int> coins, int amount, std::vector<int> &used) {
+	// base case, if there is a K-cent coin
+    int index = coins.size();
+    if (coins[index-1] == amount) {
+        used[index-1] = 1;
+        return 1;
+    }
 
-	//error if no coins
-	assert(coins.size() != 0); 
-
-	//recursive work to locate min result
-	//base case - finished making change
-	if(value == 0){
-		return 0;		// don't increment count
-	}
-	//else divide into subproblems- for each i<k
-	for(int i = 0; i < index; i++){
-		//find the min number of coins needed to make i cents
-		if(coins[i] <= value){
-			
-			//trying to do what Joseph suggests https://oregonstate.instructure.com/courses/1555021/discussion_topics/7617682
-			if(tracker != value){
-				tracker += 1;
-				temp2.push_back(coins[i]);
-			}
-			else{
-				temp.push_back(temp2);
-				temp2.clear();
-				tracker = 1;
-				temp2.push_back(coins[i]);
-
-			}
-			//find the min number of coins needed to make K-i cents
-			subCount = changeslow(coins, index, value - coins[i], used);
-			//chose the i that minimizes this sum
-			if(subCount != INT_MAX && subCount+1 < count){
-				count = subCount + 1;		
-			}
-		}
-	}
-	temp.push_back(temp2);
-
-	//look through vector of vectors to find which solution equals count
-	for(int i=0; i < temp.size(); i++){
-		tracker = 0;
-		for(int j = 0; j < temp2.size(); j++){
-			tracker += temp[i][j];
-			if(tracker == count && j == temp2.size()-1){
-				found = true;
-				//get the singular counts by counting multiples
-				for(int x=0; x < temp2.size(); x++){
-					int mults =1;
-					int y = x+1;
-					while(temp2[y] != temp2[x]){
-						mults += 1;
-						y += 1; 
-					}
-					used[x] = mults;
-				}
-			}
-		}
-		if (found){
-			break;
-		}
-	}
-
-	return count;
+    int count = 0;
+    // moves from right to left in sorted array
+    // finding the difference between the amount available and given value of i
+    for(int i = (coins.size() - 1); i >= 0; i--) {
+        if (amount >= coins[i]){
+            amount = amount - coins[i];
+            used[i] += (coins[i]/coins[i]);
+            count = changeslow(coins, amount, used);
+            return ++count;
+        }
+    }
+    return count;
 }
 
 
@@ -96,7 +47,7 @@ Purpose: Greedy
 Time Complexity:
 Input: sorted array/vector of coins in register, value
 of change that needs to be made, array/vector of used coins.
-Notes: Algorithm adapted from discusion and code found at 
+Notes: Algorithm adapted from discusion and code found at
 http://geeksquiz.com/greedy-algorithm-to-find-minimum-number-of-coins/
 titled, "Greedy Algorithm to find Minimum number of Coins".
 **********************************************************/
@@ -104,7 +55,7 @@ int changegreedy(std::vector<int> coins, int value, std::vector<int> &used){
 	int count = 0;						// coins used
 
 	//error if no coins
-	assert(coins.size() != 0); 
+	assert(coins.size() != 0);
 
 	//iterate through coins starting with largest first
 	for(int index = coins.size()-1; index >= 0; index--){
@@ -116,7 +67,7 @@ int changegreedy(std::vector<int> coins, int value, std::vector<int> &used){
 		if(value == 0){					//made change completed
 			break;
 		}
-	}	
+	}
 	//return amount of coins used
 	return count;
 
@@ -127,10 +78,10 @@ int changegreedy(std::vector<int> coins, int value, std::vector<int> &used){
 /**********************************************************
 Funcction: changedp
 Purpose: Dynamic Programming
-Time Complexity: 
+Time Complexity:
 Input: Sorted array/vector of coins in register, value of
 change that needs to be made, array/vector of used coins.
-Notes: Algorithm adapted from discusion and code found at 
+Notes: Algorithm adapted from discusion and code found at
 http://www.geeksforgeeks.org/find-minimum-number-of-coins-that-make-a-change/
 titled, "Find minimum number of coins that make a given value".
 **********************************************************/
@@ -146,7 +97,7 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	table[0] = 0;
 
 	//error if no coins
-	assert(coins.size() != 0); 
+	assert(coins.size() != 0);
 
 	//make table of all results
 	//iterate through positive, non-zero value optons
@@ -165,7 +116,7 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 						subVal -= (subVal/coins[coin])*coins[coin];
 					}
 				}
-			}		
+			}
 		}
 	}
 
@@ -185,5 +136,4 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	//return array of coins used
 	return table[value];
 }
-
 
