@@ -19,7 +19,7 @@ int main(){
 
 	  /* algo testing - comment out or delete section when running assignment */
 	  int count;
-	  int value = 29;
+	  int value = 31;
 	  static const int temp[] = {1,3,7,12};
 	  std::vector<int> coins (temp, temp+sizeof(temp)/sizeof(temp[0]));
 	  std::cout << "Size of vector: " << coins.size() << std::endl;
@@ -40,7 +40,7 @@ int main(){
 	  std::cout << "]" << std::endl;
 	  std::cout << "\n";
 
-	  value = 29;
+	  value = 31;
 	  std::cout << "- Greedy -" << std::endl;
 	  std::fill(used.begin(), used.end(), 0);
 	  count = changegreedy(coins, value, used);
@@ -57,7 +57,7 @@ int main(){
 	  std::cout << "]" << std::endl;
 	  std::cout << "\n";
 
-	  value = 29;
+	  value = 31;
 	  std::cout << "- Dynamic Programming -" << std::endl;
 	  std::fill(used.begin(), used.end(), 0);
 	  count = changedp(coins, value, used);

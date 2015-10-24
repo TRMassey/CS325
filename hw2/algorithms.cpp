@@ -20,9 +20,11 @@ int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &u
 	int count = INT_MAX;			//to compare total result to sub result
 	int subCount = 0;				//holds sub-results from recursion
 	int finalCount = INT_MAX;		//following variables for used vector result
-	int vSub = 0;					
-	int vCount = INT_MAX;
-	int vVal;
+	std::vector<int> temp2;
+	std::vector< std::vector<int> > temp;
+	int tempValue = value;
+	int tracker = 0;
+	bool found = false;
 
 	//error if no coins
 	assert(coins.size() != 0); 
@@ -36,36 +38,53 @@ int changeslow(std::vector<int> coins, int index, int value, std::vector<int> &u
 	for(int i = 0; i < index; i++){
 		//find the min number of coins needed to make i cents
 		if(coins[i] <= value){
+			
+			//trying to do what Joseph suggests https://oregonstate.instructure.com/courses/1555021/discussion_topics/7617682
+			if(tracker != value){
+				tracker += 1;
+				temp2.push_back(coins[i]);
+			}
+			else{
+				temp.push_back(temp2);
+				temp2.clear();
+				tracker = 1;
+				temp2.push_back(coins[i]);
+
+			}
 			//find the min number of coins needed to make K-i cents
 			subCount = changeslow(coins, index, value - coins[i], used);
 			//chose the i that minimizes this sum
 			if(subCount != INT_MAX && subCount+1 < count){
-				count = subCount + 1;					
+				count = subCount + 1;		
 			}
 		}
 	}
-	//Prep for writing results to used coins vector, preserve needed values
-	finalCount = count;
-	vVal = value;
-	vCount = 0;
-	int x = index-1;
-	//use the final count to locate what the current min coin amount is
-	while(vCount != finalCount && x >= 0){
-		vSub = (vVal/coins[x]);	//simplify recursive work done above since we can compare results
-		vVal -= vSub * coins[x];	
-		vCount += vSub;
-		//std::cout << vCount << " vs. " << finalCount << std::endl;
-		//compare with results from recursive work
-		if(vCount > finalCount){  //this is wrong, clear anything written to vector
-			vVal = value;
-			vCount = 0;
-			std::fill(used.begin(), used.end(), 0);
+	temp.push_back(temp2);
+
+	//look through vector of vectors to find which solution equals count
+	for(int i=0; i < temp.size(); i++){
+		tracker = 0;
+		for(int j = 0; j < temp2.size(); j++){
+			tracker += temp[i][j];
+			if(tracker == count && j == temp2.size()-1){
+				found = true;
+				//get the singular counts by counting multiples
+				for(int x=0; x < temp2.size(); x++){
+					int mults =1;
+					int y = x+1;
+					while(temp2[y] != temp2[x]){
+						mults += 1;
+						y += 1; 
+					}
+					used[x] = mults;
+				}
+			}
 		}
-		else{  //this is potentially right, write it and keep checking
-			used[x] = vSub;
+		if (found){
+			break;
 		}
-		x--;	//decrement through the coins
 	}
+
 	return count;
 }
 
@@ -119,13 +138,9 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	int count = 0;						// coins used
 	int subCount;
 	std::vector<int> table (value+1, INT_MAX);//table of sub-values
-	std::vector<int> tempUsed (coins.size(), 0);	//vectors inside vTable
-	std::vector< std::vector<int> > vTable (value+1, tempUsed); //table of vector coins used solutions
-	std::vector<int> temp2;
+	std::vector<int> temp2 (value, 0);
 	int tempValue = value;
 	int temp = 0;
-
-	int length = coins.size();
 
 	//if value == 0
 	table[0] = 0;
@@ -135,10 +150,8 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 
 	//make table of all results
 	//iterate through positive, non-zero value optons
-	temp2.push_back(0); 		// without this, weird values were happening..
 	for(int sum = 1; sum <= value; sum++){
 		int subVal = value;
-		temp2.push_back(0);	// making room to reference like a normal array for each # of sum
 		//iterate through all possible coin options
 		for(int coin = coins.size(); coin >= 0; coin--){
 			//is the coin an option?
@@ -156,39 +169,21 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 		}
 	}
 
-// go back through the stored coin, match with original array, and increase count
-// based off of: Dynamic Programming vs. Greedy Algorithms
-// https://alaning.me/index.php/Dynamic_Programming_vs_Greedy_Algorithms
-while(tempValue > 0){					//while value is greater than 0
-	temp = coins[temp2[tempValue]];		// store coin value at the previous coin stored
-	for(int i = 1; i <= coins.size(); i++){
-		if(temp == coins[i]){			// if that value == coins value
-			used[i]+=1;					// increase count
+	// go back through the stored coin, match with original array, and increase count
+	// based off of: Dynamic Programming vs. Greedy Algorithms
+	// https://alaning.me/index.php/Dynamic_Programming_vs_Greedy_Algorithms
+	while(tempValue > 0){					//while value is greater than 0
+		temp = coins[temp2[tempValue]];		// store coin value at the previous coin stored
+		for(int i = 1; i <= coins.size(); i++){
+			if(temp == coins[i]){			// if that value == coins value
+				used[i]+=1;					// increase count
+			}
 		}
+		tempValue = tempValue - coins[temp2[tempValue]];
 	}
-	tempValue = tempValue - coins[temp2[tempValue]];
-}
 
 	//return array of coins used
 	return table[value];
 }
 
 
-
-/*currently have only been working on dp.  My original version found the correct count
-based off of dp and then used a version of greedy to find the vector results.  Then I saw
-that there is a situation where greedy is supposed to return an incorrect answer while the
-other two are not:
-
-Suppose V = [1, 3, 7, 12] and A = 29. The changegreedy should return C = [2, 1, 0, 2] with m = 5
-and changedp and slowchange should return C = [0, 1, 2, 1] with m = 4. The minimum number of coins m
-= 4. 
-
-So... I tried a bunch of ideas and have been spending the most time trying to figure out
-how to do the same idea from dp for arrays.  So we would need to make a vector of vectors.
-vector[x][y]  where x is the value (similar to what we have for finding the count) and y
-is the coins.  So at vector[value] holds [0, 1, 2, 1] where the count is 4.
-
-Totally open to other ideas!
-
-*/
