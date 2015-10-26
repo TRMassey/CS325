@@ -24,12 +24,12 @@ std::vector<int> changeslow(std::vector<int> coins, int amount, int length) {
     std::vector<int> coinAdd (coins.size(), 0);//add to # of coins to find value
     std::vector<int> used (coins.size(), 0);//track numOfCoins of all coins in array
 
-	//base case, when amount is reached
+    //base case, when amount is reached
     if (amount == 0)
     {
 	   return used;
     }
-	//itereate to see if value is same as any single coin denomination
+    //itereate to see if value is same as any single coin denomination
     for (int i = 0; i < length; i++)
     {
 	   if (coins[i] == amount)
@@ -39,7 +39,7 @@ std::vector<int> changeslow(std::vector<int> coins, int amount, int length) {
 		  return used;
 	   }
     }
-	//loop to find min coins and # of coins for each denomination
+    //loop to find min coins and # of coins for each denomination
     for (int i = 0; i < length; i++)
     {
 	   if (coins[i] < amount)
@@ -73,8 +73,9 @@ std::vector<int> changeslow(std::vector<int> coins, int amount, int length) {
 
 
 /************************************************************
-After array is located with min amount of each denomiation of 
-coins, add coin amounts to get total min coins.
+Helper function for slowchange.  After array is located with 
+min amount of each denomiation of coins, add coin amounts to
+get total min coins.
 ************************************************************/
 int arraySum(std::vector<int> used, int sizeOfArray){  
     int sum = 0;
