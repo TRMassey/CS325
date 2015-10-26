@@ -135,12 +135,13 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	int count = 0;						// coins used
 	int subCount;
 	std::vector<int> table (value+1, INT_MAX);//table of sub-values
-	std::vector<int> temp2 (value, 0);
+	std::vector<int> temp2 (value+1, 0);
 	int tempValue = value;
 	int temp = 0;
 
 	//if value == 0
 	table[0] = 0;
+	temp2[0] = 0;
 
 	//error if no coins
 	//assert(coins.size() != 0);
@@ -150,16 +151,14 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	for(int sum = 1; sum <= value; sum++){
 		int subVal = value;
 		//iterate through all possible coin options
-		for(int coin = coins.size(); coin >= 0; coin--){
+		for(int coin = coins.size()-1; coin >= 0; coin--){
 			//is the coin an option?
 			if(coins[coin] <= sum){
 				subCount = table[sum-coins[coin]];
 				//find min
 				if(subCount != INT_MAX && subCount+1 < table[sum]){
 					table[sum] = subCount+1;
-					if(sum-1 >= 0){
-						temp2[sum-1] = coin;			// store coin options here for backtracking
-					}
+					temp2[sum] = coin;			// store coin options here for backtracking
 					if(subVal > coins[coin]){
 						subVal -= (subVal/coins[coin])*coins[coin];
 					}
@@ -174,14 +173,13 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	while(tempValue > 0){					//while value is greater than 0
 		temp = coins[temp2[tempValue]];		// store coin value at the previous coin stored
 		
-		for(int i = 1; i <= coins.size(); i++){
+		for(int i = 0; i < coins.size(); i++){
 			if(temp == coins[i]){			// if that value == coins value
 				used[i]+=1;					// increase count
 			}
 		}
 		tempValue = tempValue - coins[temp2[tempValue]];
 	}
-
 	//return array of coins used
 	return table[value];
 }
