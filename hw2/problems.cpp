@@ -37,25 +37,33 @@ int main(){
         std::cout << "Error opening output file.\n";
     }
 
-    // problem 4
-     for (int i = 2000; i < 2201; i++) {
-        output << "[1, 5, 10, 25, 50]\n";
-        output << i << "\n\n";
+    std::cout << "Pick problem 4, 5, or 6: \n";
+    std::cin >> val;
+
+    if(val == 4){
+       // problem 4
+         for (int i = 2000; i < 2201; i++) {
+            output << "[1, 5, 10, 25, 50]\n";
+            output << i << "\n";
+        }
     }
 
-    // problem 5
-     for (int i = 2000; i < 2201; i++) {
-        output << "[1, 2, 6, 12, 24, 48, 60]\n";
-        output << "[1, 6, 13, 37, 150]\n";
-        output << i << "\n\n";
+    else if(val == 5){
+        // problem 5
+        for (int i = 2000; i < 2201; i++) {
+            output << "[1, 2, 6, 12, 24, 48, 60]\n";
+            output << "[1, 6, 13, 37, 150]\n";
+            output << i << "\n";
+        }
     }
 
-    // problem 6
-     for (int i = 2000; i < 2201; i++) {
-        output << "[1, 2, 4, 6, 8, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]\n";
-        output << i << "\n\n";
+    else{
+     // problem 6 ---- causes an erro rin the program!! Seg fault. Coins 0.
+         for (int i = 2000; i < 2201; i++) {
+            output << "[1, 2, 4, 6, 8, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]\n";
+             output << i << "\n";
+         }
     }
-
 
  //   output.close("problems.txt");
 
