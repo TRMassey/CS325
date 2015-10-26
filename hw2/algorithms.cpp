@@ -170,7 +170,11 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	// based off of: Dynamic Programming vs. Greedy Algorithms
 	// https://alaning.me/index.php/Dynamic_Programming_vs_Greedy_Algorithms
 	while(tempValue > 0){					//while value is greater than 0
+
+std::cout << temp2[tempValue] << std::endl;
+
 		temp = coins[temp2[tempValue]];		// store coin value at the previous coin stored
+		
 		for(int i = 1; i <= coins.size(); i++){
 			if(temp == coins[i]){			// if that value == coins value
 				used[i]+=1;					// increase count

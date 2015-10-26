@@ -9,12 +9,15 @@
 #include <cstring>
 #include <iomanip>
 #include <cstdlib>
+#include <numeric>
 
 
 int main(){
-	/* All functions require a vector for register coins AND a zeroed out
+	
+    /* All functions require a vector for register coins AND a zeroed out
 	  vector for marking coins used.  Must clear used after each function
 	  call or create new used */
+/*     
     std::string inFilename;
     std::string outFilename;
     std::ifstream input;
@@ -88,7 +91,7 @@ int main(){
 
             // call sorting function
             std::vector<int> used (converted.size(), 0);
-            result = changegreedy(converted, val, used);
+            result = changedp(converted, val, used);
 
             // opening bracket
             output << "[";
@@ -111,23 +114,23 @@ int main(){
         }
     }
 
-
+*/
 	/* All functions require a vector for register coins AND a zeroed out
 	  vector for marking coins used.  Must clear used after each function
 	  call or create new used */
 
 
-	  /* algo testing - comment out or delete section when running assignment 
+//algo testing - comment out or delete section when running assignment 
 	  int count = -1;
-	  int value = 29;
-	  static const int temp[] = {1, 3, 7, 12};
+	  int value = 2000;
+	  static const int temp[] = {1, 2, 4, 6, 8, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
 	  std::vector<int> coins (temp, temp+sizeof(temp)/sizeof(temp[0]));
 	  std::cout << "Size of vector: " << coins.size() << std::endl;
 	  std::vector<int> used (coins.size(), 0);
 	  int length = coins.size();
 
 	  std::cout << "- Brute Force -" << std::endl;
-	  used = changeslow(coins, value, length);
+	  //used = changeslow(coins, value, length);
 	  count = std::accumulate(used.begin(), used.end(), 0);
 	  std::cout << "Count is: " << count << std::endl;
 	  std::cout << "Coins used: [";
@@ -142,7 +145,7 @@ int main(){
 	  std::cout << "]" << std::endl;
 	  std::cout << "\n";
 
-	  value = 29;
+	  value = 2002;
 	  std::cout << "- Greedy -" << std::endl;
 	  std::fill(used.begin(), used.end(), 0);
 	  count = changegreedy(coins, value, used);
@@ -159,7 +162,7 @@ int main(){
 	  std::cout << "]" << std::endl;
 	  std::cout << "\n";
 
-	  value = 29;
+	  value = 2002;
 	  std::cout << "- Dynamic Programming -" << std::endl;
 	  std::fill(used.begin(), used.end(), 0);
 	  count = changedp(coins, value, used);
@@ -175,7 +178,7 @@ int main(){
 	  }
 	  std::cout << "]" << std::endl;
 	  std::cout << "\n";
-*/
+
 
 	  return 0;
 }
