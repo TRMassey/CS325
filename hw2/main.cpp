@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <cstdlib>
 #include <numeric>
+#include <algorithm>    // std::merge, std::sort
 
 
 int main(){
@@ -59,58 +60,136 @@ int main(){
     if (!output.is_open()) {
         std::cout << "Error opening output file.\n";
     }
+    //problem 5 - array, array, value ... etc
+    if(reading.size() % 3 == 0){
+        for (int i = 0; i < reading.size(); i++) {
+            line = reading[i];
 
-    for (int i = 0; i < reading.size(); i++) {
-        line = reading[i];
+            // positive lines contain the array
+            if (i % 3 == 0) {
+                // replace all non-spaces with spaces
+                std::size_t found = line.find_first_of("[,]");
 
-        // positive lines contain the array
-        if (i % 2 == 0) {
-            // replace all non-spaces with spaces
-            std::size_t found = line.find_first_of("[,]");
-
-            while (found!=std::string::npos) {
-                line[found]=' ';
-                found=line.find_first_of("[,]",found+1);
-            }
-
-            // tokenize based off spaces
-            const char* toTokenize = line.c_str();
-            char* token = strtok((char*) toTokenize, " ");
-            converted.clear();
-            while(token != NULL){
-                int temp = atoi(token);
-
-                converted.push_back(temp);
-                token = strtok(NULL, " ");
-            }
-
-            // now that converted holds all the integers, pull the value
-            // being searched for from the next line
-            line = reading[i+1];
-            val = atoi(line.c_str());
-
-            // call sorting function
-            std::vector<int> used (converted.size(), 0);
-            result = changedp(converted, val, used);
-
-            // opening bracket
-            output << "[";
-
-            // write to output file
-            for (int j = 0; j < used.size(); j++) {
-                if (j == used.size() - 1) {
-                    output << used[j];
+                while (found!=std::string::npos) {
+                    line[found]=' ';
+                    found=line.find_first_of("[,]",found+1);
                 }
-                else {
-                    output << used[j] << ", ";
+
+                // tokenize based off spaces
+                const char* toTokenize = line.c_str();
+                char* token = strtok((char*) toTokenize, " ");
+                converted.clear();
+                while(token != NULL){
+                    int temp = atoi(token);
+
+                    converted.push_back(temp);
+                    token = strtok(NULL, " ");
                 }
+                //second array                
+                while (found!=std::string::npos) {
+                    line[found]=' ';
+                    found=line.find_first_of("[,]",found+1);
+                }
+
+                // tokenize based off spaces
+                toTokenize = line.c_str();
+                token = strtok((char*) toTokenize, " ");
+                while(token != NULL){
+                    int temp = atoi(token);
+                    //if not in vector already, add, sort
+                    if(std::find(converted.begin(), converted.end(), temp) == converted.end()){
+                        converted.push_back(temp);
+                        std::sort(converted.begin(), converted.end());
+                    }
+                    token = strtok(NULL, " ");
+                }
+                // now that converted holds all the integers, pull the value
+                // being searched for from the next line
+                line = reading[i+2];
+                val = atoi(line.c_str());
+
+                // call sorting function
+                std::vector<int> used (converted.size(), 0);
+//CHANGE ALGO HERE                
+                result = changedp(converted, val, used);
+
+                // opening bracket
+                output << "[";
+
+                // write to output file
+                for (int j = 0; j < used.size(); j++) {
+                    if (j == used.size() - 1) {
+                        output << used[j];
+                    }
+                    else {
+                        output << used[j] << ", ";
+                    }
+                }
+
+                // closing bracket
+                output << "]\n";
+
+                // then output number of coins used
+                output << result << "\n";
             }
+        }
+    }
+    //even lines, problems 4 and 6
+    else{
+    
+        for (int i = 0; i < reading.size(); i++) {
+            line = reading[i];
 
-            // closing bracket
-            output << "]\n";
+            // positive lines contain the array
+            if (i % 2 == 0) {
+                // replace all non-spaces with spaces
+                std::size_t found = line.find_first_of("[,]");
 
-            // then output number of coins used
-            output << result << "\n";
+                while (found!=std::string::npos) {
+                    line[found]=' ';
+                    found=line.find_first_of("[,]",found+1);
+                }
+
+                // tokenize based off spaces
+                const char* toTokenize = line.c_str();
+                char* token = strtok((char*) toTokenize, " ");
+                converted.clear();
+                while(token != NULL){
+                    int temp = atoi(token);
+
+                    converted.push_back(temp);
+                    token = strtok(NULL, " ");
+                }
+
+                // now that converted holds all the integers, pull the value
+                // being searched for from the next line
+                line = reading[i+1];
+                val = atoi(line.c_str());
+
+                // call sorting function
+                std::vector<int> used (converted.size(), 0);
+//CHANGE ALGO HERE   
+                result = changedp(converted, val, used);
+
+                // opening bracket
+                output << "[";
+
+                // write to output file
+                for (int j = 0; j < used.size(); j++) {
+                    if (j == used.size() - 1) {
+                        output << used[j];
+                    }
+                    else {
+                        output << used[j] << ", ";
+                    }
+                }
+
+                // closing bracket
+                output << "]\n";
+
+                // then output number of coins used
+                output << result << "\n";
+            }
         }
     }
 
@@ -180,5 +259,5 @@ int main(){
 	  std::cout << "\n";
 
 */
-	  return 0;
+	return 0;
 }
