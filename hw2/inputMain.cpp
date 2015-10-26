@@ -89,7 +89,7 @@ int main(){
 
             // call sorting function
             std::vector<int> used (converted.size(), 0);
-            result = changegreedy(converted, val, used);
+            result = changedp(converted, val, used);
 
             // opening bracket
             output << "[";
