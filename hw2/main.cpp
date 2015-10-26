@@ -145,7 +145,7 @@ int main(){
 	  std::cout << "]" << std::endl;
 	  std::cout << "\n";
 
-	  value = 2002;
+	  value = 2001;
 	  std::cout << "- Greedy -" << std::endl;
 	  std::fill(used.begin(), used.end(), 0);
 	  count = changegreedy(coins, value, used);
@@ -162,7 +162,7 @@ int main(){
 	  std::cout << "]" << std::endl;
 	  std::cout << "\n";
 
-	  value = 2002;
+	  value = 2001;
 	  std::cout << "- Dynamic Programming -" << std::endl;
 	  std::fill(used.begin(), used.end(), 0);
 	  count = changedp(coins, value, used);

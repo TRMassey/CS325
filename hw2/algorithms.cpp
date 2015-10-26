@@ -157,7 +157,9 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 				//find min
 				if(subCount != INT_MAX && subCount+1 < table[sum]){
 					table[sum] = subCount+1;
-					temp2[sum-1] = coin;			// store coin options here for backtracking
+					if(sum-1 >= 0){
+						temp2[sum-1] = coin;			// store coin options here for backtracking
+					}
 					if(subVal > coins[coin]){
 						subVal -= (subVal/coins[coin])*coins[coin];
 					}
@@ -170,9 +172,6 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	// based off of: Dynamic Programming vs. Greedy Algorithms
 	// https://alaning.me/index.php/Dynamic_Programming_vs_Greedy_Algorithms
 	while(tempValue > 0){					//while value is greater than 0
-
-std::cout << temp2[tempValue] << std::endl;
-
 		temp = coins[temp2[tempValue]];		// store coin value at the previous coin stored
 		
 		for(int i = 1; i <= coins.size(); i++){
