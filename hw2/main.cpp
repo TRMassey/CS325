@@ -8,6 +8,7 @@
 #include <string>
 #include <cstring>
 #include <iomanip>
+#include <numeric>
 
 
 int main(){
@@ -18,15 +19,17 @@ int main(){
 
 
 	  /* algo testing - comment out or delete section when running assignment */
-	  int count;
+	  int count = -1;
 	  int value = 29;
-	  static const int temp[] = {1,3,7,12};
+	  static const int temp[] = {1, 3, 7, 12};
 	  std::vector<int> coins (temp, temp+sizeof(temp)/sizeof(temp[0]));
 	  std::cout << "Size of vector: " << coins.size() << std::endl;
 	  std::vector<int> used (coins.size(), 0);
+	  int length = coins.size();
 
 	  std::cout << "- Brute Force -" << std::endl;
-	  count = changeslow(coins, value, used);
+	  used = changeslow(coins, value, length);
+	  count = std::accumulate(used.begin(), used.end(), 0);
 	  std::cout << "Count is: " << count << std::endl;
 	  std::cout << "Coins used: [";
 	  for(int i =0; i < used.size(); i++){

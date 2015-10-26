@@ -17,43 +17,73 @@ Notes: Adapted from pseudocode, code, and discussion found at
 http://www.algorithmist.com/index.php/Min-Coin_Change
 http://www.geeksforgeeks.org/find-minimum-number-of-coins-that-make-a-change/
 **********************************************************/
-int changeslow (std::vector<int> coins, int amount, std::vector<int> &used) {
-	int count = INT_MAX;			//to compare total result to sub result
-	int subCount = 0;				//holds sub-results from recursion
-	int index = coins.size();
-	int finalCount = 0;
+std::vector<int> changeslow(std::vector<int> coins, int amount, int length) {
+    int numCoins;//track min # of coins
+    int best = -1;//helps determine min # of coins
+    std::vector<int> coinTrack (coins.size(), 0);//track # of coins to find value
+    std::vector<int> coinAdd (coins.size(), 0);//add to # of coins to find value
+    std::vector<int> numOfCoins (coins.size(), 0);//track numOfCoins of all coins in array
+    int trackNum, addNum, coinsNum;
+    trackNum = addNum = coinsNum = 0;//initialize num var in structs
 
-	//error if no coins
-	assert(coins.size() != 0); 
+	//base case
+    if (amount == 0)
+    {
+	   return numOfCoins;
+    }
+	//see if value is same as any coin denominations
+    for (int i = 0; i < length; i++)
+    {
+	   if (coins[i] == amount)
+	   {
+		  //if the same then return that value with denomiation count incremented
+		  numOfCoins[i]++;
+		  return numOfCoins;
+	   }
+    }
 
-	// base case, if there is a K-cent coin or value is 0
-    if(amount == 0){
-    	return 0;
-    }
-    else if (coins[index-1] == amount) {
-        used[index-1] = 1;
-        return 1;
-    }
+	//loop to find min coins and # of coins for each denomination
+    for (int i = 0; i < length; i++)
+    {
+	   if (coins[i] < amount)
+	   {
+		  coinTrack = changeslow(coins, amount - coins[i], length);//recursion
+		  coinAdd = changeslow(coins, coins[i], length);//recursion
+		  //loop to find # of coins for each denomination
+		  for (int j = 0; j < length; j++)
+		  {
+			 coinTrack[j] = coinTrack[j] + coinAdd[j];
+		  }
+		  //summing the number of coins
+		  numCoins = arraySum(coinTrack, length);
+		  //conditional statement to find min # of coins
+		  if (best == -1 || numCoins < best)
+		  {
+			 best = numCoins;
 
-    // moves from right to left in sorted array
-    // finding the difference between the amount available and given value of i
-    for(int i = 0; i < index; i++) {
-        //find the min number of coins needed to make i cents
-        if (amount >= coins[i]){
-            //find the min number of coins needed to make K-i cents
-            amount = amount - coins[i];
-            used[i] += (coins[i]/coins[i]);
-            subCount = changeslow(coins, amount, used);
-            if(subCount != INT_MAX && subCount+1 < count){
-            	count = subCount + 1;
-            	//return count;
-            }      
-        }
+			 //loop to save # of each coin used to find value
+			 for (int k = 0; k < length; k++)
+			 {
+				numOfCoins[k] = coinTrack[k];
+			 }
+		  }
+	   }
     }
-    return count;
+    return numOfCoins;//return the numOfCoins
+
 }
 
+int arraySum(std::vector<int> arr, int sizeOfArray){
 
+    int sum = 0;
+    int i;
+
+    for (i = 0; i < sizeOfArray; i++)
+    {
+	   sum = sum + arr[i];
+    }
+    return sum;
+}
 
 /**********************************************************
 Funcction: changegreedy
