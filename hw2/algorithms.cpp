@@ -22,33 +22,32 @@ std::vector<int> changeslow(std::vector<int> coins, int amount, int length) {
     int best = -1;//helps determine min # of coins
     std::vector<int> coinTrack (coins.size(), 0);//track # of coins to find value
     std::vector<int> coinAdd (coins.size(), 0);//add to # of coins to find value
-    std::vector<int> numOfCoins (coins.size(), 0);//track numOfCoins of all coins in array
-    int trackNum, addNum, coinsNum;
-    trackNum = addNum = coinsNum = 0;//initialize num var in structs
+    std::vector<int> used (coins.size(), 0);//track numOfCoins of all coins in array
 
-	//base case
+    //base case, when amount is reached
     if (amount == 0)
     {
-	   return numOfCoins;
+	   return used;
     }
-	//see if value is same as any coin denominations
+    //itereate to see if value is same as any single coin denomination
     for (int i = 0; i < length; i++)
     {
 	   if (coins[i] == amount)
 	   {
 		  //if the same then return that value with denomiation count incremented
-		  numOfCoins[i]++;
-		  return numOfCoins;
+		  used[i]++;
+		  return used;
 	   }
     }
-
-	//loop to find min coins and # of coins for each denomination
+    //loop to find min coins and # of coins for each denomination
     for (int i = 0; i < length; i++)
     {
 	   if (coins[i] < amount)
 	   {
-		  coinTrack = changeslow(coins, amount - coins[i], length);//recursion
-		  coinAdd = changeslow(coins, coins[i], length);//recursion
+	   	  //find the min number of coins needed to make K-i cents
+		  coinTrack = changeslow(coins, amount - coins[i], length);
+		  //find the min number of coins needed to make i cents
+		  coinAdd = changeslow(coins, coins[i], length);
 		  //loop to find # of coins for each denomination
 		  for (int j = 0; j < length; j++)
 		  {
@@ -59,30 +58,33 @@ std::vector<int> changeslow(std::vector<int> coins, int amount, int length) {
 		  //conditional statement to find min # of coins
 		  if (best == -1 || numCoins < best)
 		  {
+			 //update new min
 			 best = numCoins;
-
 			 //loop to save # of each coin used to find value
 			 for (int k = 0; k < length; k++)
 			 {
-				numOfCoins[k] = coinTrack[k];
+				used[k] = coinTrack[k];
 			 }
 		  }
 	   }
     }
-    return numOfCoins;//return the numOfCoins
-
+    return used;//return the num of coins used vector
 }
 
-int arraySum(std::vector<int> arr, int sizeOfArray){
 
+/************************************************************
+Helper function for slowchange.  After array is located with 
+min amount of each denomiation of coins, add coin amounts to
+get total min coins.
+************************************************************/
+int arraySum(std::vector<int> used, int sizeOfArray){  
     int sum = 0;
-    int i;
-
-    for (i = 0; i < sizeOfArray; i++)
+    //iterate through used coin array
+    for (int i = 0; i < sizeOfArray; i++)
     {
-	   sum = sum + arr[i];
+	   sum = sum + used[i];
     }
-    return sum;
+    return sum;  //this is the min count
 }
 
 /**********************************************************
