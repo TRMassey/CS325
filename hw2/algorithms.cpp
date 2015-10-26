@@ -101,7 +101,7 @@ int changegreedy(std::vector<int> coins, int value, std::vector<int> &used){
 	int count = 0;						// coins used
 
 	//error if no coins
-	assert(coins.size() != 0);
+	//assert(coins.size() != 0);
 
 	//iterate through coins starting with largest first
 	for(int index = coins.size()-1; index >= 0; index--){
@@ -143,7 +143,7 @@ int changedp(std::vector<int> coins, int value, std::vector<int> &used){
 	table[0] = 0;
 
 	//error if no coins
-	assert(coins.size() != 0);
+	//assert(coins.size() != 0);
 
 	//make table of all results
 	//iterate through positive, non-zero value optons
