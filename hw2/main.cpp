@@ -29,9 +29,12 @@ int main(){
     std::string initialVal;                 // odd lines on input file
     int val;                                // converted value to be coin-changed
     int result;                             // result from algo call
+    int choice;
 
     std::cout << "Enter the name of the file to open: ";
     std::cin >> inFilename;
+    std::cout << "Please enter 1 for DP or 2 for Greedy: ";
+    std::cin >> choice;
 
     // open specified file
     input.open(inFilename.c_str());
@@ -112,8 +115,12 @@ int main(){
 
                 // call sorting function
                 std::vector<int> used (converted.size(), 0);
-//CHANGE ALGO HERE                
-                result = changedp(converted, val, used);
+
+//CHANGE ALGO HERE
+                if(choice == 1)
+                    result = changegreedy(converted, val, used);
+                else if(choice == 2)              
+                    result = changedp(converted, val, used);
 
                 // opening bracket
                 output << "[";
@@ -170,8 +177,11 @@ int main(){
 
                 // call sorting function
                 std::vector<int> used (converted.size(), 0);
-//CHANGE ALGO HERE   
-                result = changedp(converted, val, used);
+//CHANGE ALGO HERE    
+                if(choice == 1)
+                    result = changegreedy(converted, val, used);
+                else if(choice == 2)              
+                    result = changedp(converted, val, used);
 
                 // opening bracket
                 output << "[";
