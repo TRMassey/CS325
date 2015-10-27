@@ -18,7 +18,7 @@ int main(){
     /* All functions require a vector for register coins AND a zeroed out
 	  vector for marking coins used.  Must clear used after each function
 	  call or create new used */
-     
+    
     std::string inFilename;
     std::string outFilename;
     std::ifstream input;
@@ -33,7 +33,7 @@ int main(){
 
     std::cout << "Enter the name of the file to open: ";
     std::cin >> inFilename;
-    std::cout << "Please enter 0 for Divide and Conquer, 1 for DP, 2 for Greedy: ";
+    std::cout << "Please enter 0 for Divide and Conquer, 1 for Greedy, 2 for DP: ";
     std::cin >> choice;
 
     // open specified file
@@ -119,7 +119,7 @@ int main(){
 //CHANGE ALGO HERE
                 if(choice == 0){
                     used = changeslow(converted, val, converted.size());
-                    result = arraySum(used, used.size());
+                    result = std::accumulate(used.begin(), used.end(), 0);
                 }
                 else if(choice == 1)
                     result = changegreedy(converted, val, used);
@@ -183,8 +183,8 @@ int main(){
                 std::vector<int> used (converted.size(), 0);
 //CHANGE ALGO HERE    
                 if(choice == 0){
-                    used = changeslow(converted, val, converted.size());
-                    result = arraySum(used, used.size());
+                    used = changeslow(converted, val, converted.size()-1);
+                    result = std::accumulate(used.begin(), used.end(), 0);           
                 }
                 else if(choice == 1)
                     result = changegreedy(converted, val, used);
@@ -221,15 +221,15 @@ int main(){
 /*
 //algo testing - comment out or delete section when running assignment 
 	  int count = -1;
-	  int value = 2000;
-	  static const int temp[] = {1, 2, 4, 6, 8, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
+	  int value = 29;
+	  static const int temp[] = {1, 3, 7, 12};
 	  std::vector<int> coins (temp, temp+sizeof(temp)/sizeof(temp[0]));
 	  std::cout << "Size of vector: " << coins.size() << std::endl;
 	  std::vector<int> used (coins.size(), 0);
 	  int length = coins.size();
 
 	  std::cout << "- Brute Force -" << std::endl;
-	  //used = changeslow(coins, value, length);
+	  used = changeslow(coins, value, length);
 	  count = std::accumulate(used.begin(), used.end(), 0);
 	  std::cout << "Count is: " << count << std::endl;
 	  std::cout << "Coins used: [";
@@ -244,7 +244,7 @@ int main(){
 	  std::cout << "]" << std::endl;
 	  std::cout << "\n";
 
-	  value = 2002;
+	  value = 29;
 	  std::cout << "- Greedy -" << std::endl;
 	  std::fill(used.begin(), used.end(), 0);
 	  count = changegreedy(coins, value, used);
@@ -261,7 +261,7 @@ int main(){
 	  std::cout << "]" << std::endl;
 	  std::cout << "\n";
 
-	  value = 2002;
+	  value = 29;
 	  std::cout << "- Dynamic Programming -" << std::endl;
 	  std::fill(used.begin(), used.end(), 0);
 	  count = changedp(coins, value, used);
