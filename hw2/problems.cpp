@@ -18,8 +18,10 @@ int main(){
 	  call or create new used */
     std::string inFilename;
     std::string outFilename;
+    std::string outFilename2;
     std::ifstream input;
     std::ofstream output;
+    std::ofstream output2;
     std::vector<std::string> reading;       // holds lines from input file
     std::vector<int> converted;             // holds actual int values
     std::string line;
@@ -30,21 +32,28 @@ int main(){
     
 
     outFilename = "problems.txt";
-
+    outFilename2 = "smallproblems.txt";
     // open output file for results
     output.open("problems.txt");
     if (!output.is_open()) {
         std::cout << "Error opening output file.\n";
     }
-
+    output2.open("smallproblems.txt");
+    if (!output2.is_open()) {
+        std::cout << "Error opening output file.\n";
+    }
     std::cout << "Pick problem 4, 5, or 6: \n";
     std::cin >> val;
 
     if(val == 4){
        // problem 4
-         for (int i = 2000; i < 2201; i++) {
+         for (int i = 0; i < 2201; i++) {
             output << "[1, 5, 10, 25, 50]\n";
             output << i << "\n";
+        }
+        for(int i = 10; i < 50; i++){
+            output2 << "[1, 5, 10, 25, 50]\n";
+            output2 << i << "\n";
         }
     }
 
@@ -55,6 +64,11 @@ int main(){
             output << "[1, 6, 13, 37, 150]\n";
             output << i << "\n";
         }
+        for(int i = 10; i < 50; i++){
+            output2 << "[1, 2, 6, 12, 24, 48, 60]\n";
+            output2 << "[1, 6, 13, 37, 150]\n";
+            output2 << i << "\n";
+        }
     }
 
     else{
@@ -63,6 +77,10 @@ int main(){
             output << "[1, 2, 4, 6, 8, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]\n";
              output << i << "\n";
          }
+        for(int i = 10; i < 50; i++){
+ output << "[1, 2, 4, 6, 8, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]\n";
+            output2 << i << "\n";
+        }
     }
 
  //   output.close("problems.txt");
