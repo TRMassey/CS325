@@ -33,7 +33,7 @@ int main(){
 
     std::cout << "Enter the name of the file to open: ";
     std::cin >> inFilename;
-    std::cout << "Please enter 1 for DP or 2 for Greedy: ";
+    std::cout << "Please enter 0 for Divide and Conquer, 1 for DP, 2 for Greedy: ";
     std::cin >> choice;
 
     // open specified file
@@ -117,7 +117,11 @@ int main(){
                 std::vector<int> used (converted.size(), 0);
 
 //CHANGE ALGO HERE
-                if(choice == 1)
+                if(choice == 0){
+                    used = changeslow(converted, val, converted.size());
+                    result = arraySum(used, used.size());
+                }
+                else if(choice == 1)
                     result = changegreedy(converted, val, used);
                 else if(choice == 2)              
                     result = changedp(converted, val, used);
@@ -178,7 +182,11 @@ int main(){
                 // call sorting function
                 std::vector<int> used (converted.size(), 0);
 //CHANGE ALGO HERE    
-                if(choice == 1)
+                if(choice == 0){
+                    used = changeslow(converted, val, converted.size());
+                    result = arraySum(used, used.size());
+                }
+                else if(choice == 1)
                     result = changegreedy(converted, val, used);
                 else if(choice == 2)              
                     result = changedp(converted, val, used);
