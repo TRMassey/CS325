@@ -60,8 +60,10 @@ int main(){
     if (!output.is_open()) {
         std::cout << "Error opening output file.\n";
     }
+
+    std::string checkMe = reading[1];
     //problem 5 - array, array, value ... etc
-    if(reading.size() % 3 == 0){
+    if(checkMe[0] == '['){
         for (int i = 0; i < reading.size(); i++) {
             line = reading[i];
 
