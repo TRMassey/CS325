@@ -122,7 +122,7 @@ int main(){
 
 //CHANGE ALGO HERE
                 if(choice == 0){
-                    used = changeslow(converted, val, converted.size());
+                    used = changeslow(converted, val, converted.size()-1);
                     result = std::accumulate(used.begin(), used.end(), 0);
                 }
                 else if(choice == 1)
@@ -278,7 +278,7 @@ int main(){
 
                 if(choice == 0){
                      t1 = 1000 * clock() / CLOCKS_PER_SEC;
-                    used = changeslow(converted, val, converted.size());
+                    used = changeslow(converted, val, converted.size() -1);
                     result = arraySum(used, used.size());
                      t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
                      total = (t2-t1); // divide answer by loops
@@ -340,7 +340,7 @@ int main(){
 //CHANGE ALGO HERE    
                 if(choice == 0){
                      t1 = 1000 * clock() / CLOCKS_PER_SEC;
-                    used = changeslow(converted, val, converted.size());
+                    used = changeslow(converted, val, converted.size()-1);
                     result = arraySum(used, used.size());
                      t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
                      total = (t2-t1); // divide answer by loops
