@@ -122,11 +122,16 @@ int main(){
 
 //CHANGE ALGO HERE
                 if(choice == 0){
-                    used = changeslow(converted, val, converted.size()-1);
+                    std::cout << converted[converted.size()-1] << std::endl;
+                    std::cout << val << std::endl;
+                    used = changeslow(converted, val, converted.size());
                     result = std::accumulate(used.begin(), used.end(), 0);
                 }
-                else if(choice == 1)
+                else if(choice == 1){
+                    std::cout << converted[converted.size()-1] << std::endl;
+                    std::cout << val << std::endl;
                     result = changegreedy(converted, val, used);
+                }
                 else if(choice == 2)              
                     result = changedp(converted, val, used);
 
@@ -187,11 +192,16 @@ int main(){
                 std::vector<int> used (converted.size(), 0);
 //CHANGE ALGO HERE    
                 if(choice == 0){
-                    used = changeslow(converted, val, converted.size()-1);
+                    std::cout << converted[converted.size()-1] << std::endl;
+                    std::cout << val << std::endl;
+                    used = changeslow(converted, val, converted.size());
                     result = std::accumulate(used.begin(), used.end(), 0);           
                 }
-                else if(choice == 1)
+                else if(choice == 1){
+                    std::cout << converted[converted.size()-1] << std::endl;
+                    std::cout << val << std::endl;
                     result = changegreedy(converted, val, used);
+                }
                 else if(choice == 2)              
                     result = changedp(converted, val, used);
 
@@ -278,7 +288,7 @@ int main(){
 
                 if(choice == 0){
                      t1 = 1000 * clock() / CLOCKS_PER_SEC;
-                    used = changeslow(converted, val, converted.size() -1);
+                    used = changeslow(converted, val, converted.size());
                     result = arraySum(used, used.size());
                      t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
                      total = (t2-t1); // divide answer by loops
@@ -340,7 +350,7 @@ int main(){
 //CHANGE ALGO HERE    
                 if(choice == 0){
                      t1 = 1000 * clock() / CLOCKS_PER_SEC;
-                    used = changeslow(converted, val, converted.size()-1);
+                    used = changeslow(converted, val, converted.size());
                     result = arraySum(used, used.size());
                      t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
                      total = (t2-t1); // divide answer by loops

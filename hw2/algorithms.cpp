@@ -32,6 +32,7 @@ std::vector<int> changeslow(std::vector<int> coins, int amount, int length) {
     //itereate to see if value is same as any single coin denomination
     for (int i = 0; i < length; i++)
     {
+	   //std::cout << coins[i] << std::endl; 
 	   if (coins[i] == amount)
 	   {
 		  //if the same then return that value with denomiation count incremented
