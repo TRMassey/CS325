@@ -1,0 +1,7 @@
+To Compile:  Compile using the included makefile
+
+To Run: ./prog
+
+Using Program: The first half of the program will calculate the min coin change results.  The program will ask you to enter the exact name and file extension of a txt file to use as input for the coin change problem.  It will also ask you to enter 0 for slowchange algorithm, 1 for greedychange algorithm, or 2 for dpchange algorithm.  The min coin results (array of coins used, and total count of coins used) will be written to a _______results.txt file where the first part of the name matches the input file you entered.
+
+The second half of the program conducts timing analysis on the algorithms. You may choose Y or N to continue with this section.  If you choose to continue, timing results will be output to Timing.txt.
