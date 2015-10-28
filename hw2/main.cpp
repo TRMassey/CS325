@@ -122,14 +122,10 @@ int main(){
 
 //CHANGE ALGO HERE
                 if(choice == 0){
-                    std::cout << converted[converted.size()-1] << std::endl;
-                    std::cout << val << std::endl;
                     used = changeslow(converted, val, converted.size());
                     result = std::accumulate(used.begin(), used.end(), 0);
                 }
                 else if(choice == 1){
-                    std::cout << converted[converted.size()-1] << std::endl;
-                    std::cout << val << std::endl;
                     result = changegreedy(converted, val, used);
                 }
                 else if(choice == 2)
@@ -192,14 +188,10 @@ int main(){
                 std::vector<int> used (converted.size(), 0);
 //CHANGE ALGO HERE
                 if(choice == 0){
-                    std::cout << converted[converted.size()-1] << std::endl;
-                    std::cout << val << std::endl;
                     used = changeslow(converted, val, converted.size());
                     result = std::accumulate(used.begin(), used.end(), 0);
                 }
                 else if(choice == 1){
-                    std::cout << converted[converted.size()-1] << std::endl;
-                    std::cout << val << std::endl;
                     result = changegreedy(converted, val, used);
                 }
                 else if(choice == 2)
@@ -311,11 +303,11 @@ int main(){
                 }
                 else if(choice == 2) {
                     t1 = 1000 * clock() / CLOCKS_PER_SEC;
-                    for(int j = 0; j < 50000; j++){
+                    for(int j = 0; j < 500; j++){
                          result = changedp(converted, val, used);
                     }
                      t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
-                     total = (t2-t1)/50000; // divide answer by loops
+                     total = (t2-t1)/500; // divide answer by loops
                     outputTime << total << "\n";
                 }
             }
@@ -373,11 +365,11 @@ int main(){
                 }
                 else if(choice == 2) {
                     t1 = 1000 * clock() / CLOCKS_PER_SEC;
-                    for(int j = 0; j < 50000; j++){
+                    for(int j = 0; j < 500; j++){
                          result = changedp(converted, val, used);
                     }
                      t2 = 1000.0 * clock() / CLOCKS_PER_SEC;
-                     total = (t2-t1)/50000; // divide answer by loops
+                    total = (t2-t1)/50000; // divide answer by loops
                     outputTime << total << "\n";
                 }
             }
