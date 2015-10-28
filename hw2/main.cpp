@@ -15,11 +15,11 @@
 
 
 int main(){
-	
+
     /* All functions require a vector for register coins AND a zeroed out
 	  vector for marking coins used.  Must clear used after each function
 	  call or create new used */
-    
+
     std::string inFilename;
     std::string outFilename;
     std::ifstream input;
@@ -94,7 +94,7 @@ int main(){
                     converted.push_back(temp);
                     token = strtok(NULL, " ");
                 }
-                //second array                
+                //second array
                 while (found!=std::string::npos) {
                     line[found]=' ';
                     found=line.find_first_of("[,]",found+1);
@@ -132,7 +132,7 @@ int main(){
                     std::cout << val << std::endl;
                     result = changegreedy(converted, val, used);
                 }
-                else if(choice == 2)              
+                else if(choice == 2)
                     result = changedp(converted, val, used);
 
                 // opening bracket
@@ -158,7 +158,7 @@ int main(){
     }
     //even lines, problems 4 and 6
     else{
-    
+
         for (int i = 0; i < reading.size(); i++) {
             line = reading[i];
 
@@ -190,19 +190,19 @@ int main(){
 
                 // call sorting function
                 std::vector<int> used (converted.size(), 0);
-//CHANGE ALGO HERE    
+//CHANGE ALGO HERE
                 if(choice == 0){
                     std::cout << converted[converted.size()-1] << std::endl;
                     std::cout << val << std::endl;
                     used = changeslow(converted, val, converted.size());
-                    result = std::accumulate(used.begin(), used.end(), 0);           
+                    result = std::accumulate(used.begin(), used.end(), 0);
                 }
                 else if(choice == 1){
                     std::cout << converted[converted.size()-1] << std::endl;
                     std::cout << val << std::endl;
                     result = changegreedy(converted, val, used);
                 }
-                else if(choice == 2)              
+                else if(choice == 2)
                     result = changedp(converted, val, used);
 
                 // opening bracket
@@ -228,8 +228,13 @@ int main(){
     }
 
 // timing section here
+    outputTime.open("Timing.txt");
 
+    if (!outputTime.is_open()) {
+        std::cout << "Error opening timing file." << std::endl;
+    }
     char charChoice;
+
     std::cout << "\nPerforming Timing Results? Y or N: ";
     std::cin >> charChoice;
     if(charChoice != 'y' && charChoice != 'Y'){
@@ -237,6 +242,7 @@ int main(){
     }
     else{
          if(checkMe[0] == '['){
+
         for (int i = 0; i < reading.size(); i++) {
             line = reading[i];
 
@@ -260,7 +266,7 @@ int main(){
                     converted.push_back(temp);
                     token = strtok(NULL, " ");
                 }
-                //second array                
+                //second array
                 while (found!=std::string::npos) {
                     line[found]=' ';
                     found=line.find_first_of("[,]",found+1);
@@ -303,8 +309,8 @@ int main(){
                      total = (t2-t1)/50000; // divide answer by loops
                     outputTime << total << "\n";
                 }
-                else if(choice == 2) {            
-                    t1 = 1000 * clock() / CLOCKS_PER_SEC; 
+                else if(choice == 2) {
+                    t1 = 1000 * clock() / CLOCKS_PER_SEC;
                     for(int j = 0; j < 50000; j++){
                          result = changedp(converted, val, used);
                     }
@@ -347,7 +353,7 @@ int main(){
 
                 // call sorting function
                 std::vector<int> used (converted.size(), 0);
-//CHANGE ALGO HERE    
+//CHANGE ALGO HERE
                 if(choice == 0){
                      t1 = 1000 * clock() / CLOCKS_PER_SEC;
                     used = changeslow(converted, val, converted.size());
@@ -365,8 +371,8 @@ int main(){
                      total = (t2-t1)/50000; // divide answer by loops
                     outputTime << total << "\n";
                 }
-                else if(choice == 2) {            
-                    t1 = 1000 * clock() / CLOCKS_PER_SEC; 
+                else if(choice == 2) {
+                    t1 = 1000 * clock() / CLOCKS_PER_SEC;
                     for(int j = 0; j < 50000; j++){
                          result = changedp(converted, val, used);
                     }
@@ -378,12 +384,18 @@ int main(){
         }
     }
 }
+
+    outputTime.close();
+
+    if (outputTime.is_open()) {
+        std::cout << "Error closing timing file." << std::endl;
+    }
 	/* All functions require a vector for register coins AND a zeroed out
 	  vector for marking coins used.  Must clear used after each function
 	  call or create new used */
 
 /*
-//algo testing - comment out or delete section when running assignment 
+//algo testing - comment out or delete section when running assignment
 	  int count = -1;
 	  int value = 29;
 	  static const int temp[] = {1, 3, 7, 12};
