@@ -5,34 +5,48 @@
 import sys
 import time
 
-def tsp_christofides(G):
+def makeGraph():
+    # make a list of the values as they are read in
+	# since the number of the cities corresponds with its position in the list, that value is not saved
+	coordList = list()
+	
+	filename = sys.argv[1]
+	
+	with open(filename) as f:
+		for line in f:
+			splitter = line.split()
+			coord = (splitter[1], splitter[2])
+			coordList.append(coord)
+
+	return coordList
+
+# def tsp_christofides(G):
 
 
-def mst_prim(G, w, r):
-    
-
-def oddDegrees(T):
+# def mst_prim(G, w, r):
 
 
-def minPerf(O, G):
+# def oddDegrees(T):
 
 
-def multiGraph(T, M):
+# def minPerf(O, G):
 
 
-def ecircuit(H):
+# def multiGraph(T, M):
 
 
-def hamcircuit(E):
+# def ecircuit(H):
+
+
+# def hamcircuit(E):
     
 
 def main():
     # Your program must:
     # Accept problem instances on the command line
-
     f = open(sys.argv[1], "r")
     inputname = sys.argv[1]
-    contents = f.read()
+    G = makeGraph()
     f.close()   
 
 	# timer needed
