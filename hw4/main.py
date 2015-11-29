@@ -5,9 +5,26 @@
 import sys
 import time
 
+def tsp_christofides(G):
 
 
+def mst_prim(G, w, r):
+    
 
+def oddDegrees(T):
+
+
+def minPerf(O, G):
+
+
+def multiGraph(T, M):
+
+
+def ecircuit(H):
+
+
+def hamcircuit(E):
+    
 
 def main():
     # Your program must:
