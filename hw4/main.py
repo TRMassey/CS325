@@ -29,7 +29,7 @@ def makeGraph():
 # distance to the nearest integer 
 # Parmeters: float number
 # Return: integer      
-def nearest_int(num):
+def nearestInt(num):
     if num-int(num) >= .5:
         return int(num)+1
     else:
@@ -41,7 +41,7 @@ def nearest_int(num):
 # all v
 # Parmeters: Graph in format from func makeGraph()
 # Return: dict of key=(vertex#,vertex#), value = edge weight 
-def graph_edges(G):
+def graphEdges(G):
     lowRange = 0
     edges  = dict()
     #iterate through all start points
@@ -50,7 +50,7 @@ def graph_edges(G):
         #iterate through all end points
         for vertex2 in [x for x in xrange(len(G)) if x != vertex1]:
             #this is from assignment description
-            edges[(vertex1,vertex2)] = nearest_int(math.sqrt(pow(G[vertex1][0]-G[vertex2][0], 2)+pow(G[vertex1][1]-G[vertex2][1],2)))
+            edges[(vertex1,vertex2)] = nearestInt(math.sqrt(pow(G[vertex1][0]-G[vertex2][0], 2)+pow(G[vertex1][1]-G[vertex2][1],2)))
     #dict of key=(vertex#,vertex#), value = edge weight 
     return edges
 
@@ -60,9 +60,9 @@ def graph_edges(G):
 # for TSP problems, where all vertices connect to all other vertices.
 # Parmeters: Graph in format from func makeGraph()
 # Return: a list of edges in min spanning tree ex: [(0,1),(1,2),(3,4)]
-def mst_prim(G):
+def mstPrim(G):
     #set edges in dict (start, end) = weight
-    edges = graph_edges(G)
+    edges = graphEdges(G)
     A = list() # A = {(v, v.pie): v in V-{r}-
 
     #each key is set to infinity
@@ -128,6 +128,16 @@ def oddDegrees(T):
 
 # def minPerf(O, G):
 
+    #take vertices from O and find those edges in G
+
+        # make graph with smallest edges
+
+            # for paths where vertex is gone, add edges together
+
+    # find/return the min edges so all vertices are touched
+
+
+
 
 # def multiGraph(T, M):
 
@@ -140,7 +150,7 @@ def oddDegrees(T):
 
 # def tsp_christofides(G):
 def tsp_christofides(G):
-    #T = mst_prim(G, w, r)
+    #T = mstPrim(G, w, r)
     #O = oddDegrees(T)
     #M = MinWeightPerfMatch(O, G)
     #H = MultiGraph(T, M)
