@@ -183,7 +183,7 @@ def multiGraph(T, M):
 # Parameters: edge list from multigraph combo of minPerf and 
 # mstPrim
 # Return: 
-def ECircuit(H):
+def eCircuit(H):
     pass
 
 
@@ -204,8 +204,8 @@ def tsp_christofides(G):
     #O = oddDegrees(T)
     #M = MinWeightPerfMatch(O, edges)
     #H = MultiGraph(T, M)
-    #E = ECircuit(v1 of H)
-    #return HamCircuit(E)
+    #E = eCircuit(v1 of H)
+    #return hamCircuit(E)
     pass
 
 
