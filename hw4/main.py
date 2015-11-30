@@ -60,7 +60,7 @@ def graphEdges(G):
 # for TSP problems, where all vertices connect to all other vertices.
 # Parmeters: set edges in dict (start, end) = weight
 # Return: a list of edges in min spanning tree ex: [(0,1),(1,2),(3,4)]
-def mstPrim(edges):
+def mstPrim(edges, G):
     A = list() # A = {(v, v.pie): v in V-{r}-
 
     #each key is set to infinity
@@ -129,43 +129,29 @@ def oddDegrees(T):
 # with weight
 # Return: min weight perfect matching edge list
 def minPerf(O, edges):
-    #take vertices from O and find those edges in edges
-    combinedGraph = dict()
-    deadEnds = dict()
-    minPerfect = dict()
-    for path in edges:
-        #if both vertices in O, path as is
-        if path[1] in O and path[2] in O:
-            combined[path] = edges[path]
-        #if only one vertex in O, add to deadend dict for later summing of edges
-        elif path[1] in O or path[2] in O:
-            deadEnds[path] = edges[path]
-    #for all deadends, find if any edges need to be sumed and added to combined list
-    for path in deadEnds:
-        if path[1] in combined[1]:
-            #while path building, sum
-
-            #add summed edge to combined
-            pass
-        elif path[1] in combined[2]:
-            #while path building, sum
-
-            #if not in combine
-                #add summed edge to combined
-            pass
-        elif path[2] in combined[1]:
-            #while path building, sum
-
-            #add summed edge to combined
-            pass
-        elif path[2] in combined[2]:
-            #while path building, sum
-
-            #add summed edge to combined
-            pass
-
-    # find the min edges so all vertices are touched
-
+    minPerf = dict()
+    #iterate through vertices in O
+    for vertex in O:
+        curMin = float("inf")
+        #find shortest path from O[i] to other vertex in O
+        for data in edges.keys():
+            #if less than curMin, make new curMin
+            if(data[0] == vertex):
+                #find edge connecting to other v in O
+                if(data[1] in O):
+                    if(edges[data] < curMin):
+                        curMin = edges[data]
+                        curEdge = data
+            elif(data[1] == vertex):
+                #find edge connecting to other v in O
+                if(data[0] in O):
+                    if(edges[data] < curMin):
+                        curMin = edges[data]
+                        curEdge = data
+        #add path
+        minPerf[curEdge] = curMin
+    #get rid of any duplicate vertices
+    
     return minPerf
 
 
@@ -200,7 +186,7 @@ def hamCircuit(E):
 # def tsp_christofides(G):
 def tsp_christofides(G):
     #edges = graphEdges(G)
-    #T = mstPrim(edges)
+    #T = mstPrim(edges, G)
     #O = oddDegrees(T)
     #M = MinWeightPerfMatch(O, edges)
     #H = MultiGraph(T, M)

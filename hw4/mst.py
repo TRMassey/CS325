@@ -25,9 +25,8 @@ def graph_edges(G):
 	return edges
 
 
-def mst_prim(G):
+def mst_prim(edges, G):
 	#set edges in dict (start, end) = weight
-	edges = graph_edges(G)
 	A = list() # A = {(v, v.pie): v in V-{r}-
 
 	#each key is set to infinity
@@ -86,14 +85,62 @@ G = ((200,800), (3600,2300), (3100,3300), (4700,5750), (5400,5750), (5608,7103))
 print mst_prim(G)
 '''
 
-edges = {(0,1): 3, (1,2): 6, (0,2): 6}
-O = [1,2]
+def oddDegrees(T):
+    degrees = dict()
+    odd = list()
+    for x in range(0, len(T)*2):
+        degrees[x] = 0
+    #degrees are the amount of edges that conenct to v
+    for edge in T:
+        degrees[edge[0]] += 1
+        degrees[edge[1]] += 1
+    for v in degrees.keys():
+        if degrees[v] & 1:
+            odd.append(v)
+    #returns list of vertices with odd degrees
+    return odd
 
+
+
+# Description: Finds min weight perfect match from mst vs full
+# graph
+# Parameters: odd degree vertex list, dict of full graph's edges
+# with weight
+# Return: min weight perfect matching edge list
 def minPerf(O, edges):
-    #take vertices from O and find those edges in edges
-    combinedGraph = list()
-    for path in edges:
-        if path[1] in O or path[2] in O:
-        	combined[path] = edges[path]
+    minPerf = dict()
+    #iterate through vertices in O
+    for vertex in O:
+        curMin = float("inf")
+        #find shortest path from O[i] to other vertex in O
+        for data in edges.keys():
+            #if less than curMin, make new curMin
+            if(data[0] == vertex):
+                #find edge connecting to other v in O
+                if(data[1] in O):
+                    if(edges[data] < curMin):
+                        curMin = edges[data]
+                        curEdge = data
+            elif(data[1] == vertex):
+                #find edge connecting to other v in O
+                if(data[0] in O):
+                    if(edges[data] < curMin):
+                        curMin = edges[data]
+                        curEdge = data
+        #add path
+        minPerf[curEdge] = curMin
 
-minPerf(O, edges)
+    #get rid of any duplicate vertices
+
+
+    return minPerf
+
+
+G = ((200,800), (3600,2300), (3100,3300), (4700,5750), (5400,5750), (5608,7103))
+#print graph_edges(G)
+#{(1, 3): 3621, (3, 0): 6690, (5, 4): 1369, (2, 1): 1118, (5, 1): 5206, (2, 5): 4556, (0, 3): 6690, (4, 0): 7179, (1, 2): 1118, (1, 5): 5206, (5, 0): 8305, (0, 4): 7179, (5, 3): 1629, (4, 1): 3891, (3, 2): 2926, (4, 5): 1369, (1, 4): 3891, (0, 5): 8305, (4, 2): 3360, (1, 0): 3716, (3, 5): 1629, (0, 1): 3716, (5, 2): 4556, (3, 1): 3621, (0, 2): 3829, (2, 0): 3829, (4, 3): 700, (2, 3): 2926, (3, 4): 700, (2, 4): 3360}
+# expected output [(0,1),(1,2),(2,3),(3,4),(4,5)]
+edges = graph_edges(G)
+mst = mst_prim(edges, G)
+odd = oddDegrees(mst)
+print minPerf(odd, edges)
