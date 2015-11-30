@@ -115,7 +115,6 @@ def oddDegrees(T):
     for edge in T:
         degrees[edge[0]] += 1
         degrees[edge[1]] += 1
-    print degrees
     for v in degrees.keys():
         if degrees[v] & 1:
             odd.append(v)
@@ -124,7 +123,10 @@ def oddDegrees(T):
 
 
 
-# def minPerf(O, G):
+# Description: Finds min weight perfect match from mst vs full
+# graph
+# Parameters: min spanning tree, edge list of full graph
+# Return: min weight perfect matching edge list
 def minPerf(O, edges):
     #take vertices from O and find those edges in G
 
@@ -136,14 +138,32 @@ def minPerf(O, edges):
     pass
 
 
+# Description: Takes mst and edges from min perf and combines 
+# them into one graph/edge list representation
+# Parameters: mst edge list,  edge list of min weight perfect 
+# matching
+# Return: 
+def multiGraph(T, M):
+    pass
 
-# def multiGraph(T, M):
 
 
-# def ecircuit(H):
+# Description: Takes edge list and runs/finds Euler Circuit
+# Parameters: edge list from multigraph combo of minPerf and 
+# mstPrim
+# Return: 
+def ecircuit(H):
+    pass
 
 
-# def hamcircuit(E):
+
+# Description: Takes Euler Circuit and runs/finds Hamiltonian
+# Cycle/Circuit
+# Parameters: 
+# Return: 
+def hamCircuit(E):
+    pass
+
 
 
 # def tsp_christofides(G):
@@ -156,6 +176,7 @@ def tsp_christofides(G):
     #E = ECircuit(v1 of H)
     #return HamCircuit(E)
     pass
+
 
 
 def main():
