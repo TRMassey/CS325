@@ -92,6 +92,22 @@ def mst_prim(G):
 
 
 # def oddDegrees(T):
+def oddDegrees(T):
+    degrees = dict()
+    odd = list()
+    for x in range(0, len(T)*2):
+        degrees[x] = 0
+    #degrees are the amount of edges that conenct to v
+    for edge in T:
+        degrees[edge[0]] += 1
+        degrees[edge[1]] += 1
+    print degrees
+    for v in degrees.keys():
+        if degrees[v] & 1:
+            odd.append(v)
+    #returns list of vertices with odd degrees
+    return odd
+
 
 
 # def minPerf(O, G):
