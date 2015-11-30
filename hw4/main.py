@@ -20,9 +20,6 @@ def makeGraph():
 
 	return coordList
 
-# def tsp_christofides(G):
-
-
 # def mst_prim(G, w, r):
 
 
@@ -39,7 +36,18 @@ def makeGraph():
 
 
 # def hamcircuit(E):
-    
+
+
+# def tsp_christofides(G):
+def tsp_christofides(G):
+    #T = mst_prim(G, w, r)
+    #O = oddDegrees(T)
+    #M = MinWeightPerfMatch(O, G)
+    #H = MultiGraph(T, M)
+    #E = ECircuit(v1 of H)
+    #return HamCircuit(E)
+    pass
+
 
 def main():
     # Your program must:
@@ -47,6 +55,7 @@ def main():
     f = open(sys.argv[1], "r")
     inputname = sys.argv[1]
     G = makeGraph()
+    print G
     f.close()   
 
 	# timer needed
