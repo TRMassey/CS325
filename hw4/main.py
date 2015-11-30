@@ -133,7 +133,7 @@ def minPerf(O, edges):
             # for paths where vertex is gone, add edges together
 
     # find/return the min edges so all vertices are touched
-
+    pass
 
 
 
