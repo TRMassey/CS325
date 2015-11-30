@@ -125,14 +125,20 @@ def oddDegrees(T):
 
 # Description: Finds min weight perfect match from mst vs full
 # graph
-# Parameters: min spanning tree, edge list of full graph
+# Parameters: odd degree vertex list, dict of full graph's edges
+# with weight
 # Return: min weight perfect matching edge list
 def minPerf(O, edges):
-    #take vertices from O and find those edges in G
-
-        # make graph with smallest edges
-
-            # for paths where vertex is gone, add edges together
+    #take vertices from O and find those edges in edges
+    combinedGraph = dict()
+    deadEnds = dict()
+    for path in edges:
+        #if both vertices in O, path as is
+        if path[1] in O and path[2] in O:
+            combined[path] = edges[path]
+        #if only one vertex in O, add until other vertex (add until not dead end)
+        elif path[1] in O or path[2] in O:
+            pass #stuck here :(
 
     # find/return the min edges so all vertices are touched
     pass

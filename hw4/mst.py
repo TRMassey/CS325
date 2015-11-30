@@ -85,3 +85,15 @@ G = ((200,800), (3600,2300), (3100,3300), (4700,5750), (5400,5750), (5608,7103))
 # expected output [(0,1),(1,2),(2,3),(3,4),(4,5)]
 print mst_prim(G)
 '''
+
+edges = {(0,1): 3, (1,2): 6, (0,2): 6}
+O = [1,2]
+
+def minPerf(O, edges):
+    #take vertices from O and find those edges in edges
+    combinedGraph = list()
+    for path in edges:
+        if path[1] in O or path[2] in O:
+        	combined[path] = edges[path]
+
+minPerf(O, edges)
