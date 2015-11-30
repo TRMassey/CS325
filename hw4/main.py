@@ -58,11 +58,9 @@ def graphEdges(G):
 
 # Description:  Prims algorithm for min spanning tree.  Only works
 # for TSP problems, where all vertices connect to all other vertices.
-# Parmeters: Graph in format from func makeGraph()
+# Parmeters: set edges in dict (start, end) = weight
 # Return: a list of edges in min spanning tree ex: [(0,1),(1,2),(3,4)]
-def mstPrim(G):
-    #set edges in dict (start, end) = weight
-    edges = graphEdges(G)
+def mstPrim(edges):
     A = list() # A = {(v, v.pie): v in V-{r}-
 
     #each key is set to infinity
@@ -127,7 +125,7 @@ def oddDegrees(T):
 
 
 # def minPerf(O, G):
-
+def minPerf(O, edges):
     #take vertices from O and find those edges in G
 
         # make graph with smallest edges
@@ -150,9 +148,10 @@ def oddDegrees(T):
 
 # def tsp_christofides(G):
 def tsp_christofides(G):
-    #T = mstPrim(G, w, r)
+    #edges = graphEdges(G)
+    #T = mstPrim(edges)
     #O = oddDegrees(T)
-    #M = MinWeightPerfMatch(O, G)
+    #M = MinWeightPerfMatch(O, edges)
     #H = MultiGraph(T, M)
     #E = ECircuit(v1 of H)
     #return HamCircuit(E)
