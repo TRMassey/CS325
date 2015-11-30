@@ -23,10 +23,11 @@ def makeGraph():
 
 
 
-# def mst_prim(G, w, r):
-
-# To avoid floating point precision problems in computing the squareroot,
-# we will always round the distance to the nearest integer 
+# Description: To avoid floating point precision problems 
+# in computing the squareroot, we will always round the 
+# distance to the nearest integer 
+# Parmeters: float number
+# Return: integer      
 def nearest_int(num):
     if num-int(num) >= .5:
         return int(num)+1
@@ -34,7 +35,11 @@ def nearest_int(num):
         return int(num) 
 
 
-# takes given list and calculates edges to/from all v
+
+# Description: takes given list and calculates edges to/from 
+# all v
+# Parmeters: Graph in format from func makeGraph()
+# Return: dict of key=(vertex#,vertex#), value = edge weight 
 def graph_edges(G):
     lowRange = 0
     edges  = dict()
@@ -49,6 +54,11 @@ def graph_edges(G):
     return edges
 
 
+
+# Description:  Prims algorithm for min spanning tree.  Only works
+# for TSP problems, where all vertices connect to all other vertices.
+# Parmeters: Graph in format from func makeGraph()
+# Return: a list of edges in min spanning tree ex: [(0,1),(1,2),(3,4)]
 def mst_prim(G):
     #set edges in dict (start, end) = weight
     edges = graph_edges(G)
@@ -91,7 +101,12 @@ def mst_prim(G):
     return A
 
 
-# def oddDegrees(T):
+
+# Description: seperates out vertices from edge list, counts how
+# many edges/degrees each vertex has, returns vertices with odd 
+# degress
+# Parmeters: List of edges ex: [(0,1),(1,2),(3,4)]
+# Return: list of vertices with odd degrees ex: [1,2,3] 
 def oddDegrees(T):
     degrees = dict()
     odd = list()
