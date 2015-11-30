@@ -132,16 +132,41 @@ def minPerf(O, edges):
     #take vertices from O and find those edges in edges
     combinedGraph = dict()
     deadEnds = dict()
+    minPerfect = dict()
     for path in edges:
         #if both vertices in O, path as is
         if path[1] in O and path[2] in O:
             combined[path] = edges[path]
-        #if only one vertex in O, add until other vertex (add until not dead end)
+        #if only one vertex in O, add to deadend dict for later summing of edges
         elif path[1] in O or path[2] in O:
-            pass #stuck here :(
+            deadEnds[path] = edges[path]
+    #for all deadends, find if any edges need to be sumed and added to combined list
+    for path in deadEnds:
+        if path[1] in combined[1]:
+            #while path building, sum
 
-    # find/return the min edges so all vertices are touched
-    pass
+            #add summed edge to combined
+            pass
+        elif path[1] in combined[2]:
+            #while path building, sum
+
+            #if not in combine
+                #add summed edge to combined
+            pass
+        elif path[2] in combined[1]:
+            #while path building, sum
+
+            #add summed edge to combined
+            pass
+        elif path[2] in combined[2]:
+            #while path building, sum
+
+            #add summed edge to combined
+            pass
+
+    # find the min edges so all vertices are touched
+
+    return minPerf
 
 
 # Description: Takes mst and edges from min perf and combines 
@@ -158,7 +183,7 @@ def multiGraph(T, M):
 # Parameters: edge list from multigraph combo of minPerf and 
 # mstPrim
 # Return: 
-def ecircuit(H):
+def ECircuit(H):
     pass
 
 
