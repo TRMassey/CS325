@@ -50,7 +50,7 @@ def graphEdges(G):
         #iterate through all end points
         for vertex2 in [x for x in xrange(len(G)) if x != vertex1]:
             #this is from assignment description
-            edges[(int(vertex1),int(vertex2))] = nearestInt(math.sqrt(pow(int(G[vertex1][0])-int(G[vertex2][0]), 2)+pow(int(G[vertex1][1])-int(G[vertex2][1]),2)))
+            edges[(int(vertex1),int(vertex2))] = nearestInt(math.sqrt(((int(G[vertex1][0])-int(G[vertex2][0]))**2)+((int(G[vertex1][1])-int(G[vertex2][1]))**2)))
     #dict of key=(vertex#,vertex#), value = edge weight 
     return edges
 
@@ -148,16 +148,17 @@ def minPerf(O, edges):
                     if(edges[data] < curMin):
                         curMin = edges[data]
                         curEdge = data
+                        O.remove(data[1])
             elif(data[1] == vertex):
                 #find edge connecting to other v in O
                 if(data[0] in O):
                     if(edges[data] < curMin):
                         curMin = edges[data]
                         curEdge = data
+                        O.remove(data[0])
         #add path
         minPerf[curEdge] = curMin
     #get rid of any duplicate vertices
-    
     return minPerf
 
 
@@ -201,9 +202,9 @@ def eCircuit(H):
             oddN += 1
 
     # To have a Euler Circuit, number of nodes w/odd degree must be 0 or 2
-    if oddN !=2:
-        if oddN != 0:
-            return None
+#    if oddN !=2:
+ #       if oddN != 0:
+  #          return None
 
     #  make new path, it's still a dictionary
     newH = H
@@ -315,10 +316,10 @@ def main():
 
     out = open(outputname, "w")
 
-    out.write(tour)
+#need to calc weight here
 
     # need to write the path for the above length here
-
+    out.write(str(tour))
 
 
 
