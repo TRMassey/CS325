@@ -207,7 +207,7 @@ def eCircuit(H):
 
     #  make new path, it's still a dictionary
     newH = H
-    tour = {}
+    tour = []
 
     #  must start with odd node when applicable
     for node in degrees:
@@ -215,34 +215,33 @@ def eCircuit(H):
             startNode = newH[node]
             break
         else:
-            startNode = newH.iterkeys().next()
+            for cities in newH.keys():
+                if cities[0] == 0:
+                    startNode = cities[0]
 
     # find subtours starting at the starting node
-    tour = [startNode]
-    for node in degrees:
-        tour = [-1]
- 
+#   tour = [startNode]
+#    for node in degrees:
+#        tour = [-1]
+
     # find subtours starting at the starting node
     stack = [startNode]
     while stack:
         vertex = stack[-1]
-        foundEdge = False
         #search for edge using starting point vertex
-        for edges in H.keys():
+        foundEdge = False
+        destination = 0
+        for edges in H:
             if vertex == edges[0]:
                 destination = edges[1]
                 stack.append(destination)
-                #remove from dict so not reused
-                H.pop(edges)
                 foundEdge = True
-                break
         if not foundEdge:
-            #this enters list backwards, will need to reverse start+1 to end-1
             vertex = stack.pop()
             tour.append(vertex)
-    #clean up, reverse start-1 to end-1
-    tour[1:len(tour)-1] = reversed(tour[1:len(tour)-1])
-
+        else:
+            if (vertex, destination) in H: del H[(vertex, destination)]
+            #H.pop(vertex, destination)
     return tour
 
 
@@ -286,7 +285,8 @@ def tsp_christofides(G):
     M = minPerf(O, edges)
     H = multiGraph(T, M, edges)
     E = eCircuit(H)
-    return hamCircuit(E)
+    tour = hamCircuit(E)
+    return tour
 
 
 
