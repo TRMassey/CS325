@@ -183,7 +183,7 @@ def eCircuit(H):
         foundEdge = False
         #search for edge using starting point vertex
         for edges in H.keys():
-        	if vertex == edges[0]:
+            if vertex == edges[0]:
         		destination = edges[1]
         		stack.append(destination)
         		#remove from dict so not reused
@@ -191,10 +191,36 @@ def eCircuit(H):
         		foundEdge = True
         		break
         if not foundEdge:
-        	tour.append(stack.pop())
+            #this enters list backwards, will need to reverse start+1 to end-1
+            vertex = stack.pop()
+            tour.append(vertex)
+    #clean up, reverse start-1 to end-1
+    tour[1:len(tour)-1] = reversed(tour[1:len(tour)-1])
+
     return tour
 
+def hamCircuit(E):
+    #to become ham, cut circle (start and end should be same node from Euler)
+    if(E[0] == E[len(E)-1]):
+        E.pop()
+    
+    #DFS on one tour
+    visitedNodes = dict((vertex, False) for vertex in E)
+    index = 0
+    stack = [E[index]]
+    hamilton = []
 
+    while len(stack) > 0:
+        vertex = stack.pop()
+        if visitedNodes[vertex] == False:
+            visitedNodes[vertex] = True
+            hamilton.append(vertex)
+            #if neighbor, add to stack
+            if(index+1 < len(E)):
+                index += 1
+                stack.append(E[index])
+
+    return hamilton
 
 
 G = ((200,800), (3600,2300), (3100,3300), (4700,5750), (5400,5750), (5608,7103))
@@ -207,4 +233,5 @@ T = mst_prim(edges, G)
 odd = oddDegrees(T)
 M = minPerf(odd, edges)
 H = multiGraph(T, M, edges)
-print eCircuit(H)
+E = eCircuit(H)
+print hamCircuit(E)

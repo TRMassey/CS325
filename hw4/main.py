@@ -159,7 +159,7 @@ def minPerf(O, edges):
 # them into one graph/edge list representation
 # Parameters: mst edge list,  edge list of min weight perfect 
 # matching
-# Return: 
+# Return: dictionary (city1, city2) = weight
 def multiGraph(T, M, edges):
     for edge in T:
         if edge not in M.keys():
@@ -170,9 +170,9 @@ def multiGraph(T, M, edges):
 
 
 # Description: Takes edge list and runs/finds Euler Circuit
-# Parameters: edge list from multigraph combo of minPerf and 
-# mstPrim
-# Return: 
+# Parameters: dict from multigraph combo of minPerf and 
+# mstPrim (city1, city2) = weight
+# Return: list of cities in euler
 # Citation: https://github.com/plawanrath/AI_Euler_Paths-Cycles/blob/master/paths_graph1.py 
 #Citation: https://github.com/sbebo/graph/blob/master/tsp.py
 
@@ -231,38 +231,44 @@ def eCircuit(H):
                 foundEdge = True
                 break
         if not foundEdge:
-            tour.append(stack.pop())
+            #this enters list backwards, will need to reverse start+1 to end-1
+            vertex = stack.pop()
+            tour.append(vertex)
+    #clean up, reverse start-1 to end-1
+    tour[1:len(tour)-1] = reversed(tour[1:len(tour)-1])
 
-##########Code Below This is Being Fixed ##########################  
-        # set default in dictionary
-        tours.setdefault(node, [])
-        if len(tour) > 1:
-            tours[node] = tour[:-1] # no double insertion in starting node
-
-        #DFS on one tour
-        visitedNodes = dict.fromkeys(H, False)
-        stack = [H[0]]
-        euler = []
-        hamilton = []
-
-        while len(stack) > 0:
-            node = stack.pop()
-            euler.append(node)
-            if visitedNodes[node] == False:
-                visitedNodes[node] = True
-                hamilton.append(node)
-                stack.extend(tours[node])
-
-    return euler
+    return tour
 
 
 
 # Description: Takes Euler Circuit and runs/finds Hamiltonian
 # Cycle/Circuit
-# Parameters: 
-# Return: 
+# Parameters: Euler circuit as list of vertices
+# Return: Hamiltonian circuit as list of vertices
+# Citation: https://github.com/sbebo/graph/blob/master/tsp.py
 def hamCircuit(E):
-    pass
+    #to become ham, cut circle (start and end should be same node from Euler)
+    if(E[0] == E[len(E)-1]):
+        E.pop()
+    
+    #DFS on one tour
+    visitedNodes = dict((vertex, False) for vertex in E)
+    index = 0
+    stack = [E[index]]
+    hamilton = []
+
+    while len(stack) > 0:
+        vertex = stack.pop()
+        #valid if not visited yet, add to path
+        if visitedNodes[vertex] == False:
+            visitedNodes[vertex] = True
+            hamilton.append(vertex)
+            #if neighbor, add to stack
+            if(index+1 < len(E)):
+                index += 1
+                stack.append(E[index])
+
+    return hamilton
 
 
 
