@@ -136,8 +136,10 @@ def oddDegrees(T):
 # Return: min weight perfect matching edge list
 def minPerf(O, edges):
     minPerf = dict()
+    index = 0
     #iterate through vertices in O
-    for vertex in O:
+    while len(O) > 0:
+        vertex = O[index]
         curMin = float("inf")
         #find shortest path from O[i] to other vertex in O
         for data in edges.keys():
@@ -148,16 +150,14 @@ def minPerf(O, edges):
                     if(edges[data] < curMin):
                         curMin = edges[data]
                         curEdge = data
-                        O.remove(data[1])
-            elif(data[1] == vertex):
-                #find edge connecting to other v in O
-                if(data[0] in O):
+                elif len(O) == 1:
                     if(edges[data] < curMin):
                         curMin = edges[data]
                         curEdge = data
-                        O.remove(data[0])
         #add path
         minPerf[curEdge] = curMin
+        #do not reuse vertex
+        O.remove(curEdge[0])
     #get rid of any duplicate vertices
     return minPerf
 
