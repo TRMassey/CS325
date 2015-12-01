@@ -129,18 +129,25 @@ def minPerf(O, edges):
                         curEdge = data
         #add path
         minPerf[curEdge] = curMin
-
     #get rid of any duplicate vertices
 
-
     return minPerf
+
+def multiGraph(T, M, edges):
+    for edge in T:
+    	if edge not in M.keys():
+    		M[edge] = edges[edge]
+    return M
 
 
 G = ((200,800), (3600,2300), (3100,3300), (4700,5750), (5400,5750), (5608,7103))
 #print graph_edges(G)
 #{(1, 3): 3621, (3, 0): 6690, (5, 4): 1369, (2, 1): 1118, (5, 1): 5206, (2, 5): 4556, (0, 3): 6690, (4, 0): 7179, (1, 2): 1118, (1, 5): 5206, (5, 0): 8305, (0, 4): 7179, (5, 3): 1629, (4, 1): 3891, (3, 2): 2926, (4, 5): 1369, (1, 4): 3891, (0, 5): 8305, (4, 2): 3360, (1, 0): 3716, (3, 5): 1629, (0, 1): 3716, (5, 2): 4556, (3, 1): 3621, (0, 2): 3829, (2, 0): 3829, (4, 3): 700, (2, 3): 2926, (3, 4): 700, (2, 4): 3360}
 # expected output [(0,1),(1,2),(2,3),(3,4),(4,5)]
+
 edges = graph_edges(G)
-mst = mst_prim(edges, G)
-odd = oddDegrees(mst)
-print minPerf(odd, edges)
+T = mst_prim(edges, G)
+odd = oddDegrees(T)
+M = minPerf(odd, edges)
+test = multiGraph(T, M, edges)
+print test

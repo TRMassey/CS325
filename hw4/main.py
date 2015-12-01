@@ -160,8 +160,12 @@ def minPerf(O, edges):
 # Parameters: mst edge list,  edge list of min weight perfect 
 # matching
 # Return: 
-def multiGraph(T, M):
-    pass
+def multiGraph(T, M, edges):
+    for edge in T:
+        if edge not in M.keys():
+            M[edge] = edges[edge]
+    return M
+
 
 
 
@@ -188,8 +192,8 @@ def tsp_christofides(G):
     #edges = graphEdges(G)
     #T = mstPrim(edges, G)
     #O = oddDegrees(T)
-    #M = MinWeightPerfMatch(O, edges)
-    #H = MultiGraph(T, M)
+    #M = minPerf(O, edges)
+    #H = multiGraph(T, M, edges)
     #E = eCircuit(v1 of H)
     #return hamCircuit(E)
     pass
