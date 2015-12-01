@@ -205,21 +205,35 @@ def eCircuit(H):
 
     #  must start with odd node when applicable
     for node in degrees:
-        if degree[node] % 2 == 1:
-            startNode = newH[node][]
-        if len(newH) == 0:
-            StartNode = newH[0][0]
+        if degrees[node] % 2 == 1:
+            startNode = newH[node]
+            break
+        else:
+            startNode = newH.iterkeys().next()
 
     # find subtours starting at the starting node
+    tour = [startNode]
     for node in degrees:
-        tour = [startNode]
-        while len(newH[node]) > 0:
-            i = newH[node][0]
-            newH[node].remove(i)
-            newH[i].remove(node)
-            node = i
-            tour.append(node)
+        tour = [-1]
+ 
+    # find subtours starting at the starting node
+    stack = [startNode]
+    while stack:
+        vertex = stack[-1]
+        foundEdge = False
+        #search for edge using starting point vertex
+        for edges in H.keys():
+            if vertex == edges[0]:
+                destination = edges[1]
+                stack.append(destination)
+                #remove from dict so not reused
+                H.pop(edges)
+                foundEdge = True
+                break
+        if not foundEdge:
+            tour.append(stack.pop())
 
+##########Code Below This is Being Fixed ##########################  
         # set default in dictionary
         tours.setdefault(node, [])
         if len(tour) > 1:
