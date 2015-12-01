@@ -173,8 +173,73 @@ def multiGraph(T, M, edges):
 # Parameters: edge list from multigraph combo of minPerf and 
 # mstPrim
 # Return: 
+# Citation: https://github.com/plawanrath/AI_Euler_Paths-Cycles/blob/master/paths_graph1.py 
+#Citation: https://github.com/sbebo/graph/blob/master/tsp.py
+
 def eCircuit(H):
-    pass
+    edges = len(H)
+    degrees = {}
+    oddN = 0
+
+    # determine degrees
+    for edge in H:
+        for node in edge:
+          if node in degrees:
+                degrees[node] += 1
+          else:
+                degrees[node] = 1
+
+    # determine which have an odd degree
+    for node in degrees:
+        if degrees[node] % 2 == 1:
+            oddN += 1
+
+    # To have a Euler Circuit, number of nodes w/odd degree must be 0 or 2
+    if oddN !=2:
+        if oddN != 0:
+            return None
+
+    #  make new path, it's still a dictionary
+    newH = H
+    tour = {}
+
+    #  must start with odd node when applicable
+    for node in degrees:
+        if degree[node] % 2 == 1:
+            startNode = newH[node][]
+        if len(newH) == 0:
+            StartNode = newH[0][0]
+
+    # find subtours starting at the starting node
+    for node in degrees:
+        tour = [startNode]
+        while len(newH[node]) > 0:
+            i = newH[node][0]
+            newH[node].remove(i)
+            newH[i].remove(node)
+            node = i
+            tour.append(node)
+
+        # set default in dictionary
+        tours.setdefault(node, [])
+        if len(tour) > 1:
+            tours[node] = tour[:-1] # no double insertion in starting node
+
+        #DFS on one tour
+        visitedNodes = dict.fromkeys(H, False)
+        stack = [H[0]]
+        euler = []
+        hamilton = []
+
+        while len(stack) > 0:
+            node = stack.pop()
+            euler.append(node)
+            if visitedNodes[node] == False:
+                visitedNodes[node] = True
+                hamilton.append(node)
+                stack.extend(tours[node])
+
+    return euler
 
 
 
