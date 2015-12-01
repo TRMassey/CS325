@@ -50,7 +50,7 @@ def graphEdges(G):
         #iterate through all end points
         for vertex2 in [x for x in xrange(len(G)) if x != vertex1]:
             #this is from assignment description
-            edges[(vertex1,vertex2)] = nearestInt(math.sqrt(pow(G[vertex1][0]-G[vertex2][0], 2)+pow(G[vertex1][1]-G[vertex2][1],2)))
+            edges[(int(vertex1),int(vertex2))] = nearestInt(math.sqrt(pow(int(G[vertex1][0])-int(G[vertex2][0]), 2)+pow(int(G[vertex1][1])-int(G[vertex2][1]),2)))
     #dict of key=(vertex#,vertex#), value = edge weight 
     return edges
 
@@ -79,13 +79,19 @@ def mstPrim(edges, G):
     Qsize = len(Q)
     #while Q is not empty
     while Q:
+        minIndex = float("inf")
+        minWeight = float("inf")
         #find smallest key of applicble Qs
         minList = [float("inf")]*Qsize
         for num in Q:
             minList[num] = key[num]
-        u = min(u for u in minList)
+            #register min Index
+            if minList[num] < minWeight:
+                minIndex = num
+        #u = min(u for u in minList)  #this doesn't work if mult same weights
         #remove Q that was used
-        cur = (key.index(u))
+        #cur = (key.index(u))         #this doesn't work if mult same weights
+        cur = minIndex
         Q.remove(cur)
 
         if parent[cur] != None:
@@ -274,14 +280,13 @@ def hamCircuit(E):
 
 # def tsp_christofides(G):
 def tsp_christofides(G):
-    #edges = graphEdges(G)
-    #T = mstPrim(edges, G)
-    #O = oddDegrees(T)
-    #M = minPerf(O, edges)
-    #H = multiGraph(T, M, edges)
-    #E = eCircuit(v1 of H)
-    #return hamCircuit(E)
-    pass
+    edges = graphEdges(G)
+    T = mstPrim(edges, G)
+    O = oddDegrees(T)
+    M = minPerf(O, edges)
+    H = multiGraph(T, M, edges)
+    E = eCircuit(H)
+    return hamCircuit(E)
 
 
 
@@ -291,13 +296,13 @@ def main():
     f = open(sys.argv[1], "r")
     inputname = sys.argv[1]
     G = makeGraph()
-    print G
+    #print G
     f.close()   
 
 	# timer needed
     start = time.time()
     # this is where we would call the algorithm
-    tour = "algorithm here"
+    tour = tsp_christofides(G)
 
     end = time.time()
 
