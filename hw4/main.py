@@ -145,20 +145,35 @@ def minPerf(O, edges):
 
     # this is the dataset I sent # print oddsGraph
 
+    #Greedy
+    #while O is not empty 
+    while len(O) > 0:
+        minEdge = float("inf")
+        minVert = None
+        #iterate through oddGraph
+        for vert in oddsGraph:
+            #keep min edge
+            if oddsGraph[vert] < minEdge and vert[0] in O:
+                minEdge = oddsGraph[vert]
+                minVert = vert
+        #delete vert1 of (vert1, vert2) form O
+        O.remove(minVert[0])
+        minPerf[minVert] = minEdge
+    return minPerf
+'''
+    #LP
     #find the min edges that touch all verts (don't need a path)
-
+    for vertex in O: 
         #take the cheapest for that vertex
+        for path in edges:
+            if path[0] == vertex:
 
             #compare the destiation's cheapest, is it still a winner?
 
 
-    
-
-
-
     #get rid of any duplicate vertices
     return minPerf
-
+'''
 
 # Description: Takes mst and edges from min perf and combines 
 # them into one graph/edge list representation
