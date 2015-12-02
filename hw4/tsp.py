@@ -24,7 +24,7 @@ def optimize(graph, route, currentDistance):
 		one = i;
 		two = i+1 % len(route)
 
-		for j in range(i + 1, len(route)):
+		for j in range(i + 1, len(route) -1):
 
 			three = j % len(route)
 			four = j+1 % len(route)
@@ -37,12 +37,12 @@ def optimize(graph, route, currentDistance):
 
 
 			#determine shortest
-			if (graph[pathOne][pathThree] + graph[pathTwo][pathFour]) < (graph[pathOne][pathTwo] + graph[pathThree][pathFour]):
+			if ((pathOne + pathThree) + (pathTwo + pathFour)) < ((pathOne + pathTwo) + (pathThree + pathFour)):
 				new_distance = currentDistance
-				new_distance -= (graph[pathOne][pathTwo] + graph[pathThree][pathFour] - graph[pathOne][pathThree] + graph[pathTwo][pathFour])
+				new_distance -= ((pathOne + pathThree) + (pathTwo + pathFour)) - ((pathOne + pathThree) + (pathTwo + pathFour))
 
 				#reverse and swap per wikipedia, removing edge
-				new_route = twoOptSwap(route, i + 1, j)
+				new_route = twoOptSwap(route, i + 2, j)
 
 				if new_distance < bestDistance:
 					bestDistance = new_distance
@@ -153,8 +153,9 @@ def tsp(G):
 		path.append(greedyPath(vertex, vertices, edges))	#parameters might need to change
 
 	#get the optimal path in first index
-	path.sort(key=lambda tup:tup[1])
+	#path.sort(key=lambda tup:tup[1])
 ### not sure about above parameters, need to lookup
+	path = optimize(G, path, path[1])
 
 	return path[0]
 
@@ -163,6 +164,10 @@ def tsp(G):
 def main():
     # Your program must:
     # Accept problem instances on the command line
+    if len(sys.argv) != 2:
+    	print "Error."
+    	exit()
+
     f = open(sys.argv[1], "r")
     inputname = sys.argv[1]
     G = makeGraph()
@@ -173,13 +178,12 @@ def main():
     start = time.time()
     # this is where we would call the algorithm
     tour = tsp(G)
-    distance = optimize(G, tour, tour[1])
 
     end = time.time()
 
     print "Time elapsed:",(end - start), "seconds"
 
-    print "Tour length:", distance
+    print "Tour length:", tour[0]
 
     # Name the output file as the input file's name with .tour appended 
     outputname = inputname + ".tour"
