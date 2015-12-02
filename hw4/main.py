@@ -153,11 +153,12 @@ def minPerf(O, edges):
         #iterate through oddGraph
         for vert in oddsGraph:
             #keep min edge
-            if oddsGraph[vert] < minEdge and vert[0] in O:
+            if oddsGraph[vert] < minEdge and vert[0] in O and vert[1] in O:
                 minEdge = oddsGraph[vert]
                 minVert = vert
         #delete vert1 of (vert1, vert2) form O
         O.remove(minVert[0])
+        O.remove(minVert[1])
         minPerf[minVert] = minEdge
     return minPerf
 '''
@@ -174,6 +175,8 @@ def minPerf(O, edges):
     #get rid of any duplicate vertices
     return minPerf
 '''
+
+
 
 # Description: Takes mst and edges from min perf and combines 
 # them into one graph/edge list representation
@@ -298,6 +301,7 @@ def tsp_christofides(G):
     O = oddDegrees(T)
     M = minPerf(O, edges)
     H = multiGraph(T, M, edges)
+    print H
     E = eCircuit(H)
     tour = hamCircuit(E)
     return tour
