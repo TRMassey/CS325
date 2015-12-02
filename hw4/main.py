@@ -5,6 +5,7 @@
 import sys
 import time
 import math
+from blossom import *
 
 def makeGraph():
     # make a list of the values as they are read in
@@ -137,7 +138,22 @@ def oddDegrees(T):
 def minPerf(O, edges):
     oddsGraph = dict()
     minPerf = dict()
+    tuplesGraph = list()
 
+    #needed parameter for blossom
+    for entry in edges:
+        if entry[0] in O and entry[1] in O:
+            tuplesGraph.append((entry[0], entry[1],edges[entry]))
+    
+    #this returns a list where list[i] = j needs to turn into [i,j] edge
+    result =  maxWeightMatching(tuplesGraph)
+    for vertex in result:
+        if vertex > -1:
+            minPerf[result.index(vertex), vertex] = edges[result.index(vertex), vertex]
+
+    return minPerf
+
+'''
     #create a graph with only the vertices from O
     for path in edges:
         if path[0] in O and path[1] in O:
@@ -147,6 +163,7 @@ def minPerf(O, edges):
 
     #Greedy
     #while O is not empty 
+    copyO = list(O)
     while len(O) > 0:
         minEdge = float("inf")
         minVert = None
@@ -156,12 +173,13 @@ def minPerf(O, edges):
             if oddsGraph[vert] < minEdge and vert[0] in O and vert[1] in O:
                 minEdge = oddsGraph[vert]
                 minVert = vert
-        #delete vert1 of (vert1, vert2) form O
+        #delete vert1 of (vert1, vert2) from O
         O.remove(minVert[0])
-        O.remove(minVert[1])
+        if minVert[1] in O:
+            O.remove(minVert[1])
         minPerf[minVert] = minEdge
     return minPerf
-'''
+
     #LP
     #find the min edges that touch all verts (don't need a path)
     for vertex in O: 
@@ -222,14 +240,12 @@ def eCircuit(H):
  #       if oddN != 0:
   #          return None
 
-    #  make new path, it's still a dictionary
-    newH = H
     tour = []
 
     #  must start with odd node when applicable
     for node in degrees:
         if degrees[node] % 2 == 1:
-            startNode = newH[node]
+            startNode = node
             break
         else:
             for cities in newH.keys():
@@ -301,7 +317,6 @@ def tsp_christofides(G):
     O = oddDegrees(T)
     M = minPerf(O, edges)
     H = multiGraph(T, M, edges)
-    print H
     E = eCircuit(H)
     tour = hamCircuit(E)
     return tour
