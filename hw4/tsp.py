@@ -50,6 +50,7 @@ def optimize(graph, route, currentDistance):
 				if bestDistance == currentDist:
 					break
 
+				print "best Distance ", bestDistance
 	return bestDistance
 
 
@@ -155,9 +156,9 @@ def tsp(G):
 	#get the optimal path in first index
 	#path.sort(key=lambda tup:tup[1])
 ### not sure about above parameters, need to lookup
-	path = optimize(G, path, path[1])
+	distance = optimize(G, path, path[0])
 
-	return path[0]
+	return distance
 
 
 
@@ -183,7 +184,7 @@ def main():
 
     print "Time elapsed:",(end - start), "seconds"
 
-    print "Tour length:", tour[0]
+    print "Tour length:", tour[1]
 
     # Name the output file as the input file's name with .tour appended 
     outputname = inputname + ".tour"
