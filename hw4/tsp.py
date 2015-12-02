@@ -7,6 +7,52 @@ import math
 import time
 
 
+#route must be an array of some kind, i is start, j is end
+# removing edges and reconnecting
+def twoOptSwap(route, i, j): 
+	for k in range(i, len(route)):
+		routeTwo[counter] = route[k]
+		newRoute(reversed(routeTwo))
+	return newRoute
+
+
+def optimize(graph, route, currentDistance):
+
+	bestDistance = currentDistance
+	for i in range(1, len(route) - 1):
+		#positions
+		one = i;
+		two = i+1 % len(route)
+
+		for j in range(i + 1, len(route)):
+
+			three = j % len(route)
+			four = j+1 % len(route)
+
+			#paths
+			pathOne = route[one]
+			pathTwo = route[two]
+			pathThree = route[three]
+			pathFour = route[four]
+
+
+			#determine shortest
+			if (graph[pathOne][pathThree] + graph[pathTwo][pathFour]) < (graph[pathOne][pathTwo] + graph[pathThree][pathFour]):
+				new_distance = currentDistance
+				new_distance -= (graph[pathOne][pathTwo] + graph[pathThree][pathFour] - graph[pathOne][pathThree] + graph[pathTwo][pathFour])
+
+				#reverse and swap per wikipedia, removing edge
+				new_route = twoOptSwap(route, i + 1, j)
+
+				if new_distance < bestDistance:
+					bestDistance = new_distance
+
+				if bestDistance == currentDist:
+					break
+
+	return bestDistance
+
+
 def makeGraph():
     # make a list of the values as they are read in
 	# since the number of the cities corresponds with its position in the list, that value is not saved
@@ -126,12 +172,13 @@ def main():
     start = time.time()
     # this is where we would call the algorithm
     tour = tsp(G)
+    distance = optimize(G, tour, tour[1])
 
     end = time.time()
 
     print "Time elapsed:",(end - start), "seconds"
 
-    print "Tour length:", tour[1]
+    print "Tour length:", distance
 
     # Name the output file as the input file's name with .tour appended 
     outputname = inputname + ".tour"
