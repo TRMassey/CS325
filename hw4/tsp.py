@@ -55,7 +55,7 @@ def graphEdges(G):
 
 
 
-def findPath(vertex, vertices, edges):
+def greedyPath(vertex, vertices, edges):
 	curVert = vertex # current vertex being considered
 	minEdge = float("inf") #compare mins when iterating
 	minVert = None	#compare mins when iterating
@@ -104,11 +104,11 @@ def tsp(G):
 		vertices.append(G.index(vertex))
 	
 	for vertex in vertices:
-		path.append(findPath(vertex, vertices, edges))	#parameters might need to change
+		path.append(greedyPath(vertex, vertices, edges))	#parameters might need to change
 
 	#get the optimal path in first index
 	path.sort(key=lambda tup:tup[1])
-###
+### not sure about above parameters, need to lookup
 
 	return path[0]
 
@@ -139,11 +139,11 @@ def main():
 
     out = open(outputname, "w")
 
-#need to calc weight here
+	#need to calc weight here
+	out.write(str(tour[1]))
 
     # need to write the path for the above length here
-    out.write(str(tour))
-
+    out.write(str(tour[0]))
 
 
 
