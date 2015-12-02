@@ -72,10 +72,11 @@ def greedyPath(vertex, vertices, edges):
 		#check all edges from current vertex
 		for vert in unvisited: #must be to unused vertex
 			#find min edge connecting to curent vertex
-			if edges[curVert,vert] < minEdge:
-				#update to new min
-				minEdge = edges[curVert,vert] 
-				minVert = vert
+			if curVert != vert:
+				if edges[curVert,vert] < minEdge:
+					#update to new min
+					minEdge = edges[curVert,vert] 
+					minVert = vert
 		#use min info for official path info
 		path.append(minVert)
 		distance += minEdge
