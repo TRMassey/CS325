@@ -142,7 +142,7 @@ def minPerf(O, edges):
 
     #needed parameter for blossom
     for entry in edges:
-        if entry[0] in O and entry[1] in O:
+        if entry[0] in O:
             tuplesGraph.append((entry[0], entry[1],edges[entry]))
     
     #this returns a list where list[i] = j needs to turn into [i,j] edge
@@ -150,6 +150,8 @@ def minPerf(O, edges):
     for vertex in result:
         if vertex > -1:
             minPerf[result.index(vertex), vertex] = edges[result.index(vertex), vertex]
+        else:
+            print "nooooo"
 
     return minPerf
 
