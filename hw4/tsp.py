@@ -10,8 +10,7 @@ import time
 def makeGraph():
     # make a list of the values as they are read in
 	# since the number of the cities corresponds with its position in the list, that value is not saved
-	coordList = list()
-	
+	coordList = list()	
 	filename = sys.argv[1]
 	
 	with open(filename) as f:
@@ -56,12 +55,62 @@ def graphEdges(G):
 
 
 
-def findPath():
+def findPath(vertex, vertices, edges):
+	curVert = vertex # current vertex being considered
+	minEdge = float("inf") #compare mins when iterating
+	minVert = None	#compare mins when iterating
+	path = list() # list of decided path for tsp
+	distance = 0	#combined distance of final path
+	unvisited = list(vertices) #keeps track of what still needs to be used
+
+	#create a path with all vertices
+	while len(unvisited) > 0:
+		#start case: no path started yet
+		if len(unvisited) == len(vertices):
+			path.append(curVert)
+			unvisited.remove(vertex)
+		#check all edges from current vertex
+		for vert in unvisited: #must be to unused vertex
+			#find min edge connecting to curent vertex
+			if edges[curVert,vert] < minEdge:
+				#update to new min
+				minEdge = edges[curVert,vert] 
+				minVert = vert
+		#use min info for official path info
+		path.append(minVert)
+		distance += minEdge
+		#upkeep for iteration
+		unvisited.remove(minVert)
+		curVert = minVert
+		minVert = None
+		minEdge = float("inf")
+		#end case: make cycle and connect end->start
+		if len(unvisited) == 0:
+			distance += edges(curVert, vertex)
+
+	return (path, distance)
 
 
 
+def tsp(G):
+	path = list()
+	vertices = list()
 
-def tsp():
+	#calculate edges  (vertex, vertex) = weight
+	edges = dict(graphEdges(G))
+	
+	#create vertices list
+	for vertex in G:
+		vertices.append(G.index(vertex))
+	
+	for vertex in vertices:
+		path.append(findPath(vertex, vertices, edges))	#parameters might need to change
+
+	#get the optimal path in first index
+	path.sort(key=lambda tup:tup[1])
+###
+
+	return path[0]
 
 
 
@@ -77,7 +126,7 @@ def main():
 	# timer needed
     start = time.time()
     # this is where we would call the algorithm
-    tour = tsp_christofides(G)
+    tour = tsp(G)
 
     end = time.time()
 
