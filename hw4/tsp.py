@@ -86,8 +86,7 @@ def greedyPath(vertex, vertices, edges):
 		minEdge = float("inf")
 		#end case: make cycle and connect end->start
 		if len(unvisited) == 0:
-			distance += edges(curVert, vertex)
-
+			distance += edges[curVert, vertex]
 	return (path, distance)
 
 
@@ -97,7 +96,7 @@ def tsp(G):
 	vertices = list()
 
 	#calculate edges  (vertex, vertex) = weight
-	edges = dict(graphEdges(G))
+	edges = graphEdges(G)
 	
 	#create vertices list
 	for vertex in G:
@@ -132,15 +131,15 @@ def main():
 
     print "Time elapsed:",(end - start), "seconds"
 
-    print "Tour length:", tour
+    print "Tour length:", tour[1]
 
     # Name the output file as the input file's name with .tour appended 
     outputname = inputname + ".tour"
 
     out = open(outputname, "w")
 
-	#need to calc weight here
-	out.write(str(tour[1]))
+    #need to calc weight here
+    out.write(str(tour[1]))
 
     # need to write the path for the above length here
     out.write(str(tour[0]))
