@@ -12,24 +12,23 @@ import time
 #http://www.technical-recipes.com/2012/applying-c-implementations-of-2-opt-to-travelling-salesman-problems/
 # OUT OF BOUNDS ERROR!!!! GRRRRRR!!!!!!!
 def twoOptSwap(route, i, j): 
-	newRoute = []
+	newRoute = [None]*len(route)
 
 	# take Route[0] to route[i-1] and put in new route
 	for k in range(0, i):
-		newRoute[k] = route[k]
+		newRoute[k] = route[k][0]
 		#print "K: ", k
 
 	# take route[i] to route[j] and add then in reverse order
 	dec = 0
 	for k in range(i, j+1):
-		#print "K in 2: ", k
-		newRoute[k] = route[j - dec]		# going out of bounds!?
+		newRoute[k] = route[j-dec][0]		# going out of bounds!?
 		dec += 1
 
 	# take route[j+1] to the end, and add them in order to a new route
 	for k in range(j+1, len(route)):
 		#print "K in 3: ", k
-		newRoute[k] = route[k]
+		newRoute[k] = route[k][0]
 
 	return newRoute
 
@@ -49,7 +48,7 @@ def optimize(graph, route, currentDistance):
 
 				#reverse and swap per wikipedia, removing edge
 				new_route = twoOptSwap(route, i, j)
-				new_distance = new_route[0][1]			# OUT OF RANGE!?
+				new_distance = new_route[0]		# OUT OF RANGE!?
 
 				if new_distance < bestDistance:
 					#improvement found
@@ -57,11 +56,11 @@ def optimize(graph, route, currentDistance):
 					bestDistance = new_distance
 					route = new_route
 
-				if bestDistance == currentDist:
+				if bestDistance == currentDistance:
 					break
 		improve += 1
 
-	return (route, bestDistance)
+	return (route[0][0], bestDistance)
 
 
 def makeGraph():

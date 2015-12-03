@@ -10,47 +10,49 @@ import time
 #route must be an array of some kind, i is start, j is end
 # removing edges and reconnecting
 def twoOptSwap(route, i, j): 
-	for k in range(i, len(route)):
-		routeTwo[counter] = route[k]
-		newRoute(reversed(routeTwo))
-	return newRoute
+    
+    #this reverses the list only from i to j
+    route[i:j] = route[i:j][::-1]
+    return route
+    '''
+    for k in range(i, len(route)):
+        routeTwo[counter] = route[k]
+        newRoute(reversed(routeTwo))
+    return newRoute
+    '''
 
 
-def optimize(graph, route, currentDistance):
+def optimize(graph, route, currentDistance, edges):
+    bestDistance = currentDistance[1]
+    new_route = route[0]
 
-	bestDistance = currentDistance
-	for i in range(1, len(route) - 1):
-		#positions
-		one = i;
-		two = i+1 % len(route)
+    for i in range(0, len(route)):  #since files start at 0, len(route) ok
+        #positions
+        one = i;
+        two = (i+1) % len(route)
 
-		for j in range(i + 1, len(route)):
+        j = i+2
+        while (j+1)%len(route) != i:
 
-			three = j % len(route)
-			four = j+1 % len(route)
+            three = j % len(route)
+            four = (j+1) % len(route)
 
-			#paths
-			pathOne = route[one]
-			pathTwo = route[two]
-			pathThree = route[three]
-			pathFour = route[four]
+            #determine shortest
+            if ((edges[one, three] + edges[two, four]) < (edges[one, two] + edges[three, four])):
+                new_distance = currentDistance[1]
+                new_distance -= (edges[one, two] + edges[three, four] - edges[one, three] - edges[two, four])
+                #reverse and swap per wikipedia, removing edge
+                new_route = twoOptSwap(route[0][0], i+1, j)
 
+                if new_distance < bestDistance:
+                    bestDistance = new_distance
 
-			#determine shortest
-			if (graph[pathOne][pathThree] + graph[pathTwo][pathFour]) < (graph[pathOne][pathTwo] + graph[pathThree][pathFour]):
-				new_distance = currentDistance
-				new_distance -= (graph[pathOne][pathTwo] + graph[pathThree][pathFour] - graph[pathOne][pathThree] + graph[pathTwo][pathFour])
+                if bestDistance == currentDistance:
+                    break
+            j += 1
 
-				#reverse and swap per wikipedia, removing edge
-				new_route = twoOptSwap(route, i + 1, j)
+    return new_route, bestDistance
 
-				if new_distance < bestDistance:
-					bestDistance = new_distance
-
-				if bestDistance == currentDist:
-					break
-
-	return bestDistance
 
 
 def makeGraph():
@@ -139,24 +141,26 @@ def greedyPath(vertex, vertices, edges):
 
 
 def tsp(G):
-	path = list()
-	vertices = list()
+    path = list()
+    vertices = list()
 
-	#calculate edges  (vertex, vertex) = weight
-	edges = graphEdges(G)
-	
-	#create vertices list
-	for vertex in G:
-		vertices.append(G.index(vertex))
-	
-	for vertex in vertices:
-		path.append(greedyPath(vertex, vertices, edges))	#parameters might need to change
+    #calculate edges  (vertex, vertex) = weight
+    edges = graphEdges(G)
+    
+    #create vertices list
+    for vertex in G:
+        vertices.append(G.index(vertex))
+    
+    for vertex in vertices:
+        path.append(greedyPath(vertex, vertices, edges))
 
-	#get the optimal path in first index
-	path.sort(key=lambda tup:tup[1])
-### not sure about above parameters, need to lookup
+    #get the optimal path in first index
+    #path.sort(key=lambda tup:tup[1])        #if greedy only
 
-	return path[0]
+    distance = optimize(G, path, path[0], edges)   #if opt-2
+
+    #return path[0]  #if greedy only
+    return distance  #if opt-2
 
 
 
@@ -173,13 +177,13 @@ def main():
     start = time.time()
     # this is where we would call the algorithm
     tour = tsp(G)
-    distance = optimize(G, tour, tour[1])
+    #distance = optimize(G, tour, tour[1])
 
     end = time.time()
 
     print "Time elapsed:",(end - start), "seconds"
 
-    print "Tour length:", distance
+    print "Tour length:", tour[1]
 	
     formatting = list()
 	
