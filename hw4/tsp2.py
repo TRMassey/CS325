@@ -195,6 +195,10 @@ def main():
     print "Time elapsed:",(end - start), "seconds"
 
     print "Tour length:", tour[1]
+	
+    formatting = list()
+	
+    formatting = tour[0]
 
     # Name the output file as the input file's name with .tour appended 
     outputname = inputname + ".tour"
@@ -203,10 +207,11 @@ def main():
 
     #need to calc weight here
     out.write(str(tour[1]))
+    out.write('\n')
 
     # need to write the path for the above length here
-    out.write(str(tour[0]))
-
+    for f in formatting:
+	    out.write(str(f) + '\n')
 
 
 if __name__ == "__main__":
