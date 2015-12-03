@@ -2,6 +2,8 @@
 #include <climits>
 #include <strings>
 #include <fstream>
+#include <math.h>	//sqrt in graphEdges()
+#include <cmath>	//pow in graphEdges()
 
 // DS 
 struct City {
@@ -190,10 +192,47 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 }
 
 
+
 /************************************************************************************************
-input:
-output:
+input: float number
+output: int rounded to the nearest non decimal place
+************************************************************************************************/
+int nearestInt(num){
+	if num-int(num) >= .5{
+		return int(num+1)
+	}
+	else:
+		return int(num)
+}
+
+
+
+/************************************************************************************************
+input: vector of City elements 
+output: verctor of Edge elements that considers all city to city edges 
 ************************************************************************************************/
 struct std::vector<Edge> edges graphEdges(std::vector<City> cities){
+	//create a vector to rep edges dictionary from py
+	std::vector<Edge> edges;
+	int weight;
 
+	//iterate through all vert1
+	int vert1, vert2;
+	for(vert1 = 0; i < sizeof(cities); vert1++){
+		//iterate through all vert2
+		for(vert2 = 0; vert2 < sizeof(cities); vert2++){
+			//vert1 and vert2 cannot be the same
+			if(vert1 != vert2){
+				//make edge
+				Edge curEdge;
+				curEdge.vertex = vert1;
+				curEdge.vertex2 = vert2; 
+				//calc edge weight
+				curEdge.weight = nearestInt(sqrt(pow(((int(cities[vert1].b)-int(cities[vert2].b)),2)+(pow(int(cities[vert1].c)-int(cities[vert2].c)),2))))
+				//insert into edges vector
+				edges.push_back(curEdge);
+			}
+		}
+	}
+	return edges
 }

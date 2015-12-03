@@ -89,11 +89,9 @@ def nearestInt(num):
 # Parmeters: Graph in format from func makeGraph()
 # Return: dict of key=(vertex#,vertex#), value = edge weight 
 def graphEdges(G):
-    lowRange = 0
     edges  = dict()
     #iterate through all start points
     for vertex1 in range(0, len(G)):
-        lowRange += 1
         #iterate through all end points
         for vertex2 in [x for x in xrange(len(G)) if x != vertex1]:
             #this is from assignment description
@@ -149,7 +147,6 @@ def tsp(G):
     #create vertices list
     for vertex in range (0, len(G)):
         vertices.append(vertex)
-
 
     for vertex in vertices:
         path.append(greedyPath(vertex, vertices, edges))
