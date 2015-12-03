@@ -57,17 +57,17 @@ def optimize(graph, route, currentDistance, edges):
 
 def makeGraph():
     # make a list of the values as they are read in
-	# since the number of the cities corresponds with its position in the list, that value is not saved
-	coordList = list()	
-	filename = sys.argv[1]
-	
-	with open(filename) as f:
-		for line in f:
-			splitter = line.split()
-			coord = (splitter[1], splitter[2])
-			coordList.append(coord)
+    # since the number of the cities corresponds with its position in the list, that value is not saved
+    coordList = list()  
+    filename = sys.argv[1]
+    
+    with open(filename) as f:
+        for line in f:
+            splitter = line.split()
+            coord = (splitter[1], splitter[2])
+            coordList.append(coord)
 
-	return coordList
+    return coordList
 
 
 
@@ -104,39 +104,38 @@ def graphEdges(G):
 
 
 def greedyPath(vertex, vertices, edges):
-	curVert = vertex # current vertex being considered
-	minEdge = float("inf") #compare mins when iterating
-	minVert = None	#compare mins when iterating
-	path = list() # list of decided path for tsp
-	distance = 0	#combined distance of final path
-	unvisited = list(vertices) #keeps track of what still needs to be used
-
-	#create a path with all vertices
-	while len(unvisited) > 0:
-		#start case: no path started yet
-		if len(unvisited) == len(vertices):
-			path.append(curVert)
-			unvisited.remove(vertex)
-		#check all edges from current vertex
-		for vert in unvisited: #must be to unused vertex
-			#find min edge connecting to curent vertex
-			if curVert != vert:
-				if edges[curVert,vert] < minEdge:
-					#update to new min
-					minEdge = edges[curVert,vert] 
-					minVert = vert
-		#use min info for official path info
-		path.append(minVert)
-		distance += minEdge
-		#upkeep for iteration
-		unvisited.remove(minVert)
-		curVert = minVert
-		minVert = None
-		minEdge = float("inf")
-		#end case: make cycle and connect end->start
-		if len(unvisited) == 0:
-			distance += edges[curVert, vertex]
-	return (path, distance)
+    curVert = vertex # current vertex being considered
+    minEdge = float("inf") #compare mins when iterating
+    minVert = None  #compare mins when iterating
+    path = list() # list of decided path for tsp
+    distance = 0    #combined distance of final path
+    unvisited = list(vertices) #keeps track of what still needs to be used
+    #create a path with all vertices
+    while len(unvisited) > 0:
+        #start case: no path started yet
+        if len(unvisited) == len(vertices):
+            path.append(curVert)
+            unvisited.remove(vertex)
+        #check all edges from current vertex
+        for vert in unvisited: #must be to unused vertex
+            #find min edge connecting to curent vertex
+            if curVert != vert:
+                if edges[curVert,vert] < minEdge:
+                    #update to new min
+                    minEdge = edges[curVert,vert] 
+                    minVert = vert
+        #use min info for official path info
+        path.append(minVert)
+        distance += minEdge
+        #upkeep for iteration
+        unvisited.remove(minVert)
+        curVert = minVert
+        minVert = None
+        minEdge = float("inf")
+        #end case: make cycle and connect end->start
+        if len(unvisited) == 0:
+            distance += edges[curVert, vertex]
+    return (path, distance)
 
 
 
@@ -148,19 +147,20 @@ def tsp(G):
     edges = graphEdges(G)
     
     #create vertices list
-    for vertex in G:
-        vertices.append(G.index(vertex))
-    
+    for vertex in range (0, len(G)):
+        vertices.append(vertex)
+
+
     for vertex in vertices:
         path.append(greedyPath(vertex, vertices, edges))
 
     #get the optimal path in first index
-    #path.sort(key=lambda tup:tup[1])        #if greedy only
+    path.sort(key=lambda tup:tup[1])        #if greedy only
 
-    distance = optimize(G, path, path[0], edges)   #if opt-2
+    #distance = optimize(G, path, path[0], edges)   #if opt-2
 
-    #return path[0]  #if greedy only
-    return distance  #if opt-2
+    return path[0]  #if greedy only
+    #return distance  #if opt-2
 
 
 
@@ -170,10 +170,11 @@ def main():
     f = open(sys.argv[1], "r")
     inputname = sys.argv[1]
     G = makeGraph()
+
     #print G
     f.close()   
 
-	# timer needed
+    # timer needed
     start = time.time()
     # this is where we would call the algorithm
     tour = tsp(G)
@@ -184,9 +185,9 @@ def main():
     print "Time elapsed:",(end - start), "seconds"
 
     print "Tour length:", tour[1]
-	
+    
     formatting = list()
-	
+    
     formatting = tour[0]
 
     # Name the output file as the input file's name with .tour appended 
@@ -200,7 +201,7 @@ def main():
 
     # need to write the path for the above length here
     for f in formatting:
-	    out.write(str(f) + '\n')
+        out.write(str(f) + '\n')
 
 
 
