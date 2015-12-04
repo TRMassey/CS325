@@ -195,7 +195,7 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 	int distance;								// combined distance to final path
 	int weight;									// current weight between two vertices
 	int counter;
-	bool done = false;
+	bool doned = false;
 	int k;
 
     // initialize curPath distance since apparently initializing in the struct is for C++ 11
@@ -213,9 +213,7 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
     }
     //std::cout << "\n";
 
-    std::cout << "Vertices Size: " << vertices.size() << "\n";
-    std::cout << "N size: " << n << "\n";
-    counter = n;
+    counter = n + 1;
     minEdge = 100000000;
 
 	while(counter > 0){
@@ -226,7 +224,6 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 			curPath.route.push_back(curVert);	// add
 			unvisited[0].visited = true;
 			counter--;
-			//std::cout << curVert;
 		}
 
 		// check all edges from current vertex
@@ -269,26 +266,28 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 
 		// final weird end case to connect end -> start
 		int counter2 = 0;
+		n = vertices.size();
 		for(int i = 0; i < n; i++){
-			if(unvisited[i].visited != true){
-				done = false;
+			if(unvisited[i].visited == true){
 				counter2++;
 			}
 		}
-		std::cout << counter2;
 
-		if(done == true){
+		if (counter2 == n)
+		{
+			doned = true;
+		}
+
+		if(doned == true){
 			// get the weight betweent he two nodes
 			for(int i = 0; i < edges.size(); i++){
-				if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[i].city)
+				if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[0].city)
 						weight = edges[i].weight;
-				}
+			}
 			distance += weight;
-			counter--;
-			std::cout << "Final Counter Size: " << counter << "\n";
+			counter = 0;
 		}
 	}
-
 	/*	std::cout << "CurPath stuff: \n";
 		std::cout << "CurPath route: \n";
 		for(int j = 0; j < curPath.route.size(); j++){
