@@ -121,6 +121,15 @@ bool sortFunction (Path i, Path j) {
     return (i.distance < j.distance);
 }
 
+
+/************************************************************************************************
+input: float number
+output: int rounded to the nearest non decimal place
+************************************************************************************************/
+int nearestInt(int num){
+	return round(num);
+}
+
 /**********************************************************************************
 input: Vector of City. Each city contains id, coord, coord
 output: Path with least distance. Each path has city id and total distance of path
@@ -171,12 +180,37 @@ struct Path TSP(std::vector<City> cities){
 
 	//}
 
-
-
 	// sort to find the least costly path
 	/** figure out what is going on with this one **/
 	//sort(paths.begin(), paths.end(), [](const Path& lhs, const Path& rhs){ return lhs.distance < rhs.distance; });
 	std::sort( paths.begin( ), paths.end( ), sortFunction);
+
+//recalculate path 
+	int recalc = 0;
+	int i;
+	for(i=0; i < paths[0].route.size()-1; i++){
+		int x = cities[paths[0].route[i]].b - cities[paths[0].route[i+1]].b;
+		int y = cities[paths[0].route[i]].c - cities[paths[0].route[i+1]].c;
+		recalc += nearestInt(sqrt(pow(x,2)+(pow(y,2))));
+		//std::cout << cities[i].a << std::endl;
+		std::cout << cities[paths[0].route[i]].a << ", " << cities[paths[0].route[i+1]].a << ": " << nearestInt(sqrt(pow(x,2)+(pow(y,2)))) << std::endl;
+	}
+	int x = cities[paths[0].route.size()-2].b - cities[paths[0].route[0]].b;
+	int y = cities[paths[0].route.size()-2].c - cities[paths[0].route[0]].c;
+	recalc += nearestInt(sqrt(pow(x,2)+pow(y,2)));
+	std::cout << cities[paths[0].route.size()-2].a << ", " << cities[paths[0].route[0]].a << ": " << nearestInt(sqrt(pow(x,2)+(pow(y,2)))) << std::endl;
+
+	paths[0].distance = recalc;
+
+/*
+	int i;
+	for(i=0; i < paths[0].route.size()-1; i++){
+		int x = cities[i].b - cities[i+1].b;
+		int y = cities[i].c - cities[i+1].c;
+		recalc += nearestInt(sqrt(pow(x,2)+(pow(y,2))));
+		std::cout << recalc << std::endl;
+	}
+*/
 
 	// returning path with least distance
 	return paths[0];
@@ -267,9 +301,9 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 		if(doned == true){
 			// get the weight betweent he two nodes
 			for(int i = 0; i < edges.size(); i++){
-				std::cout << "Curpath at 0: " << curPath.route[0] << " and Vertex " << vertex << "\n";
+//				std::cout << "Curpath at 0: " << curPath.route[0] << " and Vertex " << vertex << "\n";
 				if(edges[i].vertex1 == curVert && edges[i].vertex2 == curPath.route[0]){
-					std::cout << "Cur Vertex: " << curVert << " Start Vertex: " << vertex << " Weight: " << weight << "\n";
+//					std::cout << "Cur Vertex: " << curVert << " Start Vertex: " << vertex << " Weight: " << weight << "\n";
 					weight = edges[i].weight;
 					if(weight < minEdge){
 						minEdge = weight;
@@ -285,15 +319,6 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 	return curPath;
 }
 
-
-
-/************************************************************************************************
-input: float number
-output: int rounded to the nearest non decimal place
-************************************************************************************************/
-int nearestInt(int num){
-	return round(num);
-}
 
 
 

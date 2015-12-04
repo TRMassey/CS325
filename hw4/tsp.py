@@ -156,6 +156,9 @@ def tsp(G):
 
     #distance = optimize(G, path, path[0], edges)   #if opt-2
 
+    for vertex in range(0, len(path[0][0])-1):
+        print str(path[0][0][vertex]) + ", " + str(path[0][0][vertex+1]) + ": " + str(edges[path[0][0][vertex], path[0][0][vertex+1]])
+    print str(edges[path[0][0][len(path)-1], path[0][0][0]])
     return path[0]  #if greedy only
     #return distance  #if opt-2
 
