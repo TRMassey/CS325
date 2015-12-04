@@ -145,6 +145,7 @@ struct Path TSP(std::vector<City> cities){
 	for(int i = 0; i < cities.size()-1; i++){
 		vertex = cities[i].a;
 		vertices.push_back(vertex);
+		//std::cout << "vertices[i] " << vertices[i];
 	}
 
 /*	for(int i = 0; i < vertices.size(); i++){
@@ -153,7 +154,7 @@ struct Path TSP(std::vector<City> cities){
 	}*/
 
 	// find current paths
-	for(int j = 0; j < vertices.size()-1; j++){
+	for(int j = 0; j < vertices.size(); j++){
 		vertex = vertices[j];
 		curPath = algo(vertex, vertices, edges);
 		paths.push_back(curPath);	// add new path
@@ -199,17 +200,21 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 
     // initialize curPath distance since apparently initializing in the struct is for C++ 11
     curPath.distance = 0;
-    int n = vertices.size() -1;
+    int n = vertices.size()-1;
     finalPath unvisited[n];					// unvisited vertices
 
     for(int i = 0; i < vertices.size(); i++){
     	int v = vertices[i];
     	unvisited[i].city = v;
     	unvisited[i].visited = false;
-    	//std::cout << unvisited[i].city << ", ";
+    	//std::cout << "vertices[i]: " << vertices[i] << ",\n";
+    	//if(i == 0)
+    		//std::cout << unvisited[i].city << ", ";
     }
     //std::cout << "\n";
 
+    std::cout << "Vertices Size: " << vertices.size() << "\n";
+    std::cout << "N size: " << n << "\n";
     counter = n;
     minEdge = 100000000;
 
@@ -217,10 +222,11 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 		// std::cout << "Counter: " << counter << "\n";
 		// start case
 
-		if(counter == vertices.size()){
+		if(counter == n){
 			curPath.route.push_back(curVert);	// add
 			unvisited[0].visited = true;
 			counter--;
+			//std::cout << curVert;
 		}
 
 		// check all edges from current vertex
@@ -232,15 +238,16 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 					if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[j].city && unvisited[j].visited == false){
 						weight = edges[i].weight;
 						//std::cout << "Weight: " << weight << "CurVert: " << curVert << "City: " << unvisited[j].city << "\n";
+									// found them, determine if smaller
+						if(weight < minEdge){
+							minEdge = weight;
+							minVert = unvisited[j].city;
+							//unvisited[j].visited = true;
+							k = j;
+						}
 					}
 				}
-				// found them, determine if smaller
-				if(weight < minEdge){
-					minEdge = weight;
-					minVert = unvisited[j].city;
-					//unvisited[j].visited = true;
-					k = j;
-				}
+
 		//	}
 		}
         //std::cout << "after nested for loops" << std::endl;
@@ -261,10 +268,14 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 		minEdge = 10000000;
 
 		// final weird end case to connect end -> start
+		int counter2 = 0;
 		for(int i = 0; i < n; i++){
-			if(unvisited[i].visited != true)
+			if(unvisited[i].visited != true){
 				done = false;
+				counter2++;
+			}
 		}
+		std::cout << counter2;
 
 		if(done == true){
 			// get the weight betweent he two nodes
@@ -274,10 +285,11 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 				}
 			distance += weight;
 			counter--;
+			std::cout << "Final Counter Size: " << counter << "\n";
 		}
 	}
 
-/*		std::cout << "CurPath stuff: \n";
+	/*	std::cout << "CurPath stuff: \n";
 		std::cout << "CurPath route: \n";
 		for(int j = 0; j < curPath.route.size(); j++){
 			std::cout << curPath.route[j] << ", ";
