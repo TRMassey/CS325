@@ -28,6 +28,11 @@ struct Edge {
 	int weight;
 };
 
+struct finalPath {
+	int city;
+	bool visited;
+};
+
 // helper functions
 struct Path TSP(std::vector<City> cities);
 std::vector<Edge> graphEdges(std::vector<City> cities);
@@ -185,66 +190,70 @@ Output: returns a path, composed of a list of cities visited and total distance
 struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges){
 	int curVert = vertex;						// current vertex
 	int minVert, minEdge;						// minimums found
-	std::vector<int> unvisited;					// unvisited vertices
 	Path curPath;								// tracking current path
 	int distance;								// combined distance to final path
 	int weight;									// current weight between two vertices
 	int counter;
+	bool done = false;
+	int k;
 
     // initialize curPath distance since apparently initializing in the struct is for C++ 11
     curPath.distance = 0;
+    int n = vertices.size() -1;
+    finalPath unvisited[n];					// unvisited vertices
 
     for(int i = 0; i < vertices.size(); i++){
     	int v = vertices[i];
-    	unvisited.push_back(v);
-    	//std::cout << unvisited[i] << ", ";
+    	unvisited[i].city = v;
+    	unvisited[i].visited = false;
+    	//std::cout << unvisited[i].city << ", ";
     }
     //std::cout << "\n";
 
-    counter = unvisited.size();
+    counter = n;
     minEdge = 100000000;
 
 	while(counter > 0){
 		// std::cout << "Counter: " << counter << "\n";
 		// start case
 
-		if(unvisited.size() == vertices.size()){
+		if(counter == vertices.size()){
 			curPath.route.push_back(curVert);	// add
-			unvisited.erase(std::remove(unvisited.begin(), unvisited.end(), curVert), unvisited.end());				// remove
+			unvisited[0].visited = true;
 			counter--;
 		}
 
 		// check all edges from current vertex
-		for(int j = 0; j < unvisited.size(); j++){
+		for(int j = 0; j < n; j++){
 			// find min edge connecting to current vertex
-			if(curVert != unvisited[j]){
+		//	if(unvisited[j].visited == false){
 				// find the weight of the edge between two vertices (match them!)
 				for(int i = 0; i < edges.size(); i++){
-					if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[j]){
+					if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[j].city && unvisited[j].visited == false){
 						weight = edges[i].weight;
+						//std::cout << "Weight: " << weight << "CurVert: " << curVert << "City: " << unvisited[j].city << "\n";
 					}
 				}
 				// found them, determine if smaller
 				if(weight < minEdge){
 					minEdge = weight;
-					minVert = unvisited[j];
+					minVert = unvisited[j].city;
+					//unvisited[j].visited = true;
+					k = j;
 				}
-			}
+		//	}
 		}
         //std::cout << "after nested for loops" << std::endl;
 		// assign the minimums to the current path
 		//std::cout << "Pushing back minVert: " << minVert << "\n";
 		curPath.route.push_back(minVert);
 		curPath.distance += minEdge;
-
+		unvisited[k].visited = true;
 		// upkeep
 		// remove first instance of minVert in unvisited
-		std::vector<int>::iterator position = std::find(unvisited.begin(), unvisited.end(), minVert);
+		//std::vector<int>::iterator position = std::find(unvisited.begin(), unvisited.end(), minVert);
 
-		if (position != unvisited.end()) {  // if it reaches the end, the value doesn't exist
-            unvisited.erase(position);
-        	counter--;
-		}
+		counter--;
 
 		//std::cout << "Counter: " << counter << "\n";
 		curVert = minVert;
@@ -252,13 +261,19 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 		minEdge = 10000000;
 
 		// final weird end case to connect end -> start
-		if(unvisited.size() == 0){
+		for(int i = 0; i < n; i++){
+			if(unvisited[i].visited != true)
+				done = false;
+		}
+
+		if(done == true){
 			// get the weight betweent he two nodes
 			for(int i = 0; i < edges.size(); i++){
-				if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[i])
+				if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[i].city)
 						weight = edges[i].weight;
 				}
 			distance += weight;
+			counter--;
 		}
 	}
 
