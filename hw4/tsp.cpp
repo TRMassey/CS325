@@ -130,6 +130,12 @@ struct Path TSP(std::vector<City> cities){
 	// calcualte the edges (vetex, vertex) = weight
 	edges = graphEdges(cities);
 
+//	for (int k = 0; k < edges.size(); k++) {
+//        std::cout << "Vertex1: " << edges[k].vertex1 << std::endl;
+//        std::cout << "Vertex2: " << edges[k].vertex2 << std::endl;
+//        std::cout << "Weight: " << edges[k].weight << std::endl;
+//	}
+
 	// create a vertices list
 	for(int i = 0; i < cities.size(); i++){
 		vertex = cities[i].a;
@@ -161,15 +167,16 @@ Output: returns a path, composed of a list of cities visited and total distance
 struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges){
 	int curVert = vertex;						// current vertex
 	int minVert, minEdge;						// minimums found
-	std::vector<int> unvisited(vertices);		// unvisited vertices
+	std::vector<int> unvisited = vertices;		// unvisited vertices
 	Path curPath;								// tracking current path
 	int distance;								// combined distance to final path
 	int weight;									// current weight between two vertices
+	int counter = unvisited.size();
 
     // initialize curPath distance since apparently initializing in the struct is for C++ 11
     curPath.distance = 0;
 
-	while(unvisited.size() > 0){
+	while(counter > 0){
 		// start case
 		if(unvisited.size() == vertices.size()){
 			curPath.route.push_back(curVert);	// add
@@ -192,7 +199,7 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 				}
 			}
 		}
-
+        //std::cout << "after nested for loops" << std::endl;
 		// assign the minimums to the current path
 		curPath.route.push_back(minVert);
 		curPath.distance += minEdge;
@@ -204,6 +211,9 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 		if (position != unvisited.end()) {  // if it reaches the end, the value doesn't exist
             unvisited.erase(position);
 		}
+
+		// reduce size being track
+		counter--;
 
 		curVert = minVert;
 		minVert = 0;
@@ -219,7 +229,6 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 			distance += weight;
 		}
 	}
-
 	// return the Path: It has the vector of cities visited and the total distance it took
 	return curPath;
 }
