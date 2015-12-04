@@ -19,7 +19,7 @@ struct City {
 
 struct Path {
 	std::vector<int> route;
-	int distance = 0;
+	int distance;
 };
 
 struct Edge {
@@ -29,7 +29,7 @@ struct Edge {
 };
 
 // helper functions
-std::vector<Path> TSP(std::vector<City> cities);
+struct Path TSP(std::vector<City> cities);
 std::vector<Edge> graphEdges(std::vector<City> cities);
 struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges);
 
@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
 	int a, b, c;				// city id, coord, coord
 	struct City location;		// city information
 	std::vector<City> cities;		// story list of locations
-	std::vector<Path> tour;			// final tour here
+	struct Path tour;			// final tour here
 
 
 	// error catch with files
@@ -57,14 +57,16 @@ int main(int argc, char** argv) {
 	fin = argv[1];
 	finStream.open(fin.c_str());
 	if(!finStream){
-		std::cout << "Unable to pen input file " << finStream << std::endl;
+		std::cout << "Unable to open input file " << finStream << std::endl;
 		exit(1);
 	}
 
 	// store the input file (same as makeGraph from python function)
 	while(!finStream.eof()){
 		finStream >> a >> b >> c;
-		location = {b, c};
+		location.a = a;
+		location.b = b;
+		location.c = c;
 		cities.push_back(location);
 	}
 	finStream.close();
@@ -82,8 +84,7 @@ int main(int argc, char** argv) {
 
 	// print for us on the screen
 	std::cout << "\nTime elapsed:" << timing << "seconds\n";
-    /** tour doesn't print because it's a struct - we need to access the tour via route in the struct **/
-	//std::cout << "\nTour Length: " << tour[1] << "\n";
+    std::cout << "\nTour Length: " << tour.distance << "\n";
 
 
 
@@ -91,19 +92,35 @@ int main(int argc, char** argv) {
 	fout = argv[1];
 	fout.append(".tour");
 
-	// STILL NEED TO DO: print to output file
-		// while not end of tours
-		// output file stream >> a >> b >> c
+    foutStream.open(fout.c_str());
 
-return 0;
+    // write tour length first
+    foutStream << tour.distance << "\r\n";
+
+    // write tour route line by line
+    for (int i = 0; i < tour.route.size(); i++) {
+        foutStream << tour.route[i] << "\r\n";
+    }
+
+	// close file
+	foutStream.close();
+
+    return 0;
 }
 
+/**********************************************************************************
+input: Paths for comparison
+output: Direction for sort call
+**********************************************************************************/
+bool sortFunction (Path i, Path j) {
+    return (i.distance < j.distance);
+}
 
 /**********************************************************************************
 input: Vector of City. Each city contains id, coord, coord
 output: Path with least distance. Each path has city id and total distance of path
 **********************************************************************************/
-std::vector<Path> TSP(std::vector<City> cities){
+struct Path TSP(std::vector<City> cities){
 	Path curPath;				// receiving vector of city ids, and total distance
 	std::vector<int> vertices;	// list of all city ids
 	std::vector<Edge> edges;	// list of EDGE, composed of vertex1, vertex2, weight
@@ -129,10 +146,10 @@ std::vector<Path> TSP(std::vector<City> cities){
 	// sort to find the least costly path
 	/** figure out what is going on with this one **/
 	//sort(paths.begin(), paths.end(), [](const Path& lhs, const Path& rhs){ return lhs.distance < rhs.distance; });
+	std::sort( paths.begin( ), paths.end( ), sortFunction);
 
 	// returning path with least distance
-	/** this was original paths[0] - need to return the whole thing and extract 0 in the other function**/
-	return paths;
+	return paths[0];
 }
 
 /**********************************************************************************************
@@ -147,16 +164,16 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 	std::vector<int> unvisited(vertices);		// unvisited vertices
 	Path curPath;								// tracking current path
 	int distance;								// combined distance to final path
-	int iter;										// iterator
 	int weight;									// current weight between two vertices
+
+    // initialize curPath distance since apparently initializing in the struct is for C++ 11
+    curPath.distance = 0;
 
 	while(unvisited.size() > 0){
 		// start case
 		if(unvisited.size() == vertices.size()){
 			curPath.route.push_back(curVert);	// add
 			unvisited.pop_back();					// remove
-            /** push_back will push back in order received, so if other order is needed, we need to change here, instead incrementing iterator for below use **/
-            iter++;
 		}
 
 		// check all edges from current vertex
@@ -177,13 +194,17 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 		}
 
 		// assign the minimums to the current path
-		/** also here, push_back pushes back in order, if pushing to a specific place in the vector is needed, we can review **/
 		curPath.route.push_back(minVert);
 		curPath.distance += minEdge;
 
 		// upkeep
-		/** pop_back removes last element of vector; do we need it to remove something specific? **/
-		unvisited.pop_back();
+		// remove first instance of minVert in unvisited
+		std::vector<int>::iterator position = std::find(unvisited.begin(), unvisited.end(), minVert);
+
+		if (position != unvisited.end()) {  // if it reaches the end, the value doesn't exist
+            unvisited.erase(position);
+		}
+
 		curVert = minVert;
 		minVert = 0;
 		minEdge = 0;
