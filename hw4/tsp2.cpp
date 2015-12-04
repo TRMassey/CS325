@@ -137,7 +137,7 @@ struct Path TSP(std::vector<City> cities){
 	}*/
 
 	// create a vertices list
-	for(int i = 0; i < cities.size(); i++){
+	for(int i = 0; i < cities.size()-1; i++){
 		vertex = cities[i].a;
 		vertices.push_back(vertex);
 	}
@@ -148,7 +148,7 @@ struct Path TSP(std::vector<City> cities){
 	}*/
 
 	// find current paths
-	for(int j = 0; j < vertices.size(); j++){
+	for(int j = 0; j < vertices.size()-1; j++){
 		vertex = vertices[j];
 		curPath = algo(vertex, vertices, edges);
 		paths.push_back(curPath);	// add new path
@@ -199,7 +199,7 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
     	unvisited.push_back(v);
     	//std::cout << unvisited[i] << ", ";
     }
-   // std::cout << "\n";
+    //std::cout << "\n";
 
     counter = unvisited.size();
     minEdge = 100000000;
@@ -207,9 +207,10 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 	while(counter > 0){
 		// std::cout << "Counter: " << counter << "\n";
 		// start case
+
 		if(unvisited.size() == vertices.size()){
 			curPath.route.push_back(curVert);	// add
-			unvisited.pop_back();				// remove
+			unvisited.erase(std::remove(unvisited.begin(), unvisited.end(), curVert), unvisited.end());				// remove
 			counter--;
 		}
 
@@ -295,9 +296,10 @@ std::vector<Edge> graphEdges(std::vector<City> cities){
 
 	//iterate through all vert1
 	int vert1, vert2;
-	for(vert1 = 0; vert1 < sizeof(cities); vert1++){
+
+	for(vert1 = 0; vert1 < cities.size()-1; vert1++){
 		//iterate through all vert2
-		for(vert2 = 0; vert2 < cities.size(); vert2++){
+		for(vert2 = 0; vert2 < cities.size()-1; vert2++){
 			//vert1 and vert2 cannot be the same
 			if(vert1 != vert2){
 				//make edge
