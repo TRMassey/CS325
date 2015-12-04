@@ -242,11 +242,9 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 
 		if (position != unvisited.end()) {  // if it reaches the end, the value doesn't exist
             unvisited.erase(position);
-        	unvisited.size--;
+        	counter--;
 		}
 
-		// reduce size being track
-		counter--;
 		//std::cout << "Counter: " << counter << "\n";
 		curVert = minVert;
 		minVert = 0;
