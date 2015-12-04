@@ -1,11 +1,16 @@
 #include <iostream>
 #include <climits>
-#include <strings>
+#include <string>
 #include <fstream>
-#include <math.h>	//sqrt in graphEdges()
+#include <math.h>	//sqrt in graphEdges(), round in nearestNum
 #include <cmath>	//pow in graphEdges()
+#include <vector>
+#include <cstdlib>  // exit
+#include <ctime>    // timer, clock_per_second
+#include <algorithm> // sort
 
-// DS 
+
+// DS
 struct City {
 	int a;	// location id
 	int b;  // coord
@@ -14,37 +19,37 @@ struct City {
 
 struct Path {
 	std::vector<int> route;
-	int distance;
+	int distance = 0;
 };
 
 struct Edge {
-	int vertex;
+	int vertex1;
 	int vertex2;
 	int weight;
 };
 
 // helper functions
 std::vector<Path> TSP(std::vector<City> cities);
-struct std::vector<Edge> edges graphEdges(std::vector<City> cities);
+std::vector<Edge> graphEdges(std::vector<City> cities);
 struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges);
 
 
 int main(int argc, char** argv) {
-	
+
 	std::string fin;			// reading file
 	std::string fout;			// output file
-	std::ofstream finStream;	// input stream
+	std::ifstream finStream;	// input stream
 	std::ofstream foutStream;	// output stream
 	int a, b, c;				// city id, coord, coord
 	struct City location;		// city information
-	vector<City> cities;		// story list of locations
-	vector<Path> tour;			// final tour here
+	std::vector<City> cities;		// story list of locations
+	std::vector<Path> tour;			// final tour here
 
 
 	// error catch with files
 	if (argc < 2)
 	{
-		usage();
+		std::cout << "Not enough or invalid arguments, please try again.\n";
 		exit(-1);
 	}
 
@@ -52,7 +57,7 @@ int main(int argc, char** argv) {
 	fin = argv[1];
 	finStream.open(fin.c_str());
 	if(!finStream){
-		cerr << "Unable to pen input file " << finStream << std::endl;
+		std::cout << "Unable to pen input file " << finStream << std::endl;
 		exit(1);
 	}
 
@@ -74,12 +79,14 @@ int main(int argc, char** argv) {
 	// timing end
 	clock_t end = clock();
 	int timing = end - start / CLOCKS_PER_SEC;
-	
+
 	// print for us on the screen
 	std::cout << "\nTime elapsed:" << timing << "seconds\n";
-	std::cout << "\nTour Length: " << tour[1] << "\n";
+    /** tour doesn't print because it's a struct - we need to access the tour via route in the struct **/
+	//std::cout << "\nTour Length: " << tour[1] << "\n";
 
-	
+
+
 	// maek output file name
 	fout = argv[1];
 	fout.append(".tour");
@@ -98,7 +105,7 @@ output: Path with least distance. Each path has city id and total distance of pa
 **********************************************************************************/
 std::vector<Path> TSP(std::vector<City> cities){
 	Path curPath;				// receiving vector of city ids, and total distance
-	std::vetor<int> vertices;	// list of all city ids
+	std::vector<int> vertices;	// list of all city ids
 	std::vector<Edge> edges;	// list of EDGE, composed of vertex1, vertex2, weight
 	int vertex;					// single id
 	int distance, distance2;	// variable for sorting by distance
@@ -108,22 +115,24 @@ std::vector<Path> TSP(std::vector<City> cities){
 
 	// create a vertices list
 	for(int i = 0; i < cities.size(); i++){
-		vertex = cities.a;
+		vertex = cities[i].a;
 		vertices.push_back(vertex);
 	}
 
 	// find current paths
 	for(int j = 0; j < vertices.size(); j++){
-		vertex = vertices[i];
+		vertex = vertices[j];
 		curPath = algo(vertex, vertices, edges);
 		paths.push_back(curPath);	// add new path
 	}
 
 	// sort to find the least costly path
-	sort(paths.begin(), paths.end(), [](const Path& lhs, const Path& rhs){ return lhs.distance < rhs.distance});
+	/** figure out what is going on with this one **/
+	//sort(paths.begin(), paths.end(), [](const Path& lhs, const Path& rhs){ return lhs.distance < rhs.distance; });
 
-	// returning oath with least distance
-	return paths[0];
+	// returning path with least distance
+	/** this was original paths[0] - need to return the whole thing and extract 0 in the other function**/
+	return paths;
 }
 
 /**********************************************************************************************
@@ -138,15 +147,16 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 	std::vector<int> unvisited(vertices);		// unvisited vertices
 	Path curPath;								// tracking current path
 	int distance;								// combined distance to final path
-	int i;										// iterator
+	int iter;										// iterator
 	int weight;									// current weight between two vertices
 
 	while(unvisited.size() > 0){
 		// start case
 		if(unvisited.size() == vertices.size()){
-			curPath.route[i].push_back(curVert);	// add
+			curPath.route.push_back(curVert);	// add
 			unvisited.pop_back();					// remove
-			i++;									// iterate
+            /** push_back will push back in order received, so if other order is needed, we need to change here, instead incrementing iterator for below use **/
+            iter++;
 		}
 
 		// check all edges from current vertex
@@ -155,7 +165,7 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 			if(curVert != unvisited[j]){
 				// find the weight of the edge between two vertices (match them!)
 				for(int i = 0; i < edges.size(); i++){
-					if(edges.vertex1 == curVert && edges.vertex2 == unvisited[j])
+					if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[j])
 						weight = edges[i].weight;
 				}
 				// found them, determine if smaller
@@ -167,11 +177,13 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 		}
 
 		// assign the minimums to the current path
-		curPath.route[i].push_back(minVert);
-		curpath.distance += minEdge;
+		/** also here, push_back pushes back in order, if pushing to a specific place in the vector is needed, we can review **/
+		curPath.route.push_back(minVert);
+		curPath.distance += minEdge;
 
 		// upkeep
-		unvisited.pop_back(minVert);
+		/** pop_back removes last element of vector; do we need it to remove something specific? **/
+		unvisited.pop_back();
 		curVert = minVert;
 		minVert = 0;
 		minEdge = 0;
@@ -180,7 +192,7 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 		if(unvisited.size() == 0){
 			// get the weight betweent he two nodes
 			for(int i = 0; i < edges.size(); i++){
-				if(edges.vertex1 == curVert && edges.vertex2 == unvisited[j])
+				if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[i])
 						weight = edges[i].weight;
 				}
 			distance += weight;
@@ -197,42 +209,41 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 input: float number
 output: int rounded to the nearest non decimal place
 ************************************************************************************************/
-int nearestInt(num){
-	if num-int(num) >= .5{
-		return int(num+1)
-	}
-	else:
-		return int(num)
+int nearestInt(int num){
+	return round(num);
 }
 
 
 
 /************************************************************************************************
-input: vector of City elements 
-output: verctor of Edge elements that considers all city to city edges 
+input: vector of City elements
+output: verctor of Edge elements that considers all city to city edges
 ************************************************************************************************/
-struct std::vector<Edge> edges graphEdges(std::vector<City> cities){
+std::vector<Edge> graphEdges(std::vector<City> cities){
 	//create a vector to rep edges dictionary from py
 	std::vector<Edge> edges;
 	int weight;
 
 	//iterate through all vert1
 	int vert1, vert2;
-	for(vert1 = 0; i < sizeof(cities); vert1++){
+	for(vert1 = 0; vert1 < sizeof(cities); vert1++){
 		//iterate through all vert2
 		for(vert2 = 0; vert2 < sizeof(cities); vert2++){
 			//vert1 and vert2 cannot be the same
 			if(vert1 != vert2){
 				//make edge
 				Edge curEdge;
-				curEdge.vertex = vert1;
-				curEdge.vertex2 = vert2; 
+				curEdge.vertex1 = vert1;
+				curEdge.vertex2 = vert2;
+				int twoB = cities[vert1].b - cities[vert2].b;
+				int twoC = cities[vert1].c - cities[vert2].c;
+
 				//calc edge weight
-				curEdge.weight = nearestInt(sqrt(pow(((int(cities[vert1].b)-int(cities[vert2].b)),2)+(pow(int(cities[vert1].c)-int(cities[vert2].c)),2))))
+				curEdge.weight = nearestInt(sqrt(pow(twoB,2)+(pow(twoC,2))));
 				//insert into edges vector
 				edges.push_back(curEdge);
 			}
 		}
 	}
-	return edges
+	return edges;
 }
