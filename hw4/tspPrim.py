@@ -130,15 +130,13 @@ def mstPrim(edges, G):
 
 
 #uses 2-opt
-def buildPath(vertices, vertPath, edges):
+def buildPath(vertPath, edges):
     distance = 0
     #go through the path or mst backwards
-    for vertex in range(len(vertPath) -3):
-        order1 = 0
-        order2 = 0
+    for vertex in range(0, len(vertPath)-3):
         #2-opt rule: swap if [1,3,2,4] < [1,2,3,4]
-        order1 = edges[vertex, vertex+2]+edges[vertex+2, vertex+1]+edges[vertex+1, vertex+3]
-        order2 = edges[vertex, vertex+1]+edges[vertex+1, vertex+2]+edges[vertex+2, vertex+3]
+        order1 = edges[vertPath[vertex], vertPath[vertex+2]]+edges[vertPath[vertex+2], vertPath[vertex+1]]+edges[vertPath[vertex+1], vertPath[vertex+3]]
+        order2 = edges[vertPath[vertex], vertPath[vertex+1]]+edges[vertPath[vertex+1], vertPath[vertex+2]]+edges[vertPath[vertex+2], vertPath[vertex+3]]
         if(order1 < order2): #2-opt swap
             #swap 2 and 3
             temp = vertPath[vertex+1]
@@ -161,6 +159,7 @@ def buildPath(vertices, vertPath, edges):
         temp = curPath[vertex]
         curPath[vertex] = curPath[-1]
         curPath[-1] = temp
+        #Calc distance
         for vertex in range(0, len(curPath)-1): 
             curDist += edges[curPath[vertex], curPath[vertex+1]]
         curDist += edges[curPath[0], curPath[-1]] 
@@ -176,11 +175,6 @@ def buildPath(vertices, vertPath, edges):
 
 
 def tsp(G):
-    #get list of vertices
-    vertices = list()
-    for vertex in range(0, len(G)):
-        vertices.append(vertex)
-
     #get edges for graph
     edges = graphEdges(G)
     #sort dictionary by values/edges
@@ -196,15 +190,17 @@ def tsp(G):
     distance = 0
     for edge in edgePath:
         distance += edges[edge]
+    distance += edges[edgePath[0][0], edgePath[-1][1]]
 
     #establish exact min path
     minPathFound = False
     path = list(vertPath)
     while not minPathFound:
         #build path
-        results = buildPath(vertices, vertPath, edges)
+        results = buildPath(vertPath, edges)
         vertPath = results[0]
-        curDist = results[1] 
+        curDist = results[1]
+
         #check if better
         if curDist < distance:
             distance = curDist
@@ -212,7 +208,6 @@ def tsp(G):
         #min has been found
         else:
             minPathFound = True
-
     return (path, distance)
 
 
