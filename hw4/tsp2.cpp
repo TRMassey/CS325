@@ -202,13 +202,12 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
    // std::cout << "\n";
 
     counter = unvisited.size();
-    minEdge = edges[0].weight;
+    minEdge = 100000000;
 
 	while(counter > 0){
 		// std::cout << "Counter: " << counter << "\n";
 		// start case
-		if(counter == vertices.size()){
-			std:: cout << "in algo, unvisied size matches vertices size, size is " << counter << "\n";
+		if(unvisited.size() == vertices.size()){
 			curPath.route.push_back(curVert);	// add
 			unvisited.pop_back();				// remove
 			counter--;
@@ -222,15 +221,12 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 				for(int i = 0; i < edges.size(); i++){
 					if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[j]){
 						weight = edges[i].weight;
-						//std::cout << "In algo, weight is: " << weight << "\n";
 					}
 				}
 				// found them, determine if smaller
 				if(weight < minEdge){
-					std::cout << "Weight: " << weight << "\n";
 					minEdge = weight;
 					minVert = unvisited[j];
-					std::cout << "MinVert: " << minVert << "\n";
 				}
 			}
 		}
@@ -246,14 +242,15 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 
 		if (position != unvisited.end()) {  // if it reaches the end, the value doesn't exist
             unvisited.erase(position);
+        	unvisited.size--;
 		}
 
 		// reduce size being track
 		counter--;
-
+		//std::cout << "Counter: " << counter << "\n";
 		curVert = minVert;
 		minVert = 0;
-		minEdge = 0;
+		minEdge = 10000000;
 
 		// final weird end case to connect end -> start
 		if(unvisited.size() == 0){
