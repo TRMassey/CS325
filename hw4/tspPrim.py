@@ -131,6 +131,7 @@ def mstPrim(edges, G):
 
 #uses 2-opt
 def buildPath(vertices, vertPath, edges):
+    distance = 0
     #go through the path or mst backwards
     for vertex in range(len(vertPath) -3):
         order1 = 0
@@ -139,11 +140,36 @@ def buildPath(vertices, vertPath, edges):
         order1 = edges[vertex, vertex+2]+edges[vertex+2, vertex+1]+edges[vertex+1, vertex+3]
         order2 = edges[vertex, vertex+1]+edges[vertex+1, vertex+2]+edges[vertex+2, vertex+3]
         if(order1 < order2): #2-opt swap
-        	#swap 2 and 3
-        	temp = vertPath[vertex+1]
-        	vertPath[vertex+1] = vertPath[vertex+2]
-        	vertPath[vertex+2] = temp
-    return vertPath
+            #swap 2 and 3
+            temp = vertPath[vertex+1]
+            vertPath[vertex+1] = vertPath[vertex+2]
+            vertPath[vertex+2] = temp
+
+    #get path distance
+    for vertex in range(0, len(vertPath)-1): 
+        distance += edges[vertPath[vertex], vertPath[vertex+1]]
+    distance += edges[vertPath[0], vertPath[-1]]
+
+
+    #adjust path between cur and last 
+    path = list(vertPath)   
+    for vertex in range(1, len(vertPath)-2, 1):
+        curDist = 0
+        #create a copy of path
+        curPath = list(vertPath)
+        #swap cur and last
+        temp = curPath[vertex]
+        curPath[vertex] = curPath[-1]
+        curPath[-1] = temp
+        for vertex in range(0, len(curPath)-1): 
+            curDist += edges[curPath[vertex], curPath[vertex+1]]
+        curDist += edges[curPath[0], curPath[-1]] 
+        #check distance to see if new min
+        if curDist < distance:
+            distance = curDist
+            path = list(curPath)
+
+    return (path, distance)
 
 
 
@@ -173,20 +199,21 @@ def tsp(G):
 
     #establish exact min path
     minPathFound = False
+    path = list(vertPath)
     while not minPathFound:
         #build path
-        vertPath = buildPath(vertices, vertPath, edges)
-        curVerts = []
-        curDist = 0
+        results = buildPath(vertices, vertPath, edges)
+        vertPath = results[0]
+        curDist = results[1] 
         #check if better
         if curDist < distance:
             distance = curDist
-            vertPath = curVerts
+            path = vertPath
         #min has been found
         else:
             minPathFound = True
 
-    return results
+    return (path, distance)
 
 
 
