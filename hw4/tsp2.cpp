@@ -207,19 +207,15 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
     	int v = vertices[i];
     	unvisited[i].city = v;
     	unvisited[i].visited = false;
-    	//std::cout << "vertices[i]: " << vertices[i] << ",\n";
-    	//if(i == 0)
-    		//std::cout << unvisited[i].city << ", ";
     }
-    //std::cout << "\n";
 
+    // starting setup
     counter = n + 1;
     minEdge = 100000000;
 
 	while(counter > 0){
-		// std::cout << "Counter: " << counter << "\n";
-		// start case
 
+		// start case
 		if(counter == n){
 			curPath.route.push_back(curVert);	// add
 			unvisited[0].visited = true;
@@ -228,38 +224,28 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 
 		// check all edges from current vertex
 		for(int j = 0; j < n; j++){
-			// find min edge connecting to current vertex
-		//	if(unvisited[j].visited == false){
 				// find the weight of the edge between two vertices (match them!)
 				for(int i = 0; i < edges.size(); i++){
 					if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[j].city && unvisited[j].visited == false){
 						weight = edges[i].weight;
-						//std::cout << "Weight: " << weight << "CurVert: " << curVert << "City: " << unvisited[j].city << "\n";
-									// found them, determine if smaller
+						
+						// found them, determine if smaller
 						if(weight < minEdge){
 							minEdge = weight;
 							minVert = unvisited[j].city;
-							//unvisited[j].visited = true;
 							k = j;
 						}
 					}
 				}
-
-		//	}
 		}
-        //std::cout << "after nested for loops" << std::endl;
+
 		// assign the minimums to the current path
-		//std::cout << "Pushing back minVert: " << minVert << "\n";
 		curPath.route.push_back(minVert);
 		curPath.distance += minEdge;
 		unvisited[k].visited = true;
+		
 		// upkeep
-		// remove first instance of minVert in unvisited
-		//std::vector<int>::iterator position = std::find(unvisited.begin(), unvisited.end(), minVert);
-
 		counter--;
-
-		//std::cout << "Counter: " << counter << "\n";
 		curVert = minVert;
 		minVert = 0;
 		minEdge = 10000000;
@@ -281,19 +267,19 @@ struct Path algo(int vertex, std::vector<int> vertices, std::vector<Edge> edges)
 		if(doned == true){
 			// get the weight betweent he two nodes
 			for(int i = 0; i < edges.size(); i++){
-				if(edges[i].vertex1 == curVert && edges[i].vertex2 == unvisited[0].city)
-						weight = edges[i].weight;
+				std::cout << "Curpath at 0: " << curPath.route[0] << " and Vertex " << vertex << "\n";
+				if(edges[i].vertex1 == curVert && edges[i].vertex2 == curPath.route[0]){
+					std::cout << "Cur Vertex: " << curVert << " Start Vertex: " << vertex << " Weight: " << weight << "\n";
+					weight = edges[i].weight;
+					if(weight < minEdge){
+						minEdge = weight;
+					}
+				}
 			}
-			distance += weight;
-			counter = 0;
+			curPath.distance += minEdge;
+			counter--;
 		}
 	}
-	/*	std::cout << "CurPath stuff: \n";
-		std::cout << "CurPath route: \n";
-		for(int j = 0; j < curPath.route.size(); j++){
-			std::cout << curPath.route[j] << ", ";
-		}
-		std::cout << "\n";*/
 
 	// return the Path: It has the vector of cities visited and the total distance it took
 	return curPath;
