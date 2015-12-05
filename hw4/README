@@ -1,0 +1,5 @@
+To Compile: Compile using included makefile or g++ for tsp3.cpp
+
+To Run:  ./tsp <inputfile name>
+
+Using Program: Program will compile a path based on aproximation heuristics using a greedy algorithm for the Traveling Salesperson Problem.  Program will output time ellapsed and tour length to the consolue.  Program will write tour length and path of vertices to an output file with the name of <input file name>.tour
