@@ -151,7 +151,7 @@ struct Path TSP(std::vector<City> cities){
 	}*/
 
 	//create a vertices list
-	for(int i = 0; i < cities.size(); i++){
+	for(int i = 0; i < cities.size() -1; i++){
 		vertices.push_back(cities[i]);
 		//std::cout << "vertices[i] " << vertices[i];
 	}
