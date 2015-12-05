@@ -126,7 +126,7 @@ bool sortFunction (Path i, Path j) {
 input: float number
 output: int rounded to the nearest non decimal place
 ************************************************************************************************/
-int nearestInt(int num){
+int nearestInt(double num){
 	return round(num);
 }
 
@@ -184,7 +184,7 @@ struct Path TSP(std::vector<City> cities){
 	//sort(paths.begin(), paths.end(), [](const Path& lhs, const Path& rhs){ return lhs.distance < rhs.distance; });
 	std::sort( paths.begin( ), paths.end( ), sortFunction);
 
-//recalculate path 
+//recalculate path
 /*	int recalc = 0;
 	int i;
 	for(i=0; i < paths[0].route.size()-1; i++){
