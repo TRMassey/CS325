@@ -1,3 +1,8 @@
+/************************************************************
+/ Project 4, Group 1
+/ Lynn Herrick, Tara Massey, Diana O'Haver
+/************************************************************/
+
 #include <iostream>
 #include <climits>
 #include <string>
@@ -146,22 +151,11 @@ struct Path TSP(std::vector<City> cities){
 	// calcualte the edges (vetex, vertex) = weight
 	edges = graphEdges(cities);
 
-/*	for (int k = 0; k < edges.size(); k++) {
-       std::cout << "Vertex1: " << edges[k].vertex1 << std::endl;
-       std::cout << "Vertex2: " << edges[k].vertex2 << std::endl;
-       std::cout << "Weight: " << edges[k].weight << std::endl;
-	}*/
-
-	//create a vertices list
+    //create a vertices list
 	for(int i = 0; i < cities.size() -1; i++){
 		vertices.push_back(cities[i]);
 		//std::cout << "vertices[i] " << vertices[i];
 	}
-
-/*	for(int i = 0; i < vertices.size(); i++){
-		std::cout << "Vertices at " << i << ": " << vertices[i] << "\n";
-
-	}*/
 
 	// find current paths
 	for(int j = 0; j < vertices.size(); j++){
@@ -170,48 +164,10 @@ struct Path TSP(std::vector<City> cities){
 		paths.push_back(curPath);	// add new path
 	}
 
-/*		for(int i = 0; i < paths.size(); i++){
-			std::cout << "Path Route: \n";
-			for(int j = 0; j < paths[i].route.size(); j++){
-				std::cout << paths[i].route[j] << ", ";
-			}
-			std::cout << "\n";
-
-		std::cout << "Distance: " << paths[i].distance << "\n";*/
-
-	//}
-
 	// sort to find the least costly path
 	/** figure out what is going on with this one **/
 	//sort(paths.begin(), paths.end(), [](const Path& lhs, const Path& rhs){ return lhs.distance < rhs.distance; });
 	std::sort( paths.begin( ), paths.end( ), sortFunction);
-
-//recalculate path
-/*	int recalc = 0;
-	int i;
-	for(i=0; i < paths[0].route.size()-1; i++){
-		int x = cities[paths[0].route[i]].b - cities[paths[0].route[i+1]].b;
-		int y = cities[paths[0].route[i]].c - cities[paths[0].route[i+1]].c;
-		recalc += nearestInt(sqrt(pow(x,2)+(pow(y,2))));
-		//std::cout << cities[i].a << std::endl;
-		std::cout << cities[paths[0].route[i]].a << ", " << cities[paths[0].route[i+1]].a << ": " << nearestInt(sqrt(pow(x,2)+(pow(y,2)))) << std::endl;
-	}
-	int x = cities[paths[0].route.size()-2].b - cities[paths[0].route[0]].b;
-	int y = cities[paths[0].route.size()-2].c - cities[paths[0].route[0]].c;
-	recalc += nearestInt(sqrt(pow(x,2)+pow(y,2)));
-	std::cout << cities[paths[0].route.size()-2].a << ", " << cities[paths[0].route[0]].a << ": " << nearestInt(sqrt(pow(x,2)+(pow(y,2)))) << std::endl;
-
-	paths[0].distance = recalc;
-*/
-/*
-	int i;
-	for(i=0; i < paths[0].route.size()-1; i++){
-		int x = cities[i].b - cities[i+1].b;
-		int y = cities[i].c - cities[i+1].c;
-		recalc += nearestInt(sqrt(pow(x,2)+(pow(y,2))));
-		std::cout << recalc << std::endl;
-	}
-*/
 
 	// returning path with least distance
 	return paths[0];
