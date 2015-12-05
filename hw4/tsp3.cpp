@@ -87,8 +87,10 @@ int main(int argc, char** argv) {
 	clock_t end = clock();
 	int timing = end - start / CLOCKS_PER_SEC;
 
+	float finaltime = ((float)timing)/CLOCKS_PER_SEC;
+
 	// print for us on the screen
-	std::cout << "\nTime elapsed:" << timing << "seconds\n";
+	std::cout << "\nTime elapsed: " << finaltime << " seconds\n";
     std::cout << "\nTour Length: " << tour.distance << "\n";
 
 
